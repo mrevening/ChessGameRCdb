@@ -1,0 +1,85 @@
+@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+.blackTile {
+    background-color: var(--bs-pink);
+}
+.whiteTile {
+    background-color: var(--bs-yellow);
+}
+
+#root .col {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+#stickyFigure {
+    opacity: 0.5;
+    position: fixed; //Floating above
+    left: -35px;
+    top: -35px;
+    pointer-events: none; /* Allow clicking trough the div */
+    height: 70px;
+    width: 70px;
+}
+
+.activeFigure {
+    opacity: 0.5;
+}
+
+#root img {
+    width: 80%;
+    height: 80%;
+    transform: translate(0%, 10%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.figureAbleToMove:hover {
+    opacity: 0.9;
+}
+
+.squareMoveOption {
+    opacity: 0.5;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+$md-container-max-width: map-get($grid-breakpoints, "md");
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    
+    @include media-breakpoint-up($breakpoint) {
+        $container-max-width: map-get($container-max-widths, $breakpoint);
+        @if ($container-max-width and $container-max-width > $md-container-max-width) {
+            #root .tile {        
+                height: $md-container-max-width/8;
+                width: $md-container-max-width/8;
+            }
+            #root .container {
+                max-width: $md-container-max-width
+            }
+        }
+        @else if ($container-max-width and $container-max-width <= $md-container-max-width) {
+            #root .tile {        
+                height: $container-max-width/8;
+                width: $container-max-width/8;
+            }
+        }
+        @else{
+            #root .tile {              
+                height: 12.5vw;
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+export enum PlayersDirection { Up = 1, Down = -1}
