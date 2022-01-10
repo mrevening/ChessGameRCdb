@@ -18,14 +18,14 @@ namespace ChessGameTests
         {
             var game = new Game(new Board(setup.GetOnePawnSetup()));
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Three));
-            Assert.Equal(Figure.WhitePawn, game.Action.OutputBoard.GetFigure(new Coordinate(Column.D, Row.Three)));
+            Assert.Equal(Figure.WhitePawn, game.InputBoard.GetFigure(new Coordinate(Column.D, Row.Three)));
         }
         [Fact]
         public void StartLine_TwoForward_Success()
         {
             var game = new Game(new Board(setup.GetOnePawnSetup()));
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Four));
-            Assert.Equal(Figure.WhitePawn, game.Action.OutputBoard.GetFigure(new Coordinate(Column.D, Row.Four)));
+            Assert.Equal(Figure.WhitePawn, game.InputBoard.GetFigure(new Coordinate(Column.D, Row.Four)));
         }
         [Fact]
         public void StartLine_TwoForward_Blocked()
@@ -60,7 +60,7 @@ namespace ChessGameTests
         {
             var game = new Game(new Board(setup.GetTwoPawnsDiagonalSetup()));
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Four), new Coordinate(Column.E, Row.Five));
-            Assert.Equal(Figure.WhitePawn, game.Action.OutputBoard.GetFigure(new Coordinate(Column.D, Row.Three)));
+            Assert.Equal(Figure.WhitePawn, game.InputBoard.GetFigure(new Coordinate(Column.D, Row.Three)));
         }
         [Fact]
         public void TwoPionsDiagonal_EnPassant_Success()
@@ -69,8 +69,8 @@ namespace ChessGameTests
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Four), new Coordinate(Column.D, Row.Five));
             game.PlayersAction(Player.Black, new Coordinate(Column.E, Row.Seven), new Coordinate(Column.E, Row.Five));
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Five), new Coordinate(Column.E, Row.Six));
-            Assert.Null(game.Action.OutputBoard.GetFigure(new Coordinate(Column.E, Row.Five)));
-            Assert.Equal(Figure.WhitePawn, game.Action.OutputBoard.GetFigure(new Coordinate(Column.E, Row.Six)));
+            Assert.Null(game.InputBoard.GetFigure(new Coordinate(Column.E, Row.Five)));
+            Assert.Equal(Figure.WhitePawn, game.InputBoard.GetFigure(new Coordinate(Column.E, Row.Six)));
         }
         [Fact]
         public void TwoPionsDiagonal_EnPassant_Failure()
@@ -79,8 +79,8 @@ namespace ChessGameTests
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Four), new Coordinate(Column.D, Row.Five));
             game.PlayersAction(Player.Black, new Coordinate(Column.E, Row.Seven), new Coordinate(Column.E, Row.Five));
             game.PlayersAction(Player.White, new Coordinate(Column.D, Row.Five), new Coordinate(Column.E, Row.Six));
-            Assert.Null(game.Action.OutputBoard.GetFigure(new Coordinate(Column.E, Row.Five)));
-            Assert.Equal(Figure.WhitePawn, game.Action.OutputBoard.GetFigure(new Coordinate(Column.E, Row.Six)));
+            Assert.Null(game.InputBoard.GetFigure(new Coordinate(Column.E, Row.Five)));
+            Assert.Equal(Figure.WhitePawn, game.InputBoard.GetFigure(new Coordinate(Column.E, Row.Six)));
         }
         [Fact]
         public void IllegalTwoFowardNotStartLine()
