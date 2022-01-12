@@ -2,7 +2,7 @@ using ChessGame.Logic.Definitions;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ChessGameCoreRedux.DTO
+namespace ChessGame.DTO
 {
     public class MoveDTO
     {

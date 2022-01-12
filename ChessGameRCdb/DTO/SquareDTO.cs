@@ -1,6 +1,6 @@
 using System;
 
-namespace ChessGameCoreRedux.DTO
+namespace ChessGame.DTO
 {
     public class SquareDTO
     {
