@@ -8,7 +8,7 @@ namespace ChessGame.Logic
     public class Board : IBoard
     {
         public List<IFigure> Figures { get; private set; }
-        public List<MoveLog> Logs { get; private set; }
+        public List<Log> Logs { get; private set; }
 
         public Board(IEnumerable<IFigure> startBoardSetup)
         {

@@ -6,6 +6,6 @@ namespace ChessGame.Logic
 {
     public interface IBoardBuilder
     {
-        IBoard CreateBoardFromLogs(IEnumerable<IFigure> figures, IEnumerable<MoveLog> logs);
+        IBoard CreateBoardFromLogs(IEnumerable<IFigure> figures, IEnumerable<Log> logs);
     }
 }

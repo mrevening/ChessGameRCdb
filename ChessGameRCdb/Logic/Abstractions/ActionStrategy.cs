@@ -16,7 +16,7 @@ namespace ChessGame.Logic
         public IBoard InputBoard { get; private set; }
         public IBoard OutputBoard { get; private set; }
         public IFigure CurrentlySelectedFigure { get; private set; }
-        public MoveLog GeneratedLog { get; }
+        public Log GeneratedLog { get; }
         public GameState GeneratedState { get; set; }
 
         public ActionStrategy(IBoard board)

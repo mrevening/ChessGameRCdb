@@ -9,7 +9,7 @@ namespace ChessGame.Logic
         IBoard OutputBoard { get; }
         Player CurrentPlayer { get; }
         IFigure CurrentlySelectedFigure { get; }
-        MoveLog GeneratedLog { get; }
+        Log GeneratedLog { get; }
         GameState GeneratedState { get; }
         void SelectFigure(Coordinate startPoint);
         void PrimaryCheck(Coordinate endPoint);
