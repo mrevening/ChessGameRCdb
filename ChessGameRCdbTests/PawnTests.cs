@@ -1,10 +1,10 @@
 //using Xunit;
 //using ChessGame.Logic;
-//using ChessGame.Logic.Enums;
-//using ChessGame.Logic.Exceptions;
-//using ChessGame.Logic.Singletons;
-//using ChessGame.Logic.Definitions;
-//using ChessGame.Logic.Abstractions;
+//using ChessGame.Logic;
+//using ChessGame.Logic;
+//using ChessGame.Logic;
+//using ChessGame.Logic;
+//using ChessGame.Logic;
 
 //namespace ChessGameTests
 //{

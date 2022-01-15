@@ -1,13 +1,13 @@
-﻿using ChessGame.Logic.Abstractions;
-using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
-using ChessGame.Logic.Exceptions;
-using ChessGame.Logic.Interfaces;
-using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace ChessGame.Logic.Implementations
+namespace ChessGame.Logic
 {
     public abstract class ActionStrategy : IActionStrategy
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ChessGame.Logic.SeedWork
+namespace ChessGame.Logic
 {
     public abstract class Enumeration : IComparable
     {

@@ -1,9 +1,4 @@
-﻿using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
-using ChessGame.Logic.Implementations;
-using ChessGame.Logic.Interfaces;
-
-namespace ChessGame.Logic
+﻿namespace ChessGame.Logic
 {
     public class Game: IGame
     {

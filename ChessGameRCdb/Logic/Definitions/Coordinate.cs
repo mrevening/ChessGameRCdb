@@ -1,9 +1,9 @@
-﻿using ChessGame.Logic.Enums;
-using ChessGame.Logic.Interfaces;
-using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System;
 
-namespace ChessGame.Logic.Definitions
+namespace ChessGame.Logic
 {
     public class Coordinate : IEquatable<Coordinate>
     {

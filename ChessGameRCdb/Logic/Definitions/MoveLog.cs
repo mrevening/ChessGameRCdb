@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace ChessGame.Logic.Definitions
+namespace ChessGame.Logic
 {
     public class MoveLog : IEnumerable
     {

@@ -1,7 +1,7 @@
-﻿using ChessGame.Logic.Enums;
+﻿using ChessGame.Logic;
 using System.Collections.Generic;
 
-namespace ChessGame.Logic.Interfaces
+namespace ChessGame.Logic
 {
     public interface IBoardSetup
     {

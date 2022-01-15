@@ -1,4 +1,4 @@
-using ChessGame.Logic.Definitions;
+using ChessGame.Logic;
 using System.Linq;
 using System.Collections.Generic;
 

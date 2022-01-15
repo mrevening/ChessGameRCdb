@@ -1,8 +1,8 @@
-﻿using ChessGame.Logic.Enums;
-using ChessGame.Logic.Implementations;
-using ChessGame.Logic.Interfaces;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 
-namespace ChessGame.Logic.Abstractions
+namespace ChessGame.Logic
 {
     public abstract class Win : EndOfGame
     {

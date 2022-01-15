@@ -1,6 +1,6 @@
-﻿using ChessGame.Logic.Enums;
+﻿using ChessGame.Logic;
 
-namespace ChessGame.Logic.Interfaces
+namespace ChessGame.Logic
 {
     public interface ISwitchable
     {

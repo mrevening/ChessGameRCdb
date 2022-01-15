@@ -1,7 +1,7 @@
-﻿using ChessGame.Logic.Interfaces;
-using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
 
-namespace ChessGame.Logic.Enums
+namespace ChessGame.Logic
 {
     public class MoveType : Enumeration, IMove
     {

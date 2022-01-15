@@ -1,10 +1,10 @@
-﻿using ChessGame.Logic.Abstractions;
-using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
-using ChessGame.Logic.Interfaces;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System.Collections.Generic;
 
-namespace ChessGame.Logic.Implementations
+namespace ChessGame.Logic
 {
     internal class Queen : Figure
     {

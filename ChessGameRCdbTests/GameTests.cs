@@ -1,10 +1,6 @@
 using Xunit;
 using ChessGame.Logic;
-using ChessGame.Logic.Enums;
 using System.Linq;
-using ChessGame.Logic.Exceptions;
-using ChessGame.Logic.Singletons;
-using ChessGame.Logic.Definitions;
 
 namespace ChessGameTests
 {

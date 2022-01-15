@@ -1,4 +1,6 @@
 using ChessGame.Infrastructure;
+using ChessGame.Interface;
+using ChessGame.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,13 +28,15 @@ namespace ChessGame
             services.AddControllersWithViews();
 
             services.AddDbContext<BoardDbContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("BoardDbContext")));
+                options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("BoardDbContext")));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientAppBoard/build";
             });
+
+            services.AddScoped<IBoardRepository, BoardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

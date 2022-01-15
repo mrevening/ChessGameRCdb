@@ -8,6 +8,7 @@ namespace ChessGame.DbModels
     public class BoardConfiguration
     {
         public int Id { get; set; }
-        //public IEnumerable<string> Board { get; set; }
+        public string Name { get; set; }
+        public virtual IEnumerable<BoardConfigurationToFigure> BoardConfigurationToFigure { get; set; }
     }
 }

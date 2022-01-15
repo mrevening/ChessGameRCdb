@@ -1,7 +1,7 @@
-﻿//using ChessGame.Logic.Enums;
-//using ChessGame.Logic.Interfaces;
+﻿//using ChessGame.Logic;
+//using ChessGame.Logic;
 
-//namespace ChessGame.Logic.Implementations
+//namespace ChessGame.Logic
 //{
 //    public class Checkmate : Win
 //    {

@@ -1,11 +1,11 @@
-﻿using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
-using ChessGame.Logic.Implementations;
-using ChessGame.Logic.Interfaces;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System;
 using System.Collections.Generic;
 
-namespace ChessGame.Logic.Abstractions
+namespace ChessGame.Logic
 {
     public abstract class Figure : IFigure, IEquatable<Figure>
     {

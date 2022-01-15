@@ -1,6 +1,6 @@
-﻿using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
 
-namespace ChessGame.Logic.Enums
+namespace ChessGame.Logic
 {
     public class Row : Enumeration
     {

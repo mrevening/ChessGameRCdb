@@ -1,4 +1,4 @@
-﻿namespace ChessGame.Logic.Interfaces
+﻿namespace ChessGame.Logic
 {
     public interface IPromotionable
     {

@@ -1,7 +1,7 @@
-﻿using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
 using System;
 
-namespace ChessGame.Logic.Enums
+namespace ChessGame.Logic
 {
     public class Column : Enumeration
     {

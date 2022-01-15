@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChessGame.Logic.Exceptions
+namespace ChessGame.Logic
 {
     public class IllegalMoveException : Exception
     {

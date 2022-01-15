@@ -1,7 +1,7 @@
-﻿using ChessGame.Logic.Enums;
-using ChessGame.Logic.Interfaces;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
 
-namespace ChessGame.Logic.Definitions
+namespace ChessGame.Logic
 {
     public class GameStatus : IGameStatus
     {

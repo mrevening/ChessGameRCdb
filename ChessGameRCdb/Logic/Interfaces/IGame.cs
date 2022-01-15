@@ -1,7 +1,7 @@
-﻿using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
 
-namespace ChessGame.Logic.Interfaces
+namespace ChessGame.Logic
 {
     public interface IGame
     {

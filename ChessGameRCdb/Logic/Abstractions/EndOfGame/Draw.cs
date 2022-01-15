@@ -1,6 +1,6 @@
-﻿using ChessGame.Logic.Enums;
+﻿using ChessGame.Logic;
 
-namespace ChessGame.Logic.Abstractions
+namespace ChessGame.Logic
 {
     public class Draw : EndOfGame
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChessGame.Logic.Interfaces
+namespace ChessGame.Logic
 {
     public interface IMove
     {

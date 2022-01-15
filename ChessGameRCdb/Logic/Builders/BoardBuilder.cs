@@ -1,9 +1,9 @@
-﻿using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Interfaces;
-using ChessGame.Logic.Singletons;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System.Collections.Generic;
 
-namespace ChessGame.Logic.Builder
+namespace ChessGame.Logic
 {
     public class BoardBuilder : IBoardBuilder
     {

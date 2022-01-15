@@ -1,12 +1,12 @@
-﻿using ChessGame.Logic.Abstractions;
-using ChessGame.Logic.Definitions;
-using ChessGame.Logic.Enums;
-using ChessGame.Logic.Interfaces;
-using ChessGame.Logic.SeedWork;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessGame.Logic.Implementations
+namespace ChessGame.Logic
 {
     internal class Rook : Figure
     {

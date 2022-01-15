@@ -1,10 +1,10 @@
-﻿using ChessGame.Logic.Enums;
-using ChessGame.Logic.Implementations;
-using ChessGame.Logic.Interfaces;
+﻿using ChessGame.Logic;
+using ChessGame.Logic;
+using ChessGame.Logic;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace ChessGame.Logic.Singletons
+namespace ChessGame.Logic
 {
     public class BoardSetup
     {
