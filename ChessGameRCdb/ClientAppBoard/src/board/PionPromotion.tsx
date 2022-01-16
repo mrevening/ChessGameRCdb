@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { pionPromotion } from './BoardSlice'
+import { pionPromotion } from '../BoardSlice'
 import PromotionFigure from './PromotionFigure'
 import { FigureImagePaths } from "./repository/FigureImagePaths"
 import { FigureType } from "./enum/FigureType";

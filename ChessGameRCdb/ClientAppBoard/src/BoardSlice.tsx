@@ -3,10 +3,10 @@ import ISquare from 'board/interface/ISquare'
 import IFigure from 'board/interface/IFigure'
 import { Player } from 'board/enum/Player'
 import { Squares } from 'board/repository/Squares'
-import { userAPI } from '../api/userAPI'
-import { boardAPI } from '../api/boardAPI'
-import { RowLine } from './enum/RowLine'
-import { FigureType } from './enum/FigureType'
+import { userAPI } from './api/userAPI'
+import { boardAPI } from './api/boardAPI'
+import { RowLine } from './board/enum/RowLine'
+import { FigureType } from './board/enum/FigureType'
 
 
 interface BoardSlice {

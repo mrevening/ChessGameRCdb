@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import BoardReducer from 'board/BoardSlice';
+import BoardReducer from 'BoardSlice';
 import MoveAnalysisReducer from 'moveAnalysis/MoveAnalysisSlice';
 
 

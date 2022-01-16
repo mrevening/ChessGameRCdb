@@ -1,7 +1,7 @@
 import FigureImage from './FigureImage'
 import ActiveStickyFigure from './ActiveStickyFigure'
 import { useAppDispatch } from 'hooks'
-import { click, release } from './BoardSlice'
+import { click, release } from '../BoardSlice'
 import { useAppSelector } from 'hooks'
 import { FigureImagePaths } from './repository/FigureImagePaths'
 import { RowLine, } from './enum/RowLine'

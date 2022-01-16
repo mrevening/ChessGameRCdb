@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.16.7",
     "@babel/runtime": "^7.16.7",
+    "@microsoft/signalr": "^6.0.1",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

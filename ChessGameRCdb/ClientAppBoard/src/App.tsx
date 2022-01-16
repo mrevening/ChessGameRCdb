@@ -1,14 +1,14 @@
-import Board from './board/Board'
-import PionPromotion from './board/PionPromotion'
+
+import Chat from './chat/Chat'
 
 
 function App() {
-  return (
-    <>
-          <Board />
-          <PionPromotion />
-    </>
-  );
+    return (
+        <>
+            <Chat />
+
+        </>
+    );
 }
 
 export default App;

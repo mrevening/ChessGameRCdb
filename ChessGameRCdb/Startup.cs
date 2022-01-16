@@ -1,3 +1,4 @@
+using ChessGame.Hub;
 using ChessGame.Infrastructure;
 using ChessGame.Interface;
 using ChessGame.Repository;
@@ -36,6 +37,18 @@ namespace ChessGame
                 configuration.RootPath = "ClientAppBoard/build";
             });
 
+            services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:44380")
+                        .AllowCredentials();
+                });
+            });
+
             services.AddScoped<IBoardRepository, BoardRepository>();
         }
 
@@ -64,6 +77,8 @@ namespace ChessGame
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/hubs/chat");
             });
 
             app.UseSpa(spa =>
@@ -75,6 +90,9 @@ namespace ChessGame
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            app.UseCors("ClientPermission");
+            //app.UseAuthorization();
         }
     }
 }
