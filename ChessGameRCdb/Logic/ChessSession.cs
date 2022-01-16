@@ -1,10 +1,10 @@
 ﻿namespace ChessGame.Logic
 {
-    public class Game: IGame
+    public class ChessSession: IGame
     {
         public IBoard InputBoard { get; private set; }
 
-        public Game(IBoard board)
+        public ChessSession(IBoard board)
         {
             InputBoard = board;
         }

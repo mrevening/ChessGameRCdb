@@ -6,7 +6,7 @@ import { FigureDTO } from "./dto/figureDTO"
 export const boardAPI = {
     async fetchStandardBoard() {
         return new Promise<{ figures: Array<IFigure> }>(resolve =>
-            fetch(`api/Board/GetStandardConfiguration`).then(response => response.json() as Promise<FigureDTO[]>).then((data) => {
+            fetch(`api/Board/GetCurrentGameStatus`).then(response => response.json() as Promise<FigureDTO[]>).then((data) => {
                 var result = data.map((figure, i) => ({
                     Id: i,
                     Player: figure.player,

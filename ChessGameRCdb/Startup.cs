@@ -1,7 +1,8 @@
+using ChessGame.Command;
 using ChessGame.Hub;
 using ChessGame.Infrastructure;
 using ChessGame.Interface;
-using ChessGame.Repository;
+using ChessGame.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,7 +50,8 @@ namespace ChessGame
                 });
             });
 
-            services.AddScoped<IBoardRepository, BoardRepository>();
+            services.AddScoped<IBoardQuery, BoardQuery>();
+            services.AddScoped<IBoardCommand, BoardCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +94,6 @@ namespace ChessGame
             });
 
             app.UseCors("ClientPermission");
-            //app.UseAuthorization();
         }
     }
 }

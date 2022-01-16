@@ -1,26 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using ChessGame.DTO;
+using ChessGame.Infrastructure;
+using ChessGame.Interface;
+using ChessGame.Logic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessGame.Logic
+namespace ChessGame.Query
 {
-    public class BoardCreator
+    public class BoardQuery : IBoardQuery
     {
-        private BoardCreator() { }
-        private static BoardCreator _instance;
-        public static BoardCreator GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new BoardCreator();
-            }
-            return _instance;
-        }
+        private readonly BoardDbContext _context;
 
-        public IBoard CreateBoard(DbModels.Game game)
+        public BoardQuery(BoardDbContext boardContext)
+        {
+            _context = boardContext;
+        }
+        public IEnumerable<FigureDTO> GetBoard(int id)
         {
             var figures = new List<IFigure>();
             var logs = new List<Log>();
+            var game = _context.Game.FirstOrDefault(x => x.Id == id);
 
             foreach (var boardConfiguration in game.BoardConfiguration.BoardConfigurationToFigure)
             {
@@ -44,7 +44,7 @@ namespace ChessGame.Logic
                 var endRow = Enumeration.FromValue<Row>(log.EndRow.Id);
 
                 var complexMoves = new List<LogComplexMove>();
-                foreach(var complexMove in log.NotationLogComplexMove)
+                foreach (var complexMove in log.NotationLogComplexMove)
                 {
                     var startColumnCM = Enumeration.FromValue<Column>(complexMove.StartColumn.Id);
                     var startRowCM = Enumeration.FromValue<Row>(complexMove.StartRow.Id);
@@ -53,7 +53,7 @@ namespace ChessGame.Logic
                     complexMoves.Add(new LogComplexMove(new Coordinate(startColumnCM, startRowCM), new Coordinate(endColumnCM, endRowCM)));
                 }
 
-                logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
+                logs.Add(new Log(game.Id, new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
             }
 
             foreach (var log in logs)
@@ -66,7 +66,8 @@ namespace ChessGame.Logic
                 }
             }
 
-            return new Board(figures);
+            var board = new Board(figures);
+            return board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Player.Id, x.Coordinate, x.MoveOptions(board)));
         }
     }
 }

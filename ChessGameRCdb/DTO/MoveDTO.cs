@@ -1,17 +1,22 @@
-using ChessGame.Logic;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace ChessGame.DTO
 {
     public class MoveDTO
     {
-        public string GameId { get; set; }
-        public string SquareFrom { get; set; }
-        public string SquareTo { get; set; }
+        public int GameId { get; set; }
+        public int ColumnStart { get; set; }
+        public int RowStart { get; set; }
+        public int ColumnEnd { get; set; }
+        public int RowEnd { get; set; }
 
-        public MoveDTO() 
+        public MoveDTO(int gameId, int columnStart, int rowstart, int columnEnd, int rowEnd) 
         {
+            GameId = gameId;
+            ColumnStart = columnStart;
+            RowStart = rowstart;
+            ColumnEnd = columnEnd;
+            RowEnd = rowEnd;
         }
     }
 }
