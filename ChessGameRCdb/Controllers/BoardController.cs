@@ -27,15 +27,18 @@ namespace ChessGame.Controllers
 
         [HttpGet]
         [Route("{name}")]
-        public IEnumerable<FigureDTO> GetCurrentGameStatus()
+        public IEnumerable<FigureDTO> GetCurrentGameStatus(int gid)
         {
-            return _boardQuery.GetBoard(1);
+            return _boardQuery.GetBoard(gid);
         }
 
         [HttpPost]
-        public void SaveLog(MoveDTO move)
+        [Route("{name}")]
+        public bool SaveMove()//MoveDTO move)
         {
-            _boardCommand.CreateLog(move);
+
+            return true;
+            //_boardCommand.CreateLog(move);
         }
     }
 }

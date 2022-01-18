@@ -11,18 +11,22 @@ import { FigureType } from './board/enum/FigureType'
 
 interface BoardSlice {
     activeFigure: IFigure | undefined,
-    currentPlayerTurn: Player,
+    //currentPlayerTurn: Player,
     Squares: Array<ISquare>
     Figures: Array<IFigure>
     PionPromotion: IPionPromotion | undefined,
+    destinationSquare: ISquare | undefined
+    isValidMove: boolean
 }
 
 const initialState: BoardSlice = {
     activeFigure: undefined,
-    currentPlayerTurn: Player.White,
+    //currentPlayerTurn: Player.White,
     Squares: Squares,
     Figures: new Array<IFigure>(),
-    PionPromotion: undefined
+    PionPromotion: undefined,
+    destinationSquare: undefined,
+    isValidMove: false
 }
 
 interface IPionPromotion {
@@ -34,7 +38,11 @@ interface ClickSquare {
     square: ISquare
 }
 
-// First, create the thunk
+export interface ISaveMove {
+    startSquare: ISquare,
+    endSquare: ISquare
+}
+
 export const fetchStandardBoard = createAsyncThunk(
     'board/fetchStandardBoard',
     async () => {
@@ -43,14 +51,19 @@ export const fetchStandardBoard = createAsyncThunk(
     }
 )
 
-// First, create the thunk
-export const fetchUserById = createAsyncThunk(
-    'users/fetchByIdStatus',
-    async (userId: string, thunkAPI) => {
-        console.log("fetchUserById")
-        const response = await userAPI.fetchById(userId)
-        console.log(response)
-        return response.data
+export const saveMove = createAsyncThunk(
+    'board/saveMove',
+    async (_, thunkAPI) => {
+        const { board } = thunkAPI.getState() as { board: BoardSlice }
+        const startSquare = board.activeFigure!.Square
+        const endSquare = board.destinationSquare!
+        await boardAPI.saveMove({ startSquare: startSquare, endSquare: endSquare })
+    },
+    {
+        condition: (_, { getState }) => {
+            const { board } = getState() as { board: BoardSlice }
+            return board.isValidMove
+        },
     }
 )
 
@@ -65,14 +78,20 @@ export const boardSlice = createSlice({
         },
         release: (state, action: PayloadAction<ClickSquare>) => {
             console.log("release")
-            const clickedSquare = action.payload.square;
-            const isValidClick = state.activeFigure?.EnableMoves?.some(eM => eM.Name === clickedSquare.Name)
+            const clickedSquare = action.payload.square
+            const activeFigure = state.activeFigure!
+            state.destinationSquare = clickedSquare
 
-            //PionPromotion
-            if (clickedSquare.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
-            
+            const isEmptyMove = activeFigure.Square === clickedSquare
+            if (isEmptyMove) return
 
-            state.activeFigure = undefined;
+            const isValidMove = activeFigure.EnableMoves?.some(eM => eM.Name === clickedSquare.Name)!
+            state.isValidMove = isValidMove
+
+            if (!isValidMove) return;
+            //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
+            const figure = state.Figures.find(x => x.Square.Name === activeFigure.Square.Name)
+            figure!.Square = clickedSquare
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
             state.Figures.find(f => f.Id === state.PionPromotion!.ActivePion.Id)!.Type = action.payload
@@ -80,17 +99,23 @@ export const boardSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(fetchStandardBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
             console.log("standardBoard loaded")
             state.Figures = action.payload;
         });
-        builder.addCase(fetchUserById.fulfilled, (state, action) => {
-            // Add user to the state array
-            
-            console.log("extraReducers")
-            return state;
-        })
+        builder.addCase(saveMove.fulfilled, (state, action) => {
+            state.activeFigure = undefined;
+            state.destinationSquare = undefined;
+            state.activeFigure = undefined;
+            state.PionPromotion = undefined;
+
+        });
+        builder.addCase(saveMove.rejected, (state, action) => {
+            state.activeFigure = undefined;
+            state.destinationSquare = undefined;
+            state.activeFigure = undefined;
+            state.PionPromotion = undefined;
+        });
     }
 })
 
