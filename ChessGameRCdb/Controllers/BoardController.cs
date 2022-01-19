@@ -38,7 +38,6 @@ namespace ChessGame.Controllers
         {
             _boardCommand.CreateLog(move);
             return true;
-            
         }
     }
 }

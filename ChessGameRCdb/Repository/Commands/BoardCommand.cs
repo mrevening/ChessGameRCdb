@@ -19,26 +19,14 @@ namespace ChessGame.Command
         }
         public void CreateLog(MoveDTO move)
         {
-            //var startColumn = Enumeration.FromValue<Logic.Column>(move.ColumnStart);
-            //var startRow = Enumeration.FromValue<Logic.Row>(move.RowStart);
-            //var endColumn = Enumeration.FromValue<Logic.Column>(move.ColumnEnd);
-            //var endRow = Enumeration.FromValue<Logic.Row>(move.RowEnd);
-            //var complexMoves = new List<int>();
-
-            //var log = new Log(move.GameId, new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), null);
-
-            //var game = _boardcontext.Game.Find(move.GameId);
-
-            var logdb = new NotationLog()
+            _boardcontext.Add(new NotationLog()
             {
                 GameId = move.GameId,
                 StartColumnId = move.ColumnStart,
                 StartRowId = move.RowStart,
                 EndColumnId = move.ColumnEnd,
                 EndRowId = move.RowEnd
-            };
-
-            _boardcontext.Add(logdb);
+            });
             _boardcontext.SaveChanges();
         }
     }
