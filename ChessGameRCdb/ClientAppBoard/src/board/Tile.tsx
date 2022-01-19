@@ -1,7 +1,7 @@
 import FigureImage from './FigureImage'
 import ActiveStickyFigure from './ActiveStickyFigure'
 import { useAppSelector, useAppDispatch } from 'hooks'
-import { click, release, getBoard, executeMove } from '../BoardSlice'
+import { click, release, executeMove } from '../BoardSlice'
 import { FigureImagePaths } from './repository/FigureImagePaths'
 import { RowLine, } from './enum/RowLine'
 import { ColumnLine } from './enum/ColumnLine'
@@ -17,6 +17,9 @@ export default function Tile( { col, row }: TileProps ){
     const squares = useAppSelector(store => store.board.Squares)
     const figures = useAppSelector(store => store.board.Figures)
     const activeFigure = useAppSelector(store => store.board.activeFigure)
+
+    console.log(figures)
+    
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)

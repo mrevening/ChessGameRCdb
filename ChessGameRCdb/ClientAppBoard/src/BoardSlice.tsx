@@ -5,6 +5,7 @@ import { Squares } from 'board/repository/Squares'
 import { boardAPI } from './api/boardAPI'
 import { FigureType } from './board/enum/FigureType'
 import { RowLine } from './board/enum/RowLine'
+import { FigureDTO } from './api/dto/figureDTO'
 
 interface BoardSlice {
     activeFigure: IFigure | undefined,
@@ -31,6 +32,10 @@ interface IPionPromotion {
 
 interface ClickSquare {
     square: ISquare
+}
+
+interface IMove {
+    board: FigureDTO[]
 }
 
 export interface ISaveMove {
@@ -98,10 +103,23 @@ export const boardSlice = createSlice({
             state.Figures.find(f => f.Id === state.PionPromotion!.ActivePion.Id)!.Type = action.payload
             state.PionPromotion = undefined;
         },
+        updateBoard: (state, action: PayloadAction<IMove>) => {
+            console.log("updateBoard")
+            const { board } = action.payload;
+            var result = board.map((figure, i) => ({
+                Id: i,
+                Player: figure.player,
+                Type: figure.type,
+                Square: Squares.find(square => square.Name === figure.square) as ISquare,
+                EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
+            } as IFigure))
+
+            state.Figures = result
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
-            state.Figures = action.payload;
+            //state.Figures = action.payload;
             state.activeFigure = undefined;
             state.destinationSquare = undefined;
             state.isValidMove = undefined;
@@ -123,6 +141,6 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { click, release, pionPromotion } = boardSlice.actions
+export const { click, release, pionPromotion, updateBoard } = boardSlice.actions
 
 export default boardSlice.reducer

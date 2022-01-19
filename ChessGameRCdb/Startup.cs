@@ -1,5 +1,6 @@
 using ChessGame.Command;
 using ChessGame.Hub;
+using ChessGame.HubMove;
 using ChessGame.Infrastructure;
 using ChessGame.Interface;
 using ChessGame.Query;
@@ -80,6 +81,7 @@ namespace ChessGame
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/hubs/chat");
+                endpoints.MapHub<MoveHub>("/hubs/move");
             });
 
             app.UseSpa(spa =>

@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SignalR;
-using ChessGame.Hub;
 using ChessGame.DTO;
 using ChessGame.Interface;
+using ChessGame.HubMove;
+using System.Threading.Tasks;
 
 namespace ChessGame.Controllers
 {
@@ -13,22 +14,24 @@ namespace ChessGame.Controllers
     public class BoardController : ControllerBase
     {
         private readonly ILogger<BoardController> _logger;
-        private readonly IHubContext<ChatHub, IChatClient> _chatHub;
+        private readonly IHubContext<MoveHub, IMoveClient> _moveHub;
         private readonly IBoardQuery _boardQuery;
         private readonly IBoardCommand _boardCommand;
 
-        public BoardController(ILogger<BoardController> logger, IHubContext<ChatHub, IChatClient> chatHub, IBoardQuery boardQuery, IBoardCommand boardCommand)
+        public BoardController(ILogger<BoardController> logger, IHubContext<MoveHub, IMoveClient> moveHub, IBoardQuery boardQuery, IBoardCommand boardCommand)
         {
             _logger = logger;
-            _chatHub = chatHub;
+            _moveHub = moveHub;
             _boardQuery = boardQuery;
             _boardCommand = boardCommand;
         }
 
         [HttpGet]
         [Route("{name}")]
-        public IEnumerable<FigureDTO> GetBoard(int gid)
+        public async Task<IEnumerable<FigureDTO>> GetBoard(int gid)
         {
+            var board = _boardQuery.GetBoard(gid);
+            await _moveHub.Clients.All.ReceiveMove(new MoveMessage() { Board = board });
             return _boardQuery.GetBoard(gid);
         }
 
@@ -39,5 +42,13 @@ namespace ChessGame.Controllers
             _boardCommand.CreateLog(move);
             return true;
         }
+
+        //[HttpPost("move")]
+        //public async Task Post(MoveMessage message)
+        //{
+        //    // run some logic...
+
+        //    await _moveHub.Clients.All.ReceiveMessage(message);
+        //}
     }
 }
