@@ -34,11 +34,11 @@ namespace ChessGame.Controllers
 
         [HttpPost]
         [Route("{name}")]
-        public bool SaveMove()//MoveDTO move)
+        public bool SaveMove([FromBody] MoveDTO move)
         {
-
+            _boardCommand.CreateLog(move);
             return true;
-            //_boardCommand.CreateLog(move);
+            
         }
     }
 }

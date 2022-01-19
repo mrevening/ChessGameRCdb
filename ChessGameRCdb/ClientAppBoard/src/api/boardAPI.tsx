@@ -30,7 +30,7 @@ export const boardAPI = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(move),
+                body: JSON.stringify({ GameId: 1, ColumnStart: move.startSquare.Column, RowStart: move.startSquare.Row, ColumnEnd: move.endSquare.Column, RowEnd: move.endSquare.Row }),
             })
             .then(response => response.json() as Promise<boolean>)
             .then((data) => {
