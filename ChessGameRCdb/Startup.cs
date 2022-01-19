@@ -30,7 +30,7 @@ namespace ChessGame
             services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddDbContext<BoardDbContext>(
-                options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("BoardDbContext")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("BoardDbContext")));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -1,8 +1,7 @@
 import FigureImage from './FigureImage'
 import ActiveStickyFigure from './ActiveStickyFigure'
-import { useAppDispatch } from 'hooks'
-import { click, release, saveMove } from '../BoardSlice'
-import { useAppSelector } from 'hooks'
+import { useAppSelector, useAppDispatch } from 'hooks'
+import { click, release, getBoard, executeMove } from '../BoardSlice'
 import { FigureImagePaths } from './repository/FigureImagePaths'
 import { RowLine, } from './enum/RowLine'
 import { ColumnLine } from './enum/ColumnLine'
@@ -33,7 +32,7 @@ export default function Tile( { col, row }: TileProps ){
                 draggable="false"
                 className={["tile", colorClass, isPossibleMoveClass].join(" ")}
                 onMouseDown={() => dispatch(click({ square }))}
-                onMouseUp={() => { dispatch(release({ square })); dispatch(saveMove()); }}
+                onMouseUp={() => { dispatch(release({ square })); dispatch(executeMove(square)) }}
             >
                 {figure && <FigureImage isActiveFigure={isActiveFigure} figureImg={figureImg} />}
                 {figure && isActiveFigure && <ActiveStickyFigure figureImg={figureImg} />}

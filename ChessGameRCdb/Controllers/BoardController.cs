@@ -27,7 +27,7 @@ namespace ChessGame.Controllers
 
         [HttpGet]
         [Route("{name}")]
-        public IEnumerable<FigureDTO> GetCurrentGameStatus(int gid)
+        public IEnumerable<FigureDTO> GetBoard(int gid)
         {
             return _boardQuery.GetBoard(gid);
         }

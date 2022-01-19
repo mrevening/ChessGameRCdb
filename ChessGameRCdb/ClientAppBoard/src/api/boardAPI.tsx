@@ -1,4 +1,3 @@
-import { resolve } from "url"
 import IFigure from "../board/interface/IFigure"
 import ISquare from "../board/interface/ISquare"
 import { Squares } from "../board/repository/Squares"
@@ -6,9 +5,9 @@ import { ISaveMove } from "../BoardSlice"
 import { FigureDTO } from "./dto/figureDTO"
 
 export const boardAPI = {
-    async fetchStandardBoard() {
+    async getBoard() {
         return new Promise<{ figures: Array<IFigure> }>(resolve =>
-            fetch(`api/Board/GetCurrentGameStatus?gid=1`)
+            fetch(`api/Board/GetBoard?gid=1`)
                 .then(response => response.json() as Promise<FigureDTO[]>)
                 .then((data) => {
                 var result = data.map((figure, i) => ({
@@ -23,7 +22,6 @@ export const boardAPI = {
         );
     },
     async saveMove(move: ISaveMove) {
-        console.log(move)
         return new Promise<{ saveResult: boolean }>(resolve =>
             fetch(`api/Board/SaveMove`, {
                 method: 'POST',

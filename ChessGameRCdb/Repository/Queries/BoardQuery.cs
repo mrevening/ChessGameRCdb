@@ -2,6 +2,7 @@
 using ChessGame.Infrastructure;
 using ChessGame.Interface;
 using ChessGame.Logic;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,49 @@ namespace ChessGame.Query
         {
             var figures = new List<IFigure>();
             var logs = new List<Log>();
-            var game = _context.Game.FirstOrDefault(x => x.Id == id);
+            var game = _context.Game.AsNoTracking()
+                .Include(game => game.StartPlayer)
+
+                .Include(game => game.BoardConfiguration)
+                    .ThenInclude(board => board.BoardConfigurationToFigure)
+                        .ThenInclude(ctf => ctf.Figure)
+                            .ThenInclude(ctf => ctf.Column)
+                .Include(game => game.BoardConfiguration)
+                    .ThenInclude(board => board.BoardConfigurationToFigure)
+                        .ThenInclude(ctf => ctf.Figure)
+                            .ThenInclude(ctf => ctf.Row)
+                .Include(game => game.BoardConfiguration)
+                    .ThenInclude(board => board.BoardConfigurationToFigure)
+                        .ThenInclude(ctf => ctf.Figure)
+                            .ThenInclude(ctf => ctf.Player)
+                .Include(game => game.BoardConfiguration)
+                    .ThenInclude(board => board.BoardConfigurationToFigure)
+                        .ThenInclude(ctf => ctf.Figure)
+                            .ThenInclude(ctf => ctf.FigureType)
+
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.StartColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.StartRow)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.EndColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.EndRow)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.NotationLogComplexMove)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.NotationLogComplexMove)
+                        .ThenInclude(log => log.StartColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.NotationLogComplexMove)
+                        .ThenInclude(log => log.StartRow)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.NotationLogComplexMove)
+                        .ThenInclude(log => log.EndColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.NotationLogComplexMove)
+                        .ThenInclude(log => log.EndRow)
+                .Single(x => x.Id == id);
 
             foreach (var boardConfiguration in game.BoardConfiguration.BoardConfigurationToFigure)
             {

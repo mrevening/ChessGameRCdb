@@ -4,12 +4,12 @@ import { Container } from 'reactstrap'
 import BoardRow from './BoardRow'
 import { useAppDispatch } from 'hooks'
 import { Rows } from 'board/repository/Rows'
-import { fetchStandardBoard } from '../BoardSlice'
+import { getBoard } from '../BoardSlice'
 
 export default function Board() {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(fetchStandardBoard())
+        dispatch(getBoard())
     }, []);
 
     return (
