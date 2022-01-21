@@ -14,14 +14,16 @@ namespace ChessGame.Controllers
     public class GameController : ControllerBase
     {
         private readonly ILogger<BoardController> _logger;
+        private readonly IHubContext<MoveHub, IMoveClient> _moveHub;
         private readonly IGameQuery _query;
         private readonly IGameCommand _command;
 
-        public GameController(ILogger<BoardController> logger, IGameQuery query, IGameCommand command)
+        public GameController(ILogger<BoardController> logger, IHubContext<MoveHub, IMoveClient> moveHub, IGameQuery query, IGameCommand command)
         {
             _logger = logger;
             _query = query;
             _command = command;
+            _moveHub = moveHub;
         }
 
         [HttpPost]

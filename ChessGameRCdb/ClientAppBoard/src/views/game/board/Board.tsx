@@ -30,9 +30,9 @@ export default function Board({ gameId }: IBoardProps) {
                 connection.on('ReceiveMove', message => {
                     dispatch(updateBoard(message))
                 });
+                connection.invoke("JoinRoom", gameId.toString())
             })
             .catch(e => console.log('Connection failed: ', e));
-
     }, []);
 
     return (

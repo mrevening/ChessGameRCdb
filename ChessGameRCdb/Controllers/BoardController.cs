@@ -31,7 +31,7 @@ namespace ChessGame.Controllers
         public async Task<IEnumerable<FigureDTO>> GetBoard(int gid)
         {
             var board = _boardQuery.GetBoard(gid);
-            await _moveHub.Clients.All.ReceiveMove(new MoveMessage() { Board = board });
+            await _moveHub.Clients.Group(gid.ToString()).ReceiveMove(new MoveMessage() { Board = board });
             return _boardQuery.GetBoard(gid);
         }
 
