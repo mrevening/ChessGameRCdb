@@ -1,6 +1,6 @@
-import { FigureType } from 'board/enum/FigureType'
-import { Player } from 'board/enum/Player'
-import ISquare from 'board/interface/ISquare'
+import { FigureType } from '../enum/FigureType'
+import { Player } from '../enum/Player'
+import ISquare from '../interface/ISquare'
 
 export default interface IFigure {
     Id: number

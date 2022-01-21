@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import ISquare from 'board/interface/ISquare'
-import IFigure from 'board/interface/IFigure'
-import { Squares } from 'board/repository/Squares'
-import { boardAPI } from './api/boardAPI'
-import { FigureType } from './board/enum/FigureType'
-import { RowLine } from './board/enum/RowLine'
-import { FigureDTO } from './api/dto/figureDTO'
+import ISquare from './interface/ISquare'
+import IFigure from './interface/IFigure'
+import { Squares } from './repository/Squares'
+import { boardAPI } from '../../api/boardAPI'
+import { FigureType } from './enum/FigureType'
+import { FigureDTO } from '../../api/dto/figureDTO'
 
 interface BoardSlice {
     activeFigure: IFigure | undefined,
@@ -42,6 +41,16 @@ export interface ISaveMove {
     startSquare: ISquare,
     endSquare: ISquare
 }
+
+export interface ICreateGame {
+}
+
+export const createGame = createAsyncThunk(
+    'board/createGame',
+    async (newGame: ICreateGame, thunkAPI) => {
+        await boardAPI.createGame(newGame)
+    }
+)
 
 export const getBoard = createAsyncThunk(
     'board/getBoard',

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import './Board.scss'
 import { Container } from 'reactstrap'
-import BoardRow from './BoardRow'
-import { useAppDispatch } from 'hooks'
-import { Rows } from 'board/repository/Rows'
-import { getBoard, updateBoard } from '../BoardSlice'
+import BoardRow from './components/BoardRow'
+import { useAppDispatch } from 'state/hooks'
+import { Rows } from './repository/Rows'
+import { getBoard, updateBoard } from './BoardSlice'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
 export default function Board() {

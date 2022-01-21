@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import BoardReducer from 'BoardSlice';
-import MoveAnalysisReducer from 'moveAnalysis/MoveAnalysisSlice';
-
+import GameReducer from '../views/game/GameSlice';
+import BoardReducer from '../views/board/BoardSlice';
 
 const store = configureStore({
     reducer: {
+        game: GameReducer,
         board: BoardReducer
     }
 })

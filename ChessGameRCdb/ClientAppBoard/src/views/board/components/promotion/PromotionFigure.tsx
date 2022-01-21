@@ -1,4 +1,4 @@
-import IFigureImagePath from "./interface/IFigureImagePath";
+import IFigureImagePath from "../../interface/IFigureImagePath";
 
 interface FigureImageProps {
     figure: IFigureImagePath

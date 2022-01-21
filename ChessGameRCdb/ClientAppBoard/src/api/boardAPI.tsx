@@ -1,10 +1,25 @@
-import IFigure from "../board/interface/IFigure"
-import ISquare from "../board/interface/ISquare"
-import { Squares } from "../board/repository/Squares"
-import { ISaveMove } from "../BoardSlice"
+import IFigure from "../views/board/interface/IFigure"
+import ISquare from "../views/board/interface/ISquare"
+import { Squares } from "../views/board/repository/Squares"
+import { ICreateGame, ISaveMove } from "../views/board/BoardSlice"
 import { FigureDTO } from "./dto/figureDTO"
 
 export const boardAPI = {
+    async createGame(gameArgs: ICreateGame) {
+        return new Promise<{ id: number }>(resolve =>
+            fetch(`api/Board/CreateGame`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ gameArgs }),
+            })
+                .then(response => response.json() as Promise<number>)
+                .then((data) => {
+                    resolve({ id: data })
+                })
+        );
+    },
     async getBoard() {
         return new Promise<{ figures: Array<IFigure> }>(resolve =>
             fetch(`api/Board/GetBoard?gid=1`)

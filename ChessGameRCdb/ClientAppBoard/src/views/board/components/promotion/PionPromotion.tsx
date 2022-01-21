@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { pionPromotion } from '../BoardSlice'
+import { useAppDispatch, useAppSelector } from "../../../../state/hooks";
+import { pionPromotion } from '../../BoardSlice'
 import PromotionFigure from './PromotionFigure'
-import { FigureImagePaths } from "./repository/FigureImagePaths"
-import { FigureType } from "./enum/FigureType";
+import { FigureImagePaths } from "../../repository/FigureImagePaths"
+import { FigureType } from "../../enum/FigureType";
 
 export default function PionPromotion() {
     const dispatch = useAppDispatch();

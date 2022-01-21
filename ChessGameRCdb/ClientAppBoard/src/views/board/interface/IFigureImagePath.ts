@@ -1,5 +1,5 @@
-import { Player } from 'board/enum/Player'
-import { FigureType } from 'board/enum/FigureType'
+import { Player } from '../enum/Player'
+import { FigureType } from '../enum/FigureType'
 
 export default interface IFigureImagePath {
     FigureType: FigureType,

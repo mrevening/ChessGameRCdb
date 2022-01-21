@@ -42,13 +42,5 @@ namespace ChessGame.Controllers
             _boardCommand.CreateLog(move);
             return true;
         }
-
-        //[HttpPost("move")]
-        //public async Task Post(MoveMessage message)
-        //{
-        //    // run some logic...
-
-        //    await _moveHub.Clients.All.ReceiveMessage(message);
-        //}
     }
 }

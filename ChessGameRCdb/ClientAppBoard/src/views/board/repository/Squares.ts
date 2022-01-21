@@ -1,7 +1,7 @@
-import { ColumnLine } from 'board/enum/ColumnLine'
-import { RowLine } from 'board/enum/RowLine'
-import { Color } from 'board/enum/Color'
-import ISquare from 'board/interface/ISquare'
+import { ColumnLine } from '../enum/ColumnLine'
+import { RowLine } from '../enum/RowLine'
+import { Color } from '../enum/Color'
+import ISquare from '../interface/ISquare'
 
 export const Squares: Array<ISquare> = [
     { Id: 1, Name: 'A1', Row: RowLine.One, Column: ColumnLine.A, Color: Color.Dark },

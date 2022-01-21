@@ -1,7 +1,7 @@
 import { Col } from 'reactstrap'
 import Tile from './Tile'
-import { ColumnLine,} from 'board/enum/ColumnLine'
-import { RowLine } from 'board/enum/RowLine'
+import { ColumnLine,} from '../enum/ColumnLine'
+import { RowLine } from '../enum/RowLine'
 
 interface BoardColProps{
     col: ColumnLine

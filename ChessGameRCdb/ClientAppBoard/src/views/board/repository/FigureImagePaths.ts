@@ -10,9 +10,9 @@ import bknight from '../figures/bknight.png'
 import bpawn from '../figures/bpawn.png'
 import bqueen from '../figures/bqueen.png'
 import brook from '../figures/brook.png'
-import IFigureImagePath from 'board/interface/IFigureImagePath'
-import { FigureType } from 'board/enum/FigureType'
-import { Player } from 'board/enum/Player'
+import IFigureImagePath from '../interface/IFigureImagePath'
+import { FigureType } from '../enum/FigureType'
+import { Player } from '../enum/Player'
 
 export const FigureImagePaths: Array<IFigureImagePath> = [ 
     { FigureType: FigureType.Pawn, Color: Player.White, ImgPath: wpawn  },
