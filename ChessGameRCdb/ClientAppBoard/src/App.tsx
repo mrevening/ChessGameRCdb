@@ -1,14 +1,14 @@
 import { useAppSelector } from 'state/hooks'
-import { createGame } from './views/game/GameSlice'
 import Game from './views/game/Game'
-//import MainMenu from './views/mainMenu/MainMenu'
+import MainMenu from './views/menu/Menu'
 
 function App() {
-    const showMainMenu = useAppSelector(store => store.game.showMainMenu)
-    const showGame = useAppSelector(store => store.game.showGame)
+    const showMainMenu = useAppSelector(store => store.menu.showMainMenuView)
+    const showGame = useAppSelector(store => store.menu.showGameView)
 
     return (
         <>
+            { showMainMenu ? <MainMenu /> : null}
             { showGame ? <Game /> : null}
         </>
     );

@@ -42,16 +42,6 @@ export interface ISaveMove {
     endSquare: ISquare
 }
 
-export interface ICreateGame {
-}
-
-export const createGame = createAsyncThunk(
-    'board/createGame',
-    async (newGame: ICreateGame, thunkAPI) => {
-        await boardAPI.createGame(newGame)
-    }
-)
-
 export const getBoard = createAsyncThunk(
     'board/getBoard',
     async () => {

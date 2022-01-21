@@ -1,9 +1,9 @@
-import { ICreateGame } from "../views/board/BoardSlice"
+import { ICreateGame } from "views/menu/MenuSlice"
 
-export const gameAPI = {
+export const menuAPI = {
     async createGame(gameArgs: ICreateGame) {
         return new Promise<{ id: number }>(resolve =>
-            fetch(`api/Board/CreateGame`, {
+            fetch(`api/Game/CreateGame`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
