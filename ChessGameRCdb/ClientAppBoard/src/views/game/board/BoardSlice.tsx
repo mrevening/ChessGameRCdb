@@ -2,9 +2,9 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import ISquare from './interface/ISquare'
 import IFigure from './interface/IFigure'
 import { Squares } from './repository/Squares'
-import { boardAPI } from '../../api/boardAPI'
+import { boardAPI } from '../../../api/boardAPI'
 import { FigureType } from './enum/FigureType'
-import { FigureDTO } from '../../api/dto/figureDTO'
+import { FigureDTO } from '../../../api/dto/figureDTO'
 
 interface BoardSlice {
     activeFigure: IFigure | undefined,
@@ -118,7 +118,6 @@ export const boardSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
-            //state.Figures = action.payload;
             state.activeFigure = undefined;
             state.destinationSquare = undefined;
             state.isValidMove = undefined;

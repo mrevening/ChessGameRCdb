@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import MenuReducer from '../views/menu/MenuSlice';
-import BoardReducer from '../views/board/BoardSlice';
+import MenuReducer from 'views/menu/MenuSlice';
+import BoardReducer from 'views/game/board/BoardSlice';
 
 const store = configureStore({
     reducer: {
