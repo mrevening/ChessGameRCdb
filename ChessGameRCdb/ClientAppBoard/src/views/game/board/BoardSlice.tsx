@@ -107,6 +107,7 @@ export const boardSlice = createSlice({
             state.activeFigure = undefined;
             state.destinationSquare = undefined;
             state.isValidMove = undefined;
+            state.Figures = action.payload
         });
         builder.addCase(executeMove.fulfilled, (state, action) => {
 

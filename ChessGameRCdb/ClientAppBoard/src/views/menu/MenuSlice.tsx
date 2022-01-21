@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { menuAPI } from './MenuAPI'
 import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
@@ -17,9 +17,7 @@ const initialState: IMenuSlice = {
 export const createNewGame = createAsyncThunk(
     'menu/createNewGame',
     async (request: ICreateGameRequest, thunkAPI) => {
-        //var { board } = thunkAPI.getState() as { board: IBoardSlice }
         var result = await menuAPI.createNewGame({} as ICreateGameRequest)
-        //board.gameId = result.response.GameId
         return result
     }
 )
@@ -52,14 +50,15 @@ export const menuSlice = createSlice({
             state.showLoadGameView = false
             state.showGameView = false
         },
-        showLoadGameView: (state) => {
-            state.showMainMenuView = true
+        joinGame: (state, action: PayloadAction<number>) => {
+            state.showMainMenuView = false
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = false
-            state.showLoadGameView = true
-            state.showGameView = false
-        }
+            state.showLoadGameView = false
+            state.showGameView = true,
+            state.gameId = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(createNewGame.fulfilled, (state, action) => {
@@ -74,6 +73,6 @@ export const menuSlice = createSlice({
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, showLoadGameView } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, joinGame } = menuSlice.actions
 
 export default menuSlice.reducer
