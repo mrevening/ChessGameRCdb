@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { menuAPI } from './menuAPI'
-import ICreateGameResponse from './interfaces/ICreateGameRequest'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { menuAPI } from './MenuAPI'
+import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
+import IBoardSlice from '../game/board/interface/IBoardSlice'
 
 const initialState: IMenuSlice = {
     showMainMenuView: true,
@@ -9,13 +10,17 @@ const initialState: IMenuSlice = {
     showCreateGameView: false,
     showJoinGameView: false,
     showLoadGameView: false,
-    showGameView: false
+    showGameView: false,
+    gameId: 0
 }
 
 export const createNewGame = createAsyncThunk(
     'menu/createNewGame',
-    async (_, thunkAPI) => {
-        return await menuAPI.createNewGame({})
+    async (request: ICreateGameRequest, thunkAPI) => {
+        //var { board } = thunkAPI.getState() as { board: IBoardSlice }
+        var result = await menuAPI.createNewGame({} as ICreateGameRequest)
+        //board.gameId = result.response.GameId
+        return result
     }
 )
 
@@ -54,23 +59,21 @@ export const menuSlice = createSlice({
             state.showJoinGameView = false
             state.showLoadGameView = true
             state.showGameView = false
-        },
-        showGameView: (state) => {
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(createNewGame.fulfilled, (state, action) => {
             state.showMainMenuView = false
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = false
             state.showLoadGameView = false
             state.showGameView = true
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(createNewGame.fulfilled, (state, action: PayloadAction<ICreateGameResponse>) => {
-
+            state.gameId = action.payload.response.gameId
         });
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, showLoadGameView, showGameView } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, showLoadGameView } = menuSlice.actions
 
 export default menuSlice.reducer

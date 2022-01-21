@@ -2,31 +2,19 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import ISquare from './interface/ISquare'
 import IFigure from './interface/IFigure'
 import { Squares } from './repository/Squares'
-import { boardAPI } from '../../../api/boardAPI'
+import { BoardAPI } from './BoardAPI'
 import { FigureType } from './enum/FigureType'
-import { FigureDTO } from '../../../api/dto/figureDTO'
+import { FigureDTO } from '../../../api/dto/FigureDTO'
+import IBoardSlice from './interface/IBoardSlice'
 
-interface BoardSlice {
-    activeFigure: IFigure | undefined,
-    Squares: Array<ISquare>
-    Figures: Array<IFigure>
-    PionPromotion: IPionPromotion | undefined,
-    destinationSquare: ISquare | undefined,
-    isValidMove: boolean | undefined
-}
-
-const initialState: BoardSlice = {
+const initialState: IBoardSlice = {
     activeFigure: undefined,
     Squares: Squares,
     Figures: new Array<IFigure>(),
     PionPromotion: undefined,
     destinationSquare: undefined,
-    isValidMove: undefined
-}
-
-interface IPionPromotion {
-    ShowPionPromotionAlert: boolean
-    ActivePion: IFigure
+    isValidMove: undefined,
+    gameId: 0
 }
 
 interface ClickSquare {
@@ -44,8 +32,9 @@ export interface ISaveMove {
 
 export const getBoard = createAsyncThunk(
     'board/getBoard',
-    async () => {
-        const response = await boardAPI.getBoard()
+    async (gameId: number, thunkAPI) => {
+        //const { board } = thunkAPI.getState() as { board: IBoardSlice }
+        const response = await BoardAPI.getBoard(gameId)
         return response.figures
     }
 )
@@ -53,21 +42,21 @@ export const getBoard = createAsyncThunk(
 export const executeMove = createAsyncThunk(
     'board/executeMove',
     async (square: ISquare, thunkAPI) => {
-        const { board } = thunkAPI.getState() as { board: BoardSlice }
+        const { board } = thunkAPI.getState() as { board: IBoardSlice }
         if (board.isValidMove)
-            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard()), null);
+            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard(board.gameId)), null);
     }
 )
 
 const saveMove = createAsyncThunk(
     'board/saveMove',
     async (_, thunkAPI) => {
-        const { board } = thunkAPI.getState() as { board: BoardSlice }
-        await boardAPI.saveMove({ startSquare: board.activeFigure!.Square, endSquare: board.destinationSquare! })
+        const { board } = thunkAPI.getState() as { board: IBoardSlice }
+        await BoardAPI.saveMove({ startSquare: board.activeFigure!.Square, endSquare: board.destinationSquare! })
     },
     {
         condition: (_, { getState }) => {
-            const { board } = getState() as { board: BoardSlice }
+            const { board } = getState() as { board: IBoardSlice }
             return board.destinationSquare !== undefined
         },
     }
@@ -77,6 +66,9 @@ export const boardSlice = createSlice({
     name: 'board',
     initialState,
     reducers: {
+        addGameId: (state, action: PayloadAction<number>) => {
+            state.gameId = action.payload
+        },
         click: (state, action: PayloadAction<ClickSquare>) => {
             console.log("click")
             const clickedSquare = action.payload.square;
@@ -139,6 +131,6 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { click, release, pionPromotion, updateBoard } = boardSlice.actions
+export const { addGameId, click, release, pionPromotion, updateBoard } = boardSlice.actions
 
 export default boardSlice.reducer

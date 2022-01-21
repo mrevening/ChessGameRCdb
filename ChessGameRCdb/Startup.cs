@@ -52,6 +52,8 @@ namespace ChessGame
             });
             services.AddScoped<IBoardQuery, BoardQuery>();
             services.AddScoped<IBoardCommand, BoardCommand>();
+            services.AddScoped<IGameQuery, GameQuery>();
+            services.AddScoped<IGameCommand, GameCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

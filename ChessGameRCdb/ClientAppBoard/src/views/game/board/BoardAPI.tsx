@@ -2,12 +2,12 @@ import IFigure from "views/game/board/interface/IFigure"
 import ISquare from "views/game/board/interface/ISquare"
 import { Squares } from "views/game/board/repository/Squares"
 import { ISaveMove } from "views/game/board/BoardSlice"
-import { FigureDTO } from "./dto/figureDTO"
+import { FigureDTO } from "../../../api/dto/FigureDTO"
 
-export const boardAPI = {
-    async getBoard() {
+export const BoardAPI = {
+    async getBoard(gameId: number) {
         return new Promise<{ figures: Array<IFigure> }>(resolve =>
-            fetch(`api/Board/GetBoard?gid=1`)
+            fetch(`api/Board/GetBoard?gid=${gameId}`)
                 .then(response => response.json() as Promise<FigureDTO[]>)
                 .then((data) => {
                 var result = data.map((figure, i) => ({

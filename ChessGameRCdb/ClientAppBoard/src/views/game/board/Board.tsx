@@ -2,16 +2,22 @@ import { useEffect } from 'react';
 import './Board.scss'
 import { Container } from 'reactstrap'
 import BoardRow from './components/BoardRow'
-import { useAppDispatch } from 'state/hooks'
+import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { Rows } from './repository/Rows'
 import { getBoard, updateBoard } from './BoardSlice'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
-export default function Board() {
+interface IBoardProps {
+    gameId: number
+}
+
+export default function Board({ gameId }: IBoardProps) {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getBoard())
+        if(gameId) dispatch(getBoard(gameId))
+    }, [gameId]);
 
+    useEffect(() => {
         const connection = new HubConnectionBuilder()
             .withUrl('https://localhost:44380/hubs/move')
             .withAutomaticReconnect()
