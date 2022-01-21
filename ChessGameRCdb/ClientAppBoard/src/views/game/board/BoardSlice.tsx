@@ -25,15 +25,9 @@ interface IMove {
     board: FigureDTO[]
 }
 
-export interface ISaveMove {
-    startSquare: ISquare,
-    endSquare: ISquare
-}
-
 export const getBoard = createAsyncThunk(
     'board/getBoard',
     async (gameId: number, thunkAPI) => {
-        //const { board } = thunkAPI.getState() as { board: IBoardSlice }
         const response = await BoardAPI.getBoard(gameId)
         return response.figures
     }
@@ -52,7 +46,7 @@ const saveMove = createAsyncThunk(
     'board/saveMove',
     async (_, thunkAPI) => {
         const { board } = thunkAPI.getState() as { board: IBoardSlice }
-        await BoardAPI.saveMove({ startSquare: board.activeFigure!.Square, endSquare: board.destinationSquare! })
+        await BoardAPI.saveMove({ gameId: board.gameId, startSquare: board.activeFigure!.Square, endSquare: board.destinationSquare! })
     },
     {
         condition: (_, { getState }) => {

@@ -17,7 +17,6 @@ export default function Tile( { col, row }: TileProps ){
     const squares = useAppSelector(store => store.board.Squares)
     const figures = useAppSelector(store => store.board.Figures)
     const activeFigure = useAppSelector(store => store.board.activeFigure)
-    const gameId = useAppSelector(store => store.board.gameId)
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)

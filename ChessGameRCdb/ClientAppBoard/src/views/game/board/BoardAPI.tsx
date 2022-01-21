@@ -1,7 +1,7 @@
 import IFigure from "views/game/board/interface/IFigure"
 import ISquare from "views/game/board/interface/ISquare"
 import { Squares } from "views/game/board/repository/Squares"
-import { ISaveMove } from "views/game/board/BoardSlice"
+import ISaveMove from "./interface/ISaveMove"
 import { FigureDTO } from "../../../api/dto/FigureDTO"
 
 export const BoardAPI = {
@@ -28,7 +28,7 @@ export const BoardAPI = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ GameId: 1, ColumnStart: move.startSquare.Column, RowStart: move.startSquare.Row, ColumnEnd: move.endSquare.Column, RowEnd: move.endSquare.Row }),
+                body: JSON.stringify({ GameId: move.gameId, ColumnStart: move.startSquare.Column, RowStart: move.startSquare.Row, ColumnEnd: move.endSquare.Column, RowEnd: move.endSquare.Row }),
             })
             .then(response => response.json() as Promise<boolean>)
             .then((data) => {
