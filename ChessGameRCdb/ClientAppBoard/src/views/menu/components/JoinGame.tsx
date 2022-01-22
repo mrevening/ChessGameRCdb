@@ -10,7 +10,7 @@ export default function JoinGame({ }) {
     return (
         <>
             <Input type="number" onChange={e => setGameId(Number(e.target.value))} />
-            <Button onClick={() => dispatch(joinGame(gameId))} color="primary">Start game</Button>
+            <Button onClick={() => dispatch(joinGame(gameId))} color="primary">Join game</Button>
             <Button onClick={() => dispatch(showMainMenuView())} color="primary">Back to main menu</Button>
         </>
     );

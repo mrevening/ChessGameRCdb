@@ -12,7 +12,7 @@ const Chat = () => {
 
     useEffect(() => {
         const connection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44380/hubs/chat')
+            .withUrl(`${process.env.PUBLIC_URL}/hubs/chat`)
             .withAutomaticReconnect()
             .build();
 
@@ -37,7 +37,7 @@ const Chat = () => {
         };
 
         try {
-            await fetch('https://localhost:44380/chat/messages', {
+            await fetch(`${process.env.PUBLIC_URL}/chat/messages`, {
                 method: 'POST', 
                 body: JSON.stringify(chatMessage),
                 headers: {

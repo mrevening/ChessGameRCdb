@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './Board.scss'
 import { Container } from 'reactstrap'
 import BoardRow from './components/BoardRow'
-import { useAppDispatch, useAppSelector } from 'state/hooks'
+import { useAppDispatch } from 'state/hooks'
 import { Rows } from './repository/Rows'
 import { getBoard, updateBoard } from './BoardSlice'
 import { HubConnectionBuilder } from '@microsoft/signalr';
@@ -19,7 +19,7 @@ export default function Board({ gameId }: IBoardProps) {
 
     useEffect(() => {
         const connection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44380/hubs/move')
+            .withUrl(`${process.env.PUBLIC_URL}/hubs/move`)
             .withAutomaticReconnect()
             .build();
 
