@@ -30,6 +30,7 @@ namespace ChessGame.Controllers
         [Route("{name}")]
         public NewGameResponseDTO CreateNewGame([FromBody] NewGameRequestDTO move)
         {
+            _logger.LogTrace("Invoked CreateNewGame api method.");
             var result = _command.CreateNewGame(move);
             return result;
         }
