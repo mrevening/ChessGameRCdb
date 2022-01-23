@@ -1,6 +1,5 @@
 import Board from './board/Board'
 import PionPromotion from './board/components/promotion/PionPromotion'
-import Chat from '../chat/Chat'
 import { useAppDispatch, useAppSelector } from '../../state/hooks';
 import { useEffect } from 'react';
 import { addGameId } from './board/BoardSlice';
@@ -11,7 +10,7 @@ export default function Game() {
     
     useEffect(() => {
         if(gameId) dispatch(addGameId(gameId!))
-    }, [gameId]);
+    }, [dispatch, gameId]);
 
     return (
         <>

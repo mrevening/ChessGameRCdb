@@ -1,7 +1,7 @@
 import ICreateGameRequest from "./interfaces/ICreateGameRequest";
 import ICreateGameResponse from "./interfaces/ICreateGameResponse";
 
-export const MenuAPI = {
+export const menuAPI = {
     async createNewGame(gameArgs: ICreateGameRequest) {
         return new Promise<{ response: ICreateGameResponse }>(resolve =>
             fetch(`api/Game/CreateNewGame`, {

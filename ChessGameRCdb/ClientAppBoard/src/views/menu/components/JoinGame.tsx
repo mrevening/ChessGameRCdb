@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button, Input } from "reactstrap";
-import { useAppDispatch } from "../../../state/hooks";
+import { useAppDispatch } from "state/hooks";
 import { showMainMenuView, joinGame } from '../MenuSlice'
 
-export default function JoinGame({ }) {
+export default function JoinGame() {
     const dispatch = useAppDispatch();
     const [gameId, setGameId] = useState(0);
 

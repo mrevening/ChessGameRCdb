@@ -15,7 +15,7 @@ export default function Board({ gameId }: IBoardProps) {
     const dispatch = useAppDispatch();
     useEffect(() => {
         if(gameId) dispatch(getBoard(gameId))
-    }, [gameId]);
+    }, [dispatch, gameId]);
 
     useEffect(() => {
         const connection = new HubConnectionBuilder()
@@ -33,7 +33,7 @@ export default function Board({ gameId }: IBoardProps) {
                 connection.invoke("JoinRoom", gameId.toString())
             })
             .catch(e => console.log('Connection failed: ', e));
-    }, []);
+    }, [dispatch, gameId]);
 
     return (
         <Container>

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { MenuAPI } from './MenuAPI'
+import { menuAPI } from './MenuAPI'
 import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
 
@@ -16,7 +16,7 @@ const initialState: IMenuSlice = {
 export const createNewGame = createAsyncThunk(
     'menu/createNewGame',
     async (request: ICreateGameRequest, thunkAPI) => {
-        var result = await MenuAPI.createNewGame({} as ICreateGameRequest)
+        var result = await menuAPI.createNewGame({} as ICreateGameRequest)
         return result
     }
 )

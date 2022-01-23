@@ -20,7 +20,7 @@ export default function Tile( { col, row }: TileProps ){
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)
-    const isActiveFigure = activeFigure && activeFigure.Square == square
+    const isActiveFigure = activeFigure && activeFigure.Square === square
     const figureImg = figure && FigureImagePaths.find(p => p.Color === figure.Player && p.FigureType === figure.Type)?.ImgPath
     const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Column === square.Column && af.Row === square.Row)
 
