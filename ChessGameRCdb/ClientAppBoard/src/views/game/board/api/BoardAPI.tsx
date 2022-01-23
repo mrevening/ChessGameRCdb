@@ -1,8 +1,8 @@
 import IFigure from "views/game/board/interface/IFigure"
 import ISquare from "views/game/board/interface/ISquare"
 import { Squares } from "views/game/board/repository/Squares"
-import ISaveMove from "./interface/ISaveMove"
-import { FigureDTO } from "../../../api/dto/FigureDTO"
+import ISaveMove from "../interface/ISaveMove"
+import { FigureDTO } from "./dto/FigureDTO"
 
 export const BoardAPI = {
     async getBoard(gameId: number) {

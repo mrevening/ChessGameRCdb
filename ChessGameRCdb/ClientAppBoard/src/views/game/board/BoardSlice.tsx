@@ -2,9 +2,9 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import ISquare from './interface/ISquare'
 import IFigure from './interface/IFigure'
 import { Squares } from './repository/Squares'
-import { BoardAPI } from './BoardAPI'
+import { BoardAPI } from './api/BoardAPI'
 import { FigureType } from './enum/FigureType'
-import { FigureDTO } from '../../../api/dto/FigureDTO'
+import { FigureDTO } from './api/dto/FigureDTO'
 import IBoardSlice from './interface/IBoardSlice'
 
 const initialState: IBoardSlice = {
