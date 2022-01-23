@@ -8,6 +8,7 @@ function App() {
 
     return (
         <>
+
             { showMainMenuComponent ? <MainMenu /> : null}
             { showGameComponent ? <Game /> : null}
         </>

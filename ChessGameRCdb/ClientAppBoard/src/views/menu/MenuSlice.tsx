@@ -5,7 +5,9 @@ import IMenuSlice from './interfaces/IMenuSlice'
 
 const initialState: IMenuSlice = {
     showMainMenuView: true,
-    showLinks: true,
+    showLoginView: true,
+    showLogoutView: false,
+    showLinks: false,
     showCreateGameView: false,
     showJoinGameView: false,
     showLoadGameView: false,
@@ -25,8 +27,30 @@ export const menuSlice = createSlice({
     name: 'menu',
     initialState,
     reducers: {
+        loggedIn: (state) => {
+            state.showMainMenuView = true
+            state.showLoginView = false
+            state.showLogoutView = true
+            state.showLinks = true
+            state.showCreateGameView = false
+            state.showJoinGameView = false
+            state.showLoadGameView = false
+            state.showGameView = false
+        },
+        loggedOut: (state) => {
+            state.showLoginView = true
+            state.showLogoutView = false
+            state.showMainMenuView = true
+            state.showLinks = false
+            state.showCreateGameView = false
+            state.showJoinGameView = false
+            state.showLoadGameView = false
+            state.showGameView = false
+        },
         showMainMenuView: (state) => {
             state.showMainMenuView = true
+            state.showLoginView = false
+            state.showLogoutView = true
             state.showLinks = true
             state.showCreateGameView = false
             state.showJoinGameView = false
@@ -34,6 +58,8 @@ export const menuSlice = createSlice({
             state.showGameView = false
         },
         showCreateGameView: (state) => {
+            state.showLoginView = false
+            state.showLogoutView = true
             state.showMainMenuView = true
             state.showLinks = false
             state.showCreateGameView = true
@@ -43,6 +69,8 @@ export const menuSlice = createSlice({
         },
         showJoinGameView: (state) => {
             state.showMainMenuView = true
+            state.showLoginView = false
+            state.showLogoutView = true
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = true
@@ -51,6 +79,8 @@ export const menuSlice = createSlice({
         },
         joinGame: (state, action: PayloadAction<number>) => {
             state.showMainMenuView = false
+            state.showLoginView = false
+            state.showLogoutView = true
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = false
@@ -62,6 +92,8 @@ export const menuSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createNewGame.fulfilled, (state, action) => {
             state.showMainMenuView = false
+            state.showLoginView = false
+            state.showLogoutView = true
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = false
@@ -72,6 +104,6 @@ export const menuSlice = createSlice({
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, joinGame } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, joinGame, loggedIn, loggedOut } = menuSlice.actions
 
 export default menuSlice.reducer

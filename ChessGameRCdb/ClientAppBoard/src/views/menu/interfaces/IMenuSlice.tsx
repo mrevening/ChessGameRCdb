@@ -1,4 +1,6 @@
 export default interface IMenuSlice {
+    showLoginView: boolean,
+    showLogoutView: boolean,
     showMainMenuView: boolean,
     showLinks: boolean,
     showCreateGameView: boolean
