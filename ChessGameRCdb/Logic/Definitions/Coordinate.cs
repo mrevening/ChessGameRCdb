@@ -1,7 +1,4 @@
-﻿using ChessGame.Logic;
-using ChessGame.Logic;
-using ChessGame.Logic;
-using System;
+﻿using System;
 
 namespace ChessGame.Logic
 {

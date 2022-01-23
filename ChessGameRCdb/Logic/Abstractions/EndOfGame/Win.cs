@@ -1,6 +1,4 @@
 ﻿using ChessGame.Logic;
-using ChessGame.Logic;
-using ChessGame.Logic;
 
 namespace ChessGame.Logic
 {

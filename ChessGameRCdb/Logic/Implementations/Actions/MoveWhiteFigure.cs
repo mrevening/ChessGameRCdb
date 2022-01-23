@@ -1,8 +1,4 @@
-﻿using ChessGame.Logic;
-using ChessGame.Logic;
-using ChessGame.Logic;
-
-namespace ChessGame.Logic
+﻿namespace ChessGame.Logic
 {
     internal class MoveWhiteFigure : ActionStrategy
     {

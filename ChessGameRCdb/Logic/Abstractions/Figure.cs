@@ -1,8 +1,4 @@
-﻿using ChessGame.Logic;
-using ChessGame.Logic;
-using ChessGame.Logic;
-using ChessGame.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ChessGame.Logic
