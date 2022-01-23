@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { menuAPI } from './MenuAPI'
+import { menuAPI } from './api/MenuAPI'
 import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
 

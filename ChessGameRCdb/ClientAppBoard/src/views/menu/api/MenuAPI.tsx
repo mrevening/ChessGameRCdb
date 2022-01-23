@@ -1,5 +1,5 @@
-import ICreateGameRequest from "./interfaces/ICreateGameRequest";
-import ICreateGameResponse from "./interfaces/ICreateGameResponse";
+import ICreateGameRequest from "../interfaces/ICreateGameRequest";
+import ICreateGameResponse from "../interfaces/ICreateGameResponse";
 
 export const menuAPI = {
     async createNewGame(gameArgs: ICreateGameRequest) {
