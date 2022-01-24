@@ -8,8 +8,6 @@ function Logout() {
     const dispatch = useAppDispatch();
 
     const onSuccess = () => {
-        console.log('Logout made successfully');
-        alert('Logout made successfully ✌');
         dispatch(loggedOut())
     };
 

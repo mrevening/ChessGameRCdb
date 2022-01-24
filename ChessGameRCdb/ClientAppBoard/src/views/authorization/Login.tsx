@@ -9,16 +9,11 @@ function Login() {
     const dispatch = useAppDispatch();
 
     const onSuccess = (res: any) => {
-        console.log('Login Success: currentUser:', res.profileObj);
-        alert(
-            `Logged in successfully welcome ${res.profileObj.name}. \n See console for full profile object.`
-        );
         refreshTokenSetup(res);
         dispatch(loggedIn())
     };
 
     const onFailure = (res: any) => {
-        console.log('Login failed: res:', res);
         alert(
             `Failed to login.`
         );
