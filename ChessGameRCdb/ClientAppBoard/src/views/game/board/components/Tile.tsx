@@ -32,7 +32,9 @@ export default function Tile( { col, row }: TileProps ){
                 draggable="false"
                 className={["tile", colorClass, isPossibleMoveClass].join(" ")}
                 onMouseDown={() => dispatch(click({ square }))}
+                onTouchStart={() => dispatch(click({ square }))}
                 onMouseUp={() => { dispatch(release({ square })); dispatch(executeMove(square)) }}
+                onTouchEnd={() => { dispatch(release({ square })); dispatch(executeMove(square)) }}
             >
                 {figure && <FigureImage isActiveFigure={isActiveFigure} figureImg={figureImg} />}
                 {figure && isActiveFigure && <ActiveStickyFigure figureImg={figureImg} />}
