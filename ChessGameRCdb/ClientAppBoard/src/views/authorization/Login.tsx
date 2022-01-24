@@ -1,4 +1,4 @@
-﻿import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { refreshTokenSetup } from './utils/refreshToken';
 import { useAppDispatch } from 'state/hooks'
 import { loggedIn } from '../menu/MenuSlice'

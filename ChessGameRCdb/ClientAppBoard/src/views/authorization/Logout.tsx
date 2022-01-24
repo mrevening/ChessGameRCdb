@@ -1,4 +1,4 @@
-﻿import { GoogleLogout } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 import { useAppDispatch } from '../../state/hooks';
 import { loggedOut } from '../menu/MenuSlice'
 
