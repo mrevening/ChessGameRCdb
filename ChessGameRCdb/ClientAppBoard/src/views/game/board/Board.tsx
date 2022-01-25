@@ -38,6 +38,6 @@ export default function Board({ gameId }: IBoardProps) {
     return (
         <Container>
             { Rows.map((row, i) => { return <BoardRow key={row} row={row} /> })}
-        </Container >
+        </Container>
     )
 }

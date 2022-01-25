@@ -12,7 +12,7 @@ interface TileProps {
     row: RowLine
 }
 
-export default function Tile( { col, row }: TileProps ){
+export default function Tile({ col, row }: TileProps) {
     const dispatch = useAppDispatch();
     const squares = useAppSelector(store => store.board.Squares)
     const figures = useAppSelector(store => store.board.Figures)
@@ -26,15 +26,43 @@ export default function Tile( { col, row }: TileProps ){
 
     const colorClass = square.Color === Color.Dark ? 'blackTile' : 'whiteTile'
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(click({ square }))
+    }
+    const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(release({ square }))
+        dispatch(executeMove(square))
+    }
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(click({ square }))
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        const firstTouchEvent = e.changedTouches[0];
+        var element = document.elementsFromPoint(firstTouchEvent.clientX, firstTouchEvent.clientY)
+        var tile = element.find(x => x.className.includes('tile'))
+        var name = tile?.getAttribute('square')
+        var square = squares.find(x => x.Name === name)!
+        dispatch(release({ square }))
+        dispatch(executeMove(square))
+    }
+
     return (
         <>
             <div
                 draggable="false"
+                {...{ 'square': square.Name }}
                 className={["tile", colorClass, isPossibleMoveClass].join(" ")}
-                onMouseDown={() => dispatch(click({ square }))}
-                onTouchStart={() => dispatch(click({ square }))}
-                onMouseUp={() => { dispatch(release({ square })); dispatch(executeMove(square)) }}
-                onTouchEnd={() => { dispatch(release({ square })); dispatch(executeMove(square)) }}
+                onMouseDown={(e) => handleMouseDown(e)}
+                onMouseUp={(e) => handleMouseUp(e) }
+                onTouchStart={(e) => handleTouchStart(e)}
+                onTouchEnd={(e) => handleTouchEnd(e) }
             >
                 {figure && <FigureImage isActiveFigure={isActiveFigure} figureImg={figureImg} />}
                 {figure && isActiveFigure && <ActiveStickyFigure figureImg={figureImg} />}

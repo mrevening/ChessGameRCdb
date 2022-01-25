@@ -1,10 +1,24 @@
-@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+/*    -ms-transform: none;
+    -webkit-transform: none;
+    transform: none;*/
+}
 
 .blackTile {
     background-color: var(--bs-pink);
 }
+
 .whiteTile {
     background-color: var(--bs-yellow);
 }
@@ -12,20 +26,6 @@
 #root .col {
     padding-right: 0;
     padding-left: 0;
-}
-
-#stickyFigure {
-    opacity: 0.5;
-    position: fixed; //Floating above
-    left: -35px;
-    top: -35px;
-    pointer-events: none; /* Allow clicking trough the div */
-    height: 70px;
-    width: 70px;
-}
-
-.activeFigure {
-    opacity: 0.5;
 }
 
 #root img {
@@ -45,40 +45,63 @@
     opacity: 0.5;
 }
 
-.noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+.activeFigure {
+    opacity: 0.5;
+}
+
+#stickyFigure {
+    opacity: 0.5;
+    position: fixed; //Floating above
+    pointer-events: none; /* Allow clicking trough the div */
 }
 
 $md-container-max-width: map-get($grid-breakpoints, "md");
+$small-width: 12.5vw;
 
 @each $breakpoint in map-keys($grid-breakpoints) {
-    
     @include media-breakpoint-up($breakpoint) {
         $container-max-width: map-get($container-max-widths, $breakpoint);
+
         @if ($container-max-width and $container-max-width > $md-container-max-width) {
-            #root .tile {        
+            #root .tile {
                 height: $md-container-max-width/8;
                 width: $md-container-max-width/8;
             }
+
             #root .container {
                 max-width: $md-container-max-width
             }
+
+            #stickyFigure {
+                width: $md-container-max-width/8;
+                height: $md-container-max-width/8;
+                left: -($md-container-max-width/8)/2;
+                top: -($md-container-max-width/8)/2;
+            }
         }
         @else if ($container-max-width and $container-max-width <= $md-container-max-width) {
-            #root .tile {        
+            #root .tile {
                 height: $container-max-width/8;
                 width: $container-max-width/8;
             }
+
+            #stickyFigure {
+                width: $container-max-width/8;
+                height: $container-max-width/8;
+                left: -($container-max-width/8)/2;
+                top: -($container-max-width/8)/2;
+            }
         }
-        @else{
-            #root .tile {              
-                height: 12.5vw;
+        @else {
+            #root .tile {
+                height: $small-width;
+            }
+
+            #stickyFigure {
+                width: $small-width;
+                height: $small-width;
+                left: -($small-width)/2;
+                top: -($small-width)/2;
             }
         }
     }
