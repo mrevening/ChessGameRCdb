@@ -2,10 +2,6 @@ interface IActiveStickyFigure {
     figureImg: string | undefined
 }
 
-
-
-
-
 export default function ActiveStickyFigure({ figureImg }: IActiveStickyFigure) {
     const translate = (x: Number, y: Number) => {
         if (document.getElementById('stickyFigure')) {
@@ -15,19 +11,23 @@ export default function ActiveStickyFigure({ figureImg }: IActiveStickyFigure) {
     }
 
     document.addEventListener('mousedown', function (ev) {
+        ev.preventDefault()
         translate(ev.clientX, ev.clientY)
     }, false);
 
     document.addEventListener('mousemove', function (ev) {
+        ev.preventDefault()
         translate(ev.clientX, ev.clientY)
     }, false);
 
     document.addEventListener('touchstart', function (ev) {
+        ev.preventDefault()
         var touch = ev.touches[0];
         translate(touch.pageX, touch.pageY)
     }, false);
 
     document.addEventListener('touchmove', function (ev) {
+        ev.preventDefault()
         var touch = ev.touches[0];
         translate(touch.pageX, touch.pageY)
     }, false);

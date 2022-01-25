@@ -12,7 +12,7 @@ const initialState: IMenuSlice = {
     showJoinGameView: false,
     showLoadGameView: false,
     showGameView: true,
-    gameId: 44
+    gameId: 45
 }
 
 export const createNewGame = createAsyncThunk(

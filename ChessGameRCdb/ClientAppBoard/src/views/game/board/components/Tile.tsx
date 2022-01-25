@@ -38,12 +38,10 @@ export default function Tile({ col, row }: TileProps) {
     }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        e.preventDefault()
         dispatch(click({ square }))
     }
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-        e.preventDefault()
         const firstTouchEvent = e.changedTouches[0];
         var element = document.elementsFromPoint(firstTouchEvent.clientX, firstTouchEvent.clientY)
         var tile = element.find(x => x.className.includes('tile'))
