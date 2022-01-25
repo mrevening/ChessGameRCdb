@@ -3,18 +3,6 @@ import { menuAPI } from './api/MenuAPI'
 import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
 
-const initialStateInin: IMenuSlice = {
-    showMainMenuView: true,
-    showLoginView: true,
-    showLogoutView: false,
-    showLinks: false,
-    showCreateGameView: false,
-    showJoinGameView: false,
-    showLoadGameView: false,
-    showGameView: false,
-    gameId: 0
-}
-
 const initialState: IMenuSlice = {
     showMainMenuView: false,
     showLoginView: false,
