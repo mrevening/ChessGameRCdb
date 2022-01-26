@@ -28,11 +28,11 @@ export default function Tile({ col, row }: TileProps) {
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         dispatch(click({ square }))
     }
     const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         dispatch(release({ square }))
         dispatch(executeMove(square))
     }
