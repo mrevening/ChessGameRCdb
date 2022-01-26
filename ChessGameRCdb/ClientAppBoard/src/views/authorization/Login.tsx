@@ -20,7 +20,7 @@ function Login() {
         );
     };
 
-    const { signIn, loaded } =
+    const { signIn } =
         useGoogleLogin({
             clientId: clientId,
             loginHint: "You will be redirected to authenticate",

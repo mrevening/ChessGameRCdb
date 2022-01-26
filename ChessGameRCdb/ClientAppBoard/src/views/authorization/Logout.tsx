@@ -12,7 +12,7 @@ function Logout() {
         dispatch(loggedOut())
     };
 
-    const { signOut, loaded } =
+    const { signOut } =
         useGoogleLogout({
             clientId: clientId,
             onLogoutSuccess: onSuccess,
