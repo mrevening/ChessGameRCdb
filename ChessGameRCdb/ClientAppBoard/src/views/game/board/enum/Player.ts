@@ -1,1 +1,0 @@
-export enum Player { White = 1, Black }

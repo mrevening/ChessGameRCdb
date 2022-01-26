@@ -17,7 +17,7 @@ export default function Menu() {
 
     return (
         <>
-            <Modal isOpen={true} style={{ textAlign: "center" }}>
+            <Modal isOpen={true} style={{ textAlign: "center" }} scrollable={false} centered={true} size="sm">
                 <ModalHeader style={{ textAlign: "center" }}>
                     Jakub's Personal Chessboard!
                 </ModalHeader>
@@ -34,8 +34,8 @@ export default function Menu() {
                     {isLoggedIn && !showLinks ? <BackToMainMenuButton /> : null} 
                 </ModalBody>
 
-                <ModalFooter style={{ textAlign: "center" }}>
-                    @Copyrigth 2022 mrevening
+                <ModalFooter style={{ textAlign: "left" }}>
+                    @Copyright 2022 mrevening
                 </ModalFooter>
             </Modal>
         </>

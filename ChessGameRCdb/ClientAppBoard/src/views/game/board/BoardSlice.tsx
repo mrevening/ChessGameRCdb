@@ -6,8 +6,10 @@ import { BoardAPI } from './api/BoardAPI'
 import { FigureType } from './enum/FigureType'
 import { FigureDTO } from './api/dto/FigureDTO'
 import IBoardSlice from './interface/IBoardSlice'
+import { PlayerColor } from './enum/PlayerColor'
 
 const initialState: IBoardSlice = {
+    currentPlayerTurn: PlayerColor.White,
     activeFigure: undefined,
     Squares: Squares,
     Figures: new Array<IFigure>(),

@@ -1,11 +1,11 @@
 import { FigureType } from '../enum/FigureType'
-import { Player } from '../enum/Player'
+import { PlayerColor } from '../enum/PlayerColor'
 import ISquare from '../interface/ISquare'
 
 export default interface IFigure {
     Id: number
     Type: FigureType
-    Player: Player,
+    Player: PlayerColor,
     Square: ISquare
     EnableMoves: Array<ISquare> | undefined
 }

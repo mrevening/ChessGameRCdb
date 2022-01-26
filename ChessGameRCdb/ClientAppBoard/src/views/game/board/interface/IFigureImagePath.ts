@@ -1,8 +1,8 @@
-import { Player } from '../enum/Player'
+import { PlayerColor } from '../enum/PlayerColor'
 import { FigureType } from '../enum/FigureType'
 
 export default interface IFigureImagePath {
     FigureType: FigureType,
-    Color: Player,
+    Color: PlayerColor,
     ImgPath: string
 }

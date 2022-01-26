@@ -1,0 +1,1 @@
+export enum PlayerColor { White = 1, Black }
