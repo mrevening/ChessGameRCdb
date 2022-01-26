@@ -12,13 +12,13 @@ function Logout() {
     };
 
     return (
-        <div>
-            <GoogleLogout
-                clientId={clientId}
-                buttonText="Logout"
-                onLogoutSuccess={onSuccess}
-            ></GoogleLogout>
-        </div>
+        <GoogleLogout
+            clientId={clientId}
+            onLogoutSuccess={onSuccess}
+            buttonText="Quit"
+            className="googleAuthenticationButton"
+            icon={false}
+        ></GoogleLogout>
     );
 }
 

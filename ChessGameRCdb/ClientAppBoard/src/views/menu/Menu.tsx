@@ -1,32 +1,42 @@
-import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import { Modal, ModalBody, ModalHeader, ModalFooter, ButtonGroup } from "reactstrap";
 import Links from './components/Links'
 import CreateGame from './components/CreateGame'
 import JoinGame from './components/JoinGame'
+import Credits from './components/Credits'
+import BackToMainMenuButton from './components/BackToMainMenuButton'
 import { useAppSelector } from 'state/hooks'
 import Login from '../authorization/Login'
-import Logout from '../authorization/Logout'
+
 
 export default function Menu() {
-    const showLoginComponent = useAppSelector(store => store.menu.showLoginView)
     const showLogoutComponent = useAppSelector(store => store.menu.showLogoutView)
+    const isLoggedIn = useAppSelector(store => store.menu.isLoggedIn)
     const showLinks = useAppSelector(store => store.menu.showLinks)
     const showCreateGameView = useAppSelector(store => store.menu.showCreateGameView)
     const showJoinGameView = useAppSelector(store => store.menu.showJoinGameView)
+    const showCreditsView = useAppSelector(store => store.menu.showCreditsView)
 
     return (
         <>
-            <Modal isOpen={true}>
-                <ModalHeader>
-                    Chess App!
-                    {showLoginComponent ? <Login /> : null}
-                    {showLogoutComponent ? <Logout /> : null}
+            <Modal isOpen={true} style={{ textAlign: "center" }}>
+                <ModalHeader style={{ textAlign: "center" }}>
+                    Jakub's Personal Chessboard!
+                    {isLoggedIn && !showLinks ? <BackToMainMenuButton />: null }
                 </ModalHeader>
                 <ModalBody>
-                    {showLinks ? <Links /> : null}
+                    {
+                        !isLoggedIn ? <Login />
+                        :showLinks ? <Links />
+                        :<>
+                            { showCreateGameView ? <CreateGame /> : null }
+                            { showJoinGameView ? <JoinGame /> : null}
+                            { showCreditsView ? <Credits /> : null}
+                         </>
+                    }
                 </ModalBody>
-                <ModalFooter>
-                    {showCreateGameView ? <CreateGame /> : null}
-                    {showJoinGameView ? <JoinGame /> : null}
+
+                <ModalFooter style={{ textAlign: "center" }}>
+                    @Copyrigth 2022 mrevening
                 </ModalFooter>
             </Modal>
         </>

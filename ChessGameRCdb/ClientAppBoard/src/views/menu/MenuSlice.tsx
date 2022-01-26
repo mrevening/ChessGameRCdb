@@ -4,15 +4,17 @@ import ICreateGameRequest from './interfaces/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
 
 const initialState: IMenuSlice = {
-    showMainMenuView: false,
-    showLoginView: false,
+    showMainMenuView: true,
+    showLoginView: true,
     showLogoutView: false,
     showLinks: false,
     showCreateGameView: false,
     showJoinGameView: false,
     showLoadGameView: false,
+    showCreditsView: false,
     showGameView: true,
-    gameId: 45
+    isLoggedIn: false,
+    gameId: 0
 }
 
 export const createNewGame = createAsyncThunk(
@@ -28,63 +30,36 @@ export const menuSlice = createSlice({
     initialState,
     reducers: {
         loggedIn: (state) => {
-            state.showMainMenuView = true
-            state.showLoginView = false
-            state.showLogoutView = true
+            state.isLoggedIn = true
             state.showLinks = true
-            state.showCreateGameView = false
-            state.showJoinGameView = false
-            state.showLoadGameView = false
-            state.showGameView = false
         },
         loggedOut: (state) => {
-            state.showLoginView = true
-            state.showLogoutView = false
-            state.showMainMenuView = true
+            state.isLoggedIn = false
             state.showLinks = false
-            state.showCreateGameView = false
-            state.showJoinGameView = false
-            state.showLoadGameView = false
-            state.showGameView = false
         },
         showMainMenuView: (state) => {
             state.showMainMenuView = true
-            state.showLoginView = false
-            state.showLogoutView = true
             state.showLinks = true
             state.showCreateGameView = false
             state.showJoinGameView = false
             state.showLoadGameView = false
-            state.showGameView = false
+            state.showCreditsView = false
         },
         showCreateGameView: (state) => {
-            state.showLoginView = false
-            state.showLogoutView = true
-            state.showMainMenuView = true
-            state.showLinks = false
             state.showCreateGameView = true
-            state.showJoinGameView = false
-            state.showLoadGameView = false
-            state.showGameView = false
+            state.showLinks = false
         },
         showJoinGameView: (state) => {
-            state.showMainMenuView = true
-            state.showLoginView = false
-            state.showLogoutView = true
-            state.showLinks = false
-            state.showCreateGameView = false
             state.showJoinGameView = true
-            state.showLoadGameView = false
-            state.showGameView = false
+            state.showLinks = false
+        },
+        showCreditsView: (state) => {
+            state.showCreditsView = true
+            state.showLinks = false
         },
         joinGame: (state, action: PayloadAction<number>) => {
             state.showMainMenuView = false
-            state.showLoginView = false
-            state.showLogoutView = true
-            state.showLinks = false
-            state.showCreateGameView = false
             state.showJoinGameView = false
-            state.showLoadGameView = false
             state.showGameView = true
             state.gameId = action.payload
         },
@@ -104,6 +79,6 @@ export const menuSlice = createSlice({
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, joinGame, loggedIn, loggedOut } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, showCreditsView, joinGame, loggedIn, loggedOut } = menuSlice.actions
 
 export default menuSlice.reducer

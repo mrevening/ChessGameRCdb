@@ -5,7 +5,9 @@ export default interface IMenuSlice {
     showLinks: boolean,
     showCreateGameView: boolean
     showJoinGameView: boolean,
-    showLoadGameView: boolean
+    showLoadGameView: boolean,
+    showCreditsView: boolean,
     showGameView: boolean,
+    isLoggedIn: boolean,
     gameId: number | undefined
 }

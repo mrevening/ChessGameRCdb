@@ -8,7 +8,6 @@ export default function CreateGame() {
     return (
         <>
             <Button onClick={() => dispatch(createNewGame({})) } color="primary">Start game</Button>
-            <Button onClick={() => dispatch(showMainMenuView()) } color="primary">Back to main menu</Button>
         </>
     );
 }

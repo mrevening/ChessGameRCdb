@@ -23,7 +23,10 @@ function Login() {
         <div>
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Login"
+                buttonText="Start game"
+                className="googleAuthentication"
+                icon={false}
+                loginHint="You will be redirected to authenticate"
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
