@@ -5,8 +5,6 @@ import IMenuSlice from './interfaces/IMenuSlice'
 
 const initialState: IMenuSlice = {
     showMainMenuView: true,
-    showLoginView: true,
-    showLogoutView: false,
     showLinks: false,
     showCreateGameView: false,
     showJoinGameView: false,
@@ -67,8 +65,6 @@ export const menuSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createNewGame.fulfilled, (state, action) => {
             state.showMainMenuView = false
-            state.showLoginView = false
-            state.showLogoutView = true
             state.showLinks = false
             state.showCreateGameView = false
             state.showJoinGameView = false

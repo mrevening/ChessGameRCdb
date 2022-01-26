@@ -11,7 +11,7 @@ export default function Links() {
             <Button onClick={() => dispatch(showCreateGameView())} color="primary">Create game</Button>
             <Button onClick={() => dispatch(showJoinGameView())} color="primary">Join game</Button>
             <Button onClick={() => dispatch(showCreditsView())} color="primary">Credits</Button>
-            <Button color="primary"><Logout /></Button>
+            <Logout />
             
         </ButtonGroup>
     );

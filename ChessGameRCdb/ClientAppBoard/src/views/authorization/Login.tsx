@@ -1,7 +1,8 @@
-import { GoogleLogin } from 'react-google-login';
 import { refreshTokenSetup } from './utils/refreshToken';
 import { useAppDispatch } from 'state/hooks'
 import { loggedIn } from '../menu/MenuSlice'
+import { useGoogleLogin } from 'react-google-login'
+import { Button } from "reactstrap";
 
 const clientId = '778159703392-1vbp93089n4t90eadabigdedmdti97id.apps.googleusercontent.com';
 
@@ -19,21 +20,19 @@ function Login() {
         );
     };
 
+    const { signIn, loaded } =
+        useGoogleLogin({
+            clientId: clientId,
+            loginHint: "You will be redirected to authenticate",
+            onSuccess: onSuccess,
+            onFailure: onFailure,
+            cookiePolicy: 'single_host_origin',
+            isSignedIn:  true
+        })
+
+
     return (
-        <div>
-            <GoogleLogin
-                clientId={clientId}
-                buttonText="Start game"
-                className="googleAuthentication"
-                icon={false}
-                loginHint="You will be redirected to authenticate"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={'single_host_origin'}
-                style={{ marginTop: '100px' }}
-                isSignedIn={true}
-            />
-        </div>
+        <Button onClick={() => signIn()} color="primary">Start game</Button>
     );
 }
 

@@ -1,6 +1,7 @@
-import { GoogleLogout } from 'react-google-login';
 import { useAppDispatch } from '../../state/hooks';
 import { loggedOut } from '../menu/MenuSlice'
+import { useGoogleLogout } from 'react-google-login'
+import { Button } from "reactstrap";
 
 const clientId = '778159703392-1vbp93089n4t90eadabigdedmdti97id.apps.googleusercontent.com';
 
@@ -11,14 +12,14 @@ function Logout() {
         dispatch(loggedOut())
     };
 
+    const { signOut, loaded } =
+        useGoogleLogout({
+            clientId: clientId,
+            onLogoutSuccess: onSuccess,
+        })
+
     return (
-        <GoogleLogout
-            clientId={clientId}
-            onLogoutSuccess={onSuccess}
-            buttonText="Quit"
-            className="googleAuthenticationButton"
-            icon={false}
-        ></GoogleLogout>
+        <Button onClick={() => signOut()} color="primary">Quit</Button>
     );
 }
 

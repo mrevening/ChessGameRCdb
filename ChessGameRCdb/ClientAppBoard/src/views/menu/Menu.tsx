@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalHeader, ModalFooter, ButtonGroup } from "reactstrap";
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import Links from './components/Links'
 import CreateGame from './components/CreateGame'
 import JoinGame from './components/JoinGame'
@@ -9,7 +9,6 @@ import Login from '../authorization/Login'
 
 
 export default function Menu() {
-    const showLogoutComponent = useAppSelector(store => store.menu.showLogoutView)
     const isLoggedIn = useAppSelector(store => store.menu.isLoggedIn)
     const showLinks = useAppSelector(store => store.menu.showLinks)
     const showCreateGameView = useAppSelector(store => store.menu.showCreateGameView)
@@ -21,7 +20,6 @@ export default function Menu() {
             <Modal isOpen={true} style={{ textAlign: "center" }}>
                 <ModalHeader style={{ textAlign: "center" }}>
                     Jakub's Personal Chessboard!
-                    {isLoggedIn && !showLinks ? <BackToMainMenuButton />: null }
                 </ModalHeader>
                 <ModalBody>
                     {
@@ -33,6 +31,7 @@ export default function Menu() {
                             { showCreditsView ? <Credits /> : null}
                          </>
                     }
+                    {isLoggedIn && !showLinks ? <BackToMainMenuButton /> : null} 
                 </ModalBody>
 
                 <ModalFooter style={{ textAlign: "center" }}>

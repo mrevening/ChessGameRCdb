@@ -1,6 +1,6 @@
 import { Button } from "reactstrap";
 import { useAppDispatch } from "../../../state/hooks";
-import { showMainMenuView, createNewGame } from '../MenuSlice'
+import { createNewGame } from '../MenuSlice'
 
 export default function CreateGame() {
     const dispatch = useAppDispatch();
