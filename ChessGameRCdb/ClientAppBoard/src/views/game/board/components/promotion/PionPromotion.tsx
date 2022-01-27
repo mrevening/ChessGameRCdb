@@ -8,7 +8,7 @@ import { FigureType } from "../../enum/FigureType";
 
 export default function PionPromotion() {
     const dispatch = useAppDispatch();
-    var pionPromotionObject = useAppSelector(store => store.board.PionPromotion)
+    var pionPromotionObject = useAppSelector(store => store.board.board.PionPromotion)
     const [blockEnter, setBlockEnter] = useState(true);
     const [figureSelected, setFigureSelected] = useState<FigureType>()
     const figures = [FigureType.Knight, FigureType.Bishop, FigureType.Rook, FigureType.Queen]

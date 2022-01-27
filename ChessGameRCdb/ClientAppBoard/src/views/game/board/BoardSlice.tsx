@@ -9,15 +9,19 @@ import IBoardSlice from './interface/IBoardSlice'
 import { PlayerColor } from './enum/PlayerColor'
 
 const initialState: IBoardSlice = {
-    currentPlayerTurn: PlayerColor.White,
-    activeFigure: undefined,
-    Squares: Squares,
-    Figures: new Array<IFigure>(),
-    PionPromotion: undefined,
-    destinationSquare: undefined,
-    isValidMove: undefined,
-    playerId: undefined,
-    gameId: 0
+    game: {
+        gameId: undefined,
+        playerId: undefined
+    },
+    board: {
+        currentPlayerTurn: PlayerColor.White,
+        activeFigure: undefined,
+        Squares: Squares,
+        Figures: new Array<IFigure>(),
+        PionPromotion: undefined,
+        destinationSquare: undefined,
+        isValidMove: undefined,
+    }
 }
 
 interface ClickSquare {
@@ -40,8 +44,8 @@ export const executeMove = createAsyncThunk(
     'board/executeMove',
     async (square: ISquare, thunkAPI) => {
         const { board } = thunkAPI.getState() as { board: IBoardSlice }
-        if (board.isValidMove)
-            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard(board.gameId)), null);
+        if (board.board.isValidMove)
+            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard(board.game.gameId!)), null);
     }
 )
 
@@ -49,12 +53,12 @@ const saveMove = createAsyncThunk(
     'board/saveMove',
     async (_, thunkAPI) => {
         const { board } = thunkAPI.getState() as { board: IBoardSlice }
-        await BoardAPI.saveMove({ gameId: board.gameId, startSquare: board.activeFigure!.Square, endSquare: board.destinationSquare! })
+        await BoardAPI.saveMove({ gameId: board.game.gameId!, startSquare: board.board.activeFigure!.Square, endSquare: board.board.destinationSquare! })
     },
     {
         condition: (_, { getState }) => {
             const { board } = getState() as { board: IBoardSlice }
-            return board.destinationSquare !== undefined
+            return board.board.destinationSquare !== undefined
         },
     }
 )
@@ -64,32 +68,31 @@ export const boardSlice = createSlice({
     initialState,
     reducers: {
         addGameId: (state, action: PayloadAction<number>) => {
-            state.gameId = action.payload
+            state.game.gameId = action.payload
         },
         click: (state, action: PayloadAction<ClickSquare>) => {
-            console.log(state.playerId)
             const clickedSquare = action.payload.square;
-            state.activeFigure = state.Figures.find(f => f.Square.Id === clickedSquare.Id);
+            state.board.activeFigure = state.board.Figures.find(f => f.Square.Id === clickedSquare.Id);
         },
         release: (state, action: PayloadAction<ClickSquare>) => {
             console.log("relase")
             const clickedSquare = action.payload.square
-            const isValidMove = state.activeFigure?.EnableMoves?.some(eM => eM.Name === clickedSquare.Name)!
-            state.isValidMove = isValidMove
+            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Name === clickedSquare.Name)!
+            state.board.isValidMove = isValidMove
             if (!isValidMove) {
-                state.activeFigure = undefined;
+                state.board.activeFigure = undefined;
                 return
             }
-            state.destinationSquare = clickedSquare
-            const figure = state.Figures.find(x => x.Square.Name === state.activeFigure!.Square.Name)
+            state.board.destinationSquare = clickedSquare
+            const figure = state.board.Figures.find(x => x.Square.Name === state.board.activeFigure!.Square.Name)
             figure!.Square = clickedSquare
 
 
             //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
-            state.Figures.find(f => f.Id === state.PionPromotion!.ActivePion.Id)!.Type = action.payload
-            state.PionPromotion = undefined;
+            state.board.Figures.find(f => f.Id === state.board.PionPromotion!.ActivePion.Id)!.Type = action.payload
+            state.board.PionPromotion = undefined;
         },
         updateBoard: (state, action: PayloadAction<IMove>) => {
             console.log("updateBoard")
@@ -102,15 +105,15 @@ export const boardSlice = createSlice({
                 EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
             } as IFigure))
 
-            state.Figures = result
+            state.board.Figures = result
         },
     },
     extraReducers: (builder) => {
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
-            state.activeFigure = undefined;
-            state.destinationSquare = undefined;
-            state.isValidMove = undefined;
-            state.Figures = action.payload
+            state.board.activeFigure = undefined;
+            state.board.destinationSquare = undefined;
+            state.board.isValidMove = undefined;
+            state.board.Figures = action.payload
         });
         builder.addCase(executeMove.fulfilled, (state, action) => {
 

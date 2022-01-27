@@ -14,9 +14,9 @@ interface TileProps {
 
 export default function Tile({ col, row }: TileProps) {
     const dispatch = useAppDispatch();
-    const squares = useAppSelector(store => store.board.Squares)
-    const figures = useAppSelector(store => store.board.Figures)
-    const activeFigure = useAppSelector(store => store.board.activeFigure)
+    const squares = useAppSelector(store => store.board.board.Squares)
+    const figures = useAppSelector(store => store.board.board.Figures)
+    const activeFigure = useAppSelector(store => store.board.board.activeFigure)
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)
