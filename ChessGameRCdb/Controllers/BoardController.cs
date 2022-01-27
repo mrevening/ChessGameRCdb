@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class BoardController : ControllerBase
     {
         private readonly ILogger<BoardController> _logger;
@@ -27,7 +25,6 @@ namespace ChessGame.Controllers
         }
 
         [HttpGet]
-        [Route("{name}")]
         public async Task<IEnumerable<FigureDTO>> GetBoard(int gid)
         {
             var board = _boardQuery.GetBoard(gid);
@@ -36,7 +33,6 @@ namespace ChessGame.Controllers
         }
 
         [HttpPost]
-        [Route("{name}")]
         public bool SaveMove([FromBody] MoveDTO move)
         {
             _boardCommand.CreateLog(move);

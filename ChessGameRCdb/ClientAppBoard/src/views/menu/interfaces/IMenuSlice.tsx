@@ -7,5 +7,6 @@ export default interface IMenuSlice {
     showCreditsView: boolean,
     showGameView: boolean,
     isLoggedIn: boolean,
+    userId: String | undefined
     gameId: number | undefined
 }

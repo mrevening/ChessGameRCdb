@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Chatty.Api.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class ChatController : ControllerBase
     {
         private readonly IHubContext<ChatHub, IChatClient> _chatHub;

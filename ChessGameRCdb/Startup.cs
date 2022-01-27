@@ -91,7 +91,7 @@ namespace ChessGame
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "api/{controller}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/hubs/chat");
                 endpoints.MapHub<MoveHub>("/hubs/move");

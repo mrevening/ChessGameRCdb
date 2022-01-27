@@ -16,6 +16,7 @@ const initialState: IBoardSlice = {
     PionPromotion: undefined,
     destinationSquare: undefined,
     isValidMove: undefined,
+    playerId: undefined,
     gameId: 0
 }
 
@@ -66,7 +67,7 @@ export const boardSlice = createSlice({
             state.gameId = action.payload
         },
         click: (state, action: PayloadAction<ClickSquare>) => {
-            console.log("click")
+            console.log(state.playerId)
             const clickedSquare = action.payload.square;
             state.activeFigure = state.Figures.find(f => f.Square.Id === clickedSquare.Id);
         },

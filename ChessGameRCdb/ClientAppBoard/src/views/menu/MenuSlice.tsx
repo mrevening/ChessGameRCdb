@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import ILoggedInRequest from './interfaces/ILoggedInRequest'
+import { gameAPI } from '../game/api/GameAPI'
 import { menuAPI } from './api/MenuAPI'
-import ICreateGameRequest from './interfaces/ICreateGameRequest'
+import ICreateGameRequest from '../game/api/interface/ICreateGameRequest'
 import IMenuSlice from './interfaces/IMenuSlice'
 
 const initialState: IMenuSlice = {
@@ -12,13 +14,22 @@ const initialState: IMenuSlice = {
     showCreditsView: false,
     showGameView: true,
     isLoggedIn: false,
+    userId: undefined,
     gameId: 0
 }
+
+
+export const loggedIn = createAsyncThunk(
+    'menu/loggedIn',
+    async (loggedIn: ILoggedInRequest) => {
+        return await menuAPI.createloggedInEntry(loggedIn)
+    }
+)
 
 export const createNewGame = createAsyncThunk(
     'menu/createNewGame',
     async (request: ICreateGameRequest, thunkAPI) => {
-        var result = await menuAPI.createNewGame({} as ICreateGameRequest)
+        var result = await gameAPI.createNewGame({} as ICreateGameRequest)
         return result
     }
 )
@@ -27,10 +38,6 @@ export const menuSlice = createSlice({
     name: 'menu',
     initialState,
     reducers: {
-        loggedIn: (state) => {
-            state.isLoggedIn = true
-            state.showLinks = true
-        },
         loggedOut: (state) => {
             state.isLoggedIn = false
             state.showLinks = false
@@ -63,6 +70,11 @@ export const menuSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(loggedIn.fulfilled, (state, action) => {
+            state.userId = action.payload.response.userId
+            state.isLoggedIn = true
+            state.showLinks = true
+        });
         builder.addCase(createNewGame.fulfilled, (state, action) => {
             state.showMainMenuView = false
             state.showLinks = false
@@ -75,6 +87,6 @@ export const menuSlice = createSlice({
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, showCreditsView, joinGame, loggedIn, loggedOut } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, showCreditsView, joinGame, loggedOut } = menuSlice.actions
 
 export default menuSlice.reducer
