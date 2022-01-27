@@ -1,7 +1,7 @@
 import IFigure from "views/game/board/interface/IFigure"
 import ISquare from "views/game/board/interface/ISquare"
 import { Squares } from "views/game/board/repository/Squares"
-import ISaveMove from "../interface/ISaveMove"
+import ISaveMove from "../../board/interface/ISaveMove"
 import { FigureDTO } from "./dto/FigureDTO"
 
 export const BoardAPI = {

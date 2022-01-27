@@ -4,7 +4,7 @@ import { Container } from 'reactstrap'
 import BoardRow from './components/BoardRow'
 import { useAppDispatch } from 'state/hooks'
 import { Rows } from './repository/Rows'
-import { getBoard, updateBoard } from './BoardSlice'
+import { getBoard, updateBoard } from '../GameSlice'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
 interface IBoardProps {

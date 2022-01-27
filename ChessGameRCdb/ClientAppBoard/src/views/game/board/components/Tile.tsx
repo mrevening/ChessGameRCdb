@@ -1,11 +1,11 @@
 import FigureImage from './FigureImage'
 import ActiveStickyFigure from './ActiveStickyFigure'
 import { useAppSelector, useAppDispatch } from 'state/hooks'
-import { click, release, executeMove } from '../BoardSlice'
 import { FigureImagePaths } from '../repository/FigureImagePaths'
 import { RowLine, } from '../enum/RowLine'
 import { ColumnLine } from '../enum/ColumnLine'
 import { Color } from '../enum/Color'
+import { click, executeMove, release } from '../../GameSlice'
 
 interface TileProps {
     col: ColumnLine
@@ -14,9 +14,9 @@ interface TileProps {
 
 export default function Tile({ col, row }: TileProps) {
     const dispatch = useAppDispatch();
-    const squares = useAppSelector(store => store.board.board.Squares)
-    const figures = useAppSelector(store => store.board.board.Figures)
-    const activeFigure = useAppSelector(store => store.board.board.activeFigure)
+    const squares = useAppSelector(store => store.game.board.Squares)
+    const figures = useAppSelector(store => store.game.board.Figures)
+    const activeFigure = useAppSelector(store => store.game.board.activeFigure)
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)

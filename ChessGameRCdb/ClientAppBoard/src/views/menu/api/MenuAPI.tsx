@@ -1,3 +1,5 @@
+import ICreateGameRequest from "../interfaces/ICreateGameRequest";
+import ICreateGameResponse from "../interfaces/ICreateGameResponse";
 import ILoggedInRequest from "../interfaces/ILoggedInRequest";
 import ILoggedInResponse from "../interfaces/ILoggedInResponse";
 
@@ -19,6 +21,21 @@ export const menuAPI = {
                 }),
             })
                 .then(response => response.json() as Promise<ILoggedInResponse>)
+                .then((data) => {
+                    resolve({ response: data })
+                })
+        );
+    },
+    async createNewGame(gameArgs: ICreateGameRequest) {
+        return new Promise<{ response: ICreateGameResponse }>(resolve =>
+            fetch(`api/Game/CreateNewGame`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ gameArgs }),
+            })
+                .then(response => response.json() as Promise<ICreateGameResponse>)
                 .then((data) => {
                     resolve({ response: data })
                 })

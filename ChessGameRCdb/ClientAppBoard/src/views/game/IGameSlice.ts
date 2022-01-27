@@ -1,14 +1,14 @@
-import { PlayerColor } from "../enum/PlayerColor";
-import IFigure from "./IFigure";
-import IPionPromotion from "./IPionPromotion";
-import ISquare from "./ISquare";
+import { PlayerColor } from "./board/enum/PlayerColor";
+import IFigure from "./board/interface/IFigure";
+import IPionPromotion from "./board/interface/IPionPromotion";
+import ISquare from "./board/interface/ISquare";
 
-export default interface IBoardSlice {
-    game: IGame
+export default interface IGameSlice {
+    status: IStatus
     board: IBoard
 }
 
-interface IGame {
+interface IStatus {
     playerId: Number | undefined
     gameId: number | undefined
 }

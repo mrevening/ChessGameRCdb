@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useAppDispatch, useAppSelector } from "state/hooks";
-import { pionPromotion } from '../../BoardSlice'
 import PromotionFigure from './PromotionFigure'
 import { FigureImagePaths } from "../../repository/FigureImagePaths"
 import { FigureType } from "../../enum/FigureType";
+import { pionPromotion } from "../../../GameSlice";
 
 export default function PionPromotion() {
     const dispatch = useAppDispatch();
-    var pionPromotionObject = useAppSelector(store => store.board.board.PionPromotion)
+    var pionPromotionObject = useAppSelector(store => store.game.board.PionPromotion)
     const [blockEnter, setBlockEnter] = useState(true);
     const [figureSelected, setFigureSelected] = useState<FigureType>()
     const figures = [FigureType.Knight, FigureType.Bishop, FigureType.Rook, FigureType.Queen]
