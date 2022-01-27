@@ -5,7 +5,7 @@ import ISquare from '../interface/ISquare'
 export default interface IFigure {
     Id: number
     Type: FigureType
-    Player: PlayerColor,
+    Color: PlayerColor,
     Square: ISquare
     EnableMoves: Array<ISquare> | undefined
 }

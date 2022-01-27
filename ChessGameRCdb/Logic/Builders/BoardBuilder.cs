@@ -6,7 +6,7 @@ namespace ChessGame.Logic
     {
         public IBoard CreateBoardFromLogs(IEnumerable<IFigure> figures, IEnumerable<Log> logs)
         {
-            return new Board(BoardSetup.GetInstance().GetStandardSetup());
+            return new Board(BoardSetup.GetInstance().GetStandardSetup(), Color.White);
         }
     }
 }

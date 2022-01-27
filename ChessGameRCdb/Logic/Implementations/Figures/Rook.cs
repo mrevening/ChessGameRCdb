@@ -8,9 +8,9 @@ namespace ChessGame.Logic
         public override FigureType FigureType { get { return FigureType.Rook; } }
         public override IEnumerable<IMove> PossibleMoves { get => new List<IMove>() { MoveType.DiagonalAllDirection }; }
 
-        public Rook(Player player) : base(player) { }
-        public Rook(Player player, Column column, Row row) : base(player, column, row) { }
-        public Rook(Player player, Coordinate position) : base(player, position) { }
+        public Rook(Color player) : base(player) { }
+        public Rook(Color player, Column column, Row row) : base(player, column, row) { }
+        public Rook(Color player, Coordinate position) : base(player, position) { }
 
         public override bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint)
         {
@@ -18,6 +18,13 @@ namespace ChessGame.Logic
         }
         public override IEnumerable<Coordinate> MoveOptions(IBoard board)
         {
+            if (board.IsEnemysFigure(board.CurrentPlayerColor, Coordinate))
+            {
+                return new List<Coordinate>();
+            }
+
+
+
             //select all hypothetical moves
             //var captureMoves = new List<Coordinate>();
             //var freeMoves = new List<Coordinate>();
@@ -49,7 +56,7 @@ namespace ChessGame.Logic
             var rows = Enumeration.GetAll<Row>().Where(x => x != Coordinate.Row).Select(r => new Coordinate(Coordinate.Column, r));
             var hypothetics = cols.Concat(rows);
             var freeMoves = hypothetics.Where(x => !board.Figures.Any(f => x == f.Coordinate));
-            var strikes = hypothetics.Where(x => board.Figures.Any(f => x == f.Coordinate && f.Player != Player));
+            var strikes = hypothetics.Where(x => board.Figures.Any(f => x == f.Coordinate && f.Color != Color));
             //remove all not allowed moves
             //var real = hypothetics.Where(h => board.Figures.Any(f => f.Coordinate == h && (f.Player != Player || )));
 
@@ -75,8 +82,8 @@ namespace ChessGame.Logic
             {
                 if (board.Figures.Any(x => x.Coordinate == new Coordinate(val, Coordinate.Row.Id)))
                 {
-                    if (board.Figures.Any(x => x.Coordinate == new Coordinate(val, Coordinate.Row.Id) && x.Player == Player)) break;
-                    else if (board.Figures.Any(x => x.Coordinate == new Coordinate(val, Coordinate.Row.Id) && x.Player == Player))
+                    if (board.Figures.Any(x => x.Coordinate == new Coordinate(val, Coordinate.Row.Id) && x.Color == Color)) break;
+                    else if (board.Figures.Any(x => x.Coordinate == new Coordinate(val, Coordinate.Row.Id) && x.Color == Color))
                     {
                         captureMoves.Add(new Coordinate(val, Coordinate.Row.Id));
                         break;

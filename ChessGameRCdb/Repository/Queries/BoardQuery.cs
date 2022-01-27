@@ -22,7 +22,7 @@ namespace ChessGame.Query
             var figures = new List<IFigure>();
             var logs = new List<Log>();
             var game = _context.Game.AsNoTracking()
-                .Include(game => game.StartPlayer)
+                .Include(game => game.HostColor)
 
                 .Include(game => game.BoardConfiguration)
                     .ThenInclude(board => board.BoardConfigurationToFigure)
@@ -35,7 +35,7 @@ namespace ChessGame.Query
                 .Include(game => game.BoardConfiguration)
                     .ThenInclude(board => board.BoardConfigurationToFigure)
                         .ThenInclude(ctf => ctf.Figure)
-                            .ThenInclude(ctf => ctf.Player)
+                            .ThenInclude(ctf => ctf.Color)
                 .Include(game => game.BoardConfiguration)
                     .ThenInclude(board => board.BoardConfigurationToFigure)
                         .ThenInclude(ctf => ctf.Figure)
@@ -68,7 +68,7 @@ namespace ChessGame.Query
             foreach (var boardConfiguration in game.BoardConfiguration.BoardConfigurationToFigure)
             {
                 var dbFigure = boardConfiguration.Figure;
-                var player = Enumeration.FromValue<Player>(dbFigure.Player.Id);
+                var player = Enumeration.FromValue<Color>(dbFigure.Color.Id);
                 var figureType = Enumeration.FromValue<FigureType>(dbFigure.FigureType.Id);
                 var column = Enumeration.FromValue<Column>(dbFigure.Column.Id);
                 var row = Enumeration.FromValue<Row>(dbFigure.Row.Id);
@@ -109,8 +109,10 @@ namespace ChessGame.Query
                 }
             }
 
-            var board = new Board(figures);
-            return board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Player.Id, x.Coordinate, x.MoveOptions(board)));
+            var color = logs.Count % 2 == 0 ? Color.White : Color.Black;
+
+            var board = new Board(figures, color);
+            return board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions(board)));
         }
     }
 }

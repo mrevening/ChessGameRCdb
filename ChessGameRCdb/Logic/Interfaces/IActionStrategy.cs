@@ -4,7 +4,7 @@
     {
         IBoard InputBoard { get; }
         IBoard OutputBoard { get; }
-        Player CurrentPlayer { get; }
+        Color CurrentPlayer { get; }
         IFigure CurrentlySelectedFigure { get; }
         Log GeneratedLog { get; }
         GameState GeneratedState { get; }

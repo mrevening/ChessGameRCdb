@@ -1,3 +1,3 @@
 export default interface ILoggedInResponse {
-    userId: String
+    userId: string
 }

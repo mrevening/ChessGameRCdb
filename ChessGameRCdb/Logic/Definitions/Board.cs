@@ -7,17 +7,19 @@ namespace ChessGame.Logic
     {
         public List<IFigure> Figures { get; private set; }
         public List<Log> Logs { get; private set; }
+        public Color CurrentPlayerColor { get; private set; }
 
-        public Board(IEnumerable<IFigure> startBoardSetup)
+        public Board(IEnumerable<IFigure> startBoardSetup, Color currentPlayerColor)
         {
             Figures = new List<IFigure>(startBoardSetup);
+            CurrentPlayerColor = currentPlayerColor;
         }
 
-        public bool IsPlayersFigure(Player player, Coordinate endPoint)
+        public bool IsPlayersFigure(Color player, Coordinate endPoint)
         {
             return Figures.Any(x => x.IsPlayersFigure(player, endPoint));
         }
-        public bool IsEnemysFigure(Player player, Coordinate endPoint)
+        public bool IsEnemysFigure(Color player, Coordinate endPoint)
         {
             return Figures.Any(x => x.IsEnemysFigure(player, endPoint));
         }

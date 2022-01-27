@@ -25,9 +25,15 @@ namespace ChessGame.Controllers
         }
 
         [HttpPost]
-        public NewGameResponseDTO CreateNewGame([FromBody] NewGameRequestDTO move)
+        public NewGameResponseDTO CreateNewGame([FromBody] NewGameRequestDTO request)
         {
-            var result = _command.CreateNewGame(move);
+            var result = _command.CreateNewGame(request);
+            return result;
+        }
+        [HttpPost]
+        public JoinGameResponseDTO JoinGame([FromBody] JoinGameRequestDTO request)
+        {
+            var result = _command.JoinGame(request);
             return result;
         }
     }

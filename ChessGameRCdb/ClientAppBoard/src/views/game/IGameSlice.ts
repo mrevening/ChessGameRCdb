@@ -10,9 +10,10 @@ export default interface IGameSlice {
 
 interface IStatus {
     gameId: number | undefined
-    hostId: String | undefined
-    opponentId: String | undefined
-    hostColor: PlayerColor | undefined
+    hostId: string | undefined
+    guestId: string | undefined
+    thisPlayer: IPlayer | undefined
+    oponent: IPlayer | undefined
 }
 
 interface IBoard {
@@ -23,4 +24,9 @@ interface IBoard {
     PionPromotion: IPionPromotion | undefined
     destinationSquare: ISquare | undefined
     isValidMove: boolean | undefined
+}
+
+interface IPlayer {
+    playerId: string | undefined
+    playerColor: PlayerColor | undefined
 }

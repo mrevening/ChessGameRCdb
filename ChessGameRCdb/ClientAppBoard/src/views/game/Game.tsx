@@ -1,6 +1,6 @@
 import Board from './board/Board'
 import PionPromotion from './board/components/promotion/PionPromotion'
-import { useAppDispatch, useAppSelector } from '../../state/hooks';
+import { useAppSelector } from '../../state/hooks';
 import OpponentPanel from './panels/OpponentPanel';
 import CurrentPlayerPanel from './panels/CurrentPlayerPanel';
 

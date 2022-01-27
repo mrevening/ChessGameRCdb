@@ -23,7 +23,7 @@ export default function PionPromotion() {
                     {
                         figures.map((figure,i) => { return (
                             <Button key={i} outline onClick={() => { setBlockEnter(false); setFigureSelected(figure) }}>
-                                <PromotionFigure figure={FigureImagePaths.find(x => x.Color === pionPromotionObject?.ActivePion.Player && x.FigureType === figure)!} />
+                                <PromotionFigure figure={FigureImagePaths.find(x => x.Color === pionPromotionObject?.ActivePion.Color && x.FigureType === figure)!} />
                             </Button>
                         )})
                     }

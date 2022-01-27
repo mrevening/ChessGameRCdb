@@ -4,6 +4,6 @@ namespace ChessGame.Logic
 {
     public interface ISwitchable
     {
-        Player Switch();
+        Color Switch();
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IGame
     {
-        IGameStatus PlayersAction(Player player, Coordinate startPoint, Coordinate endPoint);
+        IGameStatus PlayersAction(Color player, Coordinate startPoint, Coordinate endPoint);
     }
 }

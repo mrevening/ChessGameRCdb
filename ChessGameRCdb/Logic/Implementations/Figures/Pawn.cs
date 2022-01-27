@@ -7,9 +7,9 @@ namespace ChessGame.Logic
         public override FigureType FigureType { get { return FigureType.Pawn; } }
         public override IEnumerable<IMove> PossibleMoves { get => new List<IMove>() { MoveType.DiagonalAllDirection }; }
 
-        public Pawn(Player player) : base(player) { }
-        public Pawn(Player player, Column column, Row row) : base(player, column, row) { }
-        public Pawn(Player player, Coordinate position) : base( player, position) { }
+        public Pawn(Color player) : base(player) { }
+        public Pawn(Color player, Column column, Row row) : base(player, column, row) { }
+        public Pawn(Color player, Coordinate position) : base( player, position) { }
 
         public override bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint)
         {

@@ -12,7 +12,7 @@ export const BoardAPI = {
                 .then((data) => {
                 var result = data.map((figure, i) => ({
                     Id: i,
-                    Player: figure.player,
+                    Color: figure.player,
                     Type: figure.type,
                     Square: Squares.find(square => square.Name === figure.square) as ISquare,
                     EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)

@@ -4,7 +4,7 @@ namespace ChessGame.Logic
 {
     public abstract class ActionStrategy : IActionStrategy
     {
-        public abstract Player CurrentPlayer { get; }
+        public abstract Color CurrentPlayer { get; }
         public abstract Direction Direction { get; }
         public IBoard InputBoard { get; private set; }
         public IBoard OutputBoard { get; private set; }
@@ -45,7 +45,7 @@ namespace ChessGame.Logic
 
         private void RewriteBoard()
         {
-            OutputBoard = new Board(ImmutableList.CreateRange(InputBoard.Figures).ToImmutableList());
+            OutputBoard = new Board(ImmutableList.CreateRange(InputBoard.Figures).ToImmutableList(), CurrentPlayer);
         }
     }
 }

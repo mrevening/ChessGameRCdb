@@ -9,7 +9,7 @@
             InputBoard = board;
         }
 
-        public IGameStatus PlayersAction(Player player, Coordinate startPoint, Coordinate endPoint)
+        public IGameStatus PlayersAction(Color player, Coordinate startPoint, Coordinate endPoint)
         {
             var action = GetAction(player);
             action.SelectFigure(startPoint);
@@ -21,9 +21,9 @@
             return new GameStatus(action.OutputBoard, action.GeneratedLog, action.GeneratedState);
         }
 
-        private IActionStrategy GetAction(Player player)
+        private IActionStrategy GetAction(Color player)
         {
-            if (player == Player.White) return new MoveWhiteFigure(InputBoard);
+            if (player == Color.White) return new MoveWhiteFigure(InputBoard);
             else return new MoveBlackFigure(InputBoard);
         }
     }
