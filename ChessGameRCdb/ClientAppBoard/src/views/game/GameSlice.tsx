@@ -8,11 +8,15 @@ import ISquare from './board/interface/ISquare'
 import { Squares } from './board/repository/Squares'
 import IGameSlice from './IGameSlice'
 import { FigureType } from './board/enum/FigureType'
+import ICreateGameRequest from './interface/ICreateGameRequest'
+import ICreateGameResponse from './interface/ICreateGameResponse'
 
 const initialState: IGameSlice = {
     status: {
         gameId: undefined,
-        playerId: undefined
+        hostId: undefined,
+        opponentId: undefined,
+        hostColor: undefined,
     },
     board: {
         currentPlayerTurn: PlayerColor.White,
@@ -32,6 +36,16 @@ interface ClickSquare {
 interface IMove {
     game: FigureDTO[]
 }
+
+export const createNewGame = createAsyncThunk(
+    'game/createNewGame',
+    async (request: ICreateGameRequest, thunkAPI) => {
+        var result = await GameAPI.createNewGame(request)
+        result.response.hostId = request.hostId
+        result.response.hostColor = request.hostColor
+        return result.response
+    }
+)
 
 export const getBoard = createAsyncThunk(
     'game/getBoard',
@@ -68,9 +82,6 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        addGameId: (state, action: PayloadAction<number>) => {
-            state.status.gameId = action.payload
-        },
         click: (state, action: PayloadAction<ClickSquare>) => {
             const clickedSquare = action.payload.square;
             state.board.activeFigure = state.board.Figures.find(f => f.Square.Id === clickedSquare.Id);
@@ -110,6 +121,12 @@ export const gameSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(createNewGame.fulfilled, (state, action: PayloadAction<ICreateGameResponse>) => {
+            state.status.gameId = action.payload.gameId
+            state.status.hostId = action.payload.hostId
+            state.status.hostColor = action.payload.hostColor
+        });
+
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
             state.board.activeFigure = undefined;
             state.board.destinationSquare = undefined;
@@ -133,6 +150,6 @@ export const gameSlice = createSlice({
     }
 })
 
-export const { addGameId, click, release, pionPromotion, updateBoard } = gameSlice.actions
+export const { click, release, pionPromotion, updateBoard } = gameSlice.actions
 
 export default gameSlice.reducer

@@ -9,8 +9,10 @@ export default interface IGameSlice {
 }
 
 interface IStatus {
-    playerId: Number | undefined
     gameId: number | undefined
+    hostId: String | undefined
+    opponentId: String | undefined
+    hostColor: PlayerColor | undefined
 }
 
 interface IBoard {

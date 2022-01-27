@@ -12,18 +12,10 @@ function Login() {
     const onSuccess = (res: any) => {
         var tokenId = res.tokenId;
         var name = res.profileObj.name;
-        var familyName = res.profileObj.familyName;
-        var givenName = res.profileObj.givenName;
-        var email = res.profileObj.email;
-        var googleId = res.profileObj.googleId;
 
         dispatch(loggedIn({
             tokenId: tokenId,
-            name: name,
-            familyName: familyName,
-            givenName: givenName,
-            email: email,
-            googleId: googleId
+            name: name
         }))
 
         refreshTokenSetup(res);

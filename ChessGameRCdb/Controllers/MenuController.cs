@@ -25,9 +25,9 @@ namespace ChessGame.Controllers
         }
 
         [HttpPost]
-        public LoggedInResponseDTO LoggedIn([FromBody] LoggedInRequestDTO move)
+        public LoggedInResponseDTO LoggedIn([FromBody] LoggedInRequestDTO request)
         {
-            return new LoggedInResponseDTO() { };
+            return new LoggedInResponseDTO() {  UserId = request.TokenId };
         }
 
         [HttpPost]

@@ -4,9 +4,6 @@ namespace ChessGame.DTO
 {
     public class LoggedInResponseDTO
     {
-        public LoggedInResponseDTO() 
-        {
-
-        }
+        public string UserId { get; set; }
     }
 }

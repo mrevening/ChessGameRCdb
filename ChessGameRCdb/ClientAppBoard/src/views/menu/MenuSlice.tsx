@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import ILoggedInRequest from './interfaces/ILoggedInRequest'
+import ILoggedInRequest from './interface/ILoggedInRequest'
 import { menuAPI } from './api/MenuAPI'
-import IMenuSlice from './interfaces/IMenuSlice'
-import ICreateGameRequest from './interfaces/ICreateGameRequest'
+import IMenuSlice from './IMenuSlice'
+import ILoggedInResponse from './interface/ILoggedInResponse'
 
 const initialState: IMenuSlice = {
     showMainMenuView: true,
@@ -20,16 +20,9 @@ const initialState: IMenuSlice = {
 
 export const loggedIn = createAsyncThunk(
     'menu/loggedIn',
-    async (loggedIn: ILoggedInRequest) => {
-        return await menuAPI.createloggedInEntry(loggedIn)
-    }
-)
-
-export const createNewGame = createAsyncThunk(
-    'menu/createNewGame',
-    async (request: ICreateGameRequest, thunkAPI) => {
-        var result = await menuAPI.createNewGame({} as ICreateGameRequest)
-        return result
+    async (loggedIn: ILoggedInRequest, thunkAPI) => {
+        var result = await menuAPI.createloggedInEntry(loggedIn)
+        return result.response
     }
 )
 
@@ -61,6 +54,14 @@ export const menuSlice = createSlice({
             state.showCreditsView = true
             state.showLinks = false
         },
+        showBoard: (state) => {
+            state.showMainMenuView = false
+            state.showLinks = false
+            state.showCreateGameView = false
+            state.showJoinGameView = false
+            state.showLoadGameView = false
+            state.showGameView = true
+        },
         joinGame: (state, action: PayloadAction<number>) => {
             state.showMainMenuView = false
             state.showJoinGameView = false
@@ -69,23 +70,14 @@ export const menuSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(loggedIn.fulfilled, (state, action) => {
-            state.userId = action.payload.response.userId
+        builder.addCase(loggedIn.fulfilled, (state, action: PayloadAction<ILoggedInResponse>) => {
+            state.userId = action.payload.userId
             state.isLoggedIn = true
             state.showLinks = true
-        });
-        builder.addCase(createNewGame.fulfilled, (state, action) => {
-            state.showMainMenuView = false
-            state.showLinks = false
-            state.showCreateGameView = false
-            state.showJoinGameView = false
-            state.showLoadGameView = false
-            state.showGameView = true
-            state.gameId = action.payload.response.gameId
         });
     }
 })
 
-export const { showMainMenuView, showCreateGameView, showJoinGameView, showCreditsView, joinGame, loggedOut } = menuSlice.actions
+export const { showMainMenuView, showCreateGameView, showJoinGameView, showCreditsView, joinGame, showBoard, loggedOut } = menuSlice.actions
 
 export default menuSlice.reducer
