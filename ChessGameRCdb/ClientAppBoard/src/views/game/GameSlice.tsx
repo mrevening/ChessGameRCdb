@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { BoardAPI } from './api/boardAPI/BoardAPI'
 import { GameAPI } from './api/gameAPI/GameAPI'
-import { FigureDTO } from './api/boardAPI/dto/FigureDTO'
 import { PlayerColor } from './board/enum/PlayerColor'
 import IFigure from './board/interface/IFigure'
 import ISquare from './board/interface/ISquare'
