@@ -28,7 +28,7 @@ namespace ChessGame.Controllers
         public async Task<GetBoardResponseDTO> GetBoard(int gameId)
         {
             var board = _boardQuery.GetBoard(gameId);
-            await _moveHub.Clients.Group(gameId.ToString()).ReceiveMove(new MoveMessage() { Board = board.Figures });
+            await _moveHub.Clients.Group(gameId.ToString()).UpdateBoard(new UpdateBoardDTO() { Board = board.Figures });
             return board;
         }
 

@@ -14,12 +14,13 @@ export default function Menu() {
     const showCreateGameView = useAppSelector(store => store.menu.showCreateGameView)
     const showJoinGameView = useAppSelector(store => store.menu.showJoinGameView)
     const showCreditsView = useAppSelector(store => store.menu.showCreditsView)
+    const userName = useAppSelector(store => store.menu.loggedInUser?.username)
 
     return (
         <>
             <Modal isOpen={true} style={{ textAlign: "center" }} scrollable={false} centered={true} size="sm">
-                <ModalHeader style={{ textAlign: "center" }}>
-                    JW's Cheessboard!
+                <ModalHeader>
+                    <div>JW's Cheessboard!</div>
                 </ModalHeader>
                 <ModalBody>
                     {
@@ -34,8 +35,8 @@ export default function Menu() {
                     {isLoggedIn && !showLinks ? <BackToMainMenuButton /> : null} 
                 </ModalBody>
 
-                <ModalFooter style={{ textAlign: "left" }}>
-                    Created by mrevening
+                <ModalFooter>
+                    {isLoggedIn ? <div>logged as {userName}</div> : null}
                 </ModalFooter>
             </Modal>
         </>

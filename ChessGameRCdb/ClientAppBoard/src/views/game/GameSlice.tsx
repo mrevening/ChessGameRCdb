@@ -13,6 +13,7 @@ import { ICreateGameResponseDTO } from './api/gameAPI/dto/ICreateGameResponseDTO
 import { IJoinGameRequestDTO } from './api/gameAPI/dto/IJoinGameRequestDTO'
 import { IJoinGameResponseDTO } from './api/gameAPI/dto/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
+import { IUpdateBoardDTO } from './api/boardAPI/dto/IUpdateBoardDTO'
 
 const initialState: IGameSlice = {
     status: {
@@ -35,11 +36,6 @@ const initialState: IGameSlice = {
 
 interface ClickSquare {
     square: ISquare
-}
-
-interface IMove {
-    game: FigureDTO[]
-    currentPlayerTurn: PlayerColor
 }
 
 interface IUpdateUserInfo {
@@ -101,6 +97,7 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         click: (state, action: PayloadAction<ClickSquare>) => {
+            console.log(state.status.thisPlayer?.name)
             const clickedSquare = action.payload.square;
             var figure = state.board.Figures.find(f => f.Square.Id === clickedSquare.Id);
             if (figure && figure.Color !== state.status.thisPlayer?.color) return
@@ -127,10 +124,10 @@ export const gameSlice = createSlice({
             state.board.Figures.find(f => f.Id === state.board.PionPromotion!.ActivePion.Id)!.Type = action.payload
             state.board.PionPromotion = undefined;
         },
-        updateBoard: (state, action: PayloadAction<IMove>) => {
+        updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
             console.log("updateGame")
-            const { game } = action.payload;
-            var result = game.map((figure, i) => ({
+            const board = action.payload.board;
+            var result = board.map((figure, i) => ({
                 Id: i,
                 Color: figure.player,
                 Type: figure.type,
@@ -141,13 +138,14 @@ export const gameSlice = createSlice({
             state.board.Figures = result
         },
         updateGuestInfo: (state, action: PayloadAction<IUpdateUserInfo>) => {
-            var guestColor = state.status.host?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
+            var hostColor = state.status.guest?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
             state.status.host = {
                 id: action.payload.id,
                 name: action.payload.name,
                 token: action.payload.token,
-                color: guestColor
+                color: hostColor
             }
+            state.status.opponent = state.status.host
         },
     },
     extraReducers: (builder) => {

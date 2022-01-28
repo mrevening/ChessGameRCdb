@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessGame.HubMove
 {
-    public class MoveMessage
+    public class UpdateBoardDTO
     {
         public IEnumerable<FigureDTO> Board { get; set; }
     }
