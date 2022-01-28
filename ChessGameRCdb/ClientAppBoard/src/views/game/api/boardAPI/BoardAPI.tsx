@@ -1,23 +1,13 @@
-import IFigure from "views/game/board/interface/IFigure"
-import ISquare from "views/game/board/interface/ISquare"
-import { Squares } from "views/game/board/repository/Squares"
 import ISaveMove from "../../board/interface/ISaveMove"
-import { FigureDTO } from "./dto/FigureDTO"
+import { IGetBoardResponseDTO } from "./dto/IGetBoardResponseDTO"
 
 export const BoardAPI = {
     async getBoard(gameId: number) {
-        return new Promise<{ figures: Array<IFigure> }>(resolve =>
-            fetch(`api/Board/GetBoard?gid=${gameId}`)
-                .then(response => response.json() as Promise<FigureDTO[]>)
-                .then((data) => {
-                var result = data.map((figure, i) => ({
-                    Id: i,
-                    Color: figure.player,
-                    Type: figure.type,
-                    Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                    EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
-                } as IFigure))
-                resolve({ figures: result })
+        return new Promise<{ response: IGetBoardResponseDTO }>(resolve =>
+            fetch(`api/Board/GetBoard?gameId=${gameId}`)
+            .then(response => response.json() as Promise<IGetBoardResponseDTO>)
+            .then((data) => {
+                resolve({ response: data })
             })
         );
     },

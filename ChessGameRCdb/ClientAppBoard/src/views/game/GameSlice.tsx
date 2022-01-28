@@ -12,6 +12,8 @@ import { ICreateGameRequestDTO } from './api/gameAPI/dto/ICreateGameRequestDTO'
 import { ICreateGameResponseDTO } from './api/gameAPI/dto/ICreateGameResponseDTO'
 import { IJoinGameRequestDTO } from './api/gameAPI/dto/IJoinGameRequestDTO'
 import { IJoinGameResponseDTO } from './api/gameAPI/dto/IJoinGameResponseDTO'
+import { IGetBoardRequestDTO } from './api/boardAPI/dto/IGetBoardRequestDTO'
+import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
 
 const initialState: IGameSlice = {
     status: {
@@ -19,10 +21,10 @@ const initialState: IGameSlice = {
         hostId: undefined,
         guestId: undefined,
         thisPlayer: undefined,
-        oponent: undefined
+        oponent: undefined,
+        currentPlayerTurn: PlayerColor.White,
     },
     board: {
-        currentPlayerTurn: PlayerColor.White,
         activeFigure: undefined,
         Squares: Squares,
         Figures: new Array<IFigure>(),
@@ -38,6 +40,7 @@ interface ClickSquare {
 
 interface IMove {
     game: FigureDTO[]
+    currentPlayerTurn: PlayerColor
 }
 
 export const createNewGame = createAsyncThunk(
@@ -60,9 +63,9 @@ export const joinGame = createAsyncThunk(
 
 export const getBoard = createAsyncThunk(
     'game/getBoard',
-    async (gameId: number, thunkAPI) => {
-        const response = await BoardAPI.getBoard(gameId)
-        return response.figures
+    async (gameId: number) => {
+        const result = await BoardAPI.getBoard( gameId )
+        return result.response
     }
 )
 
@@ -112,6 +115,7 @@ export const gameSlice = createSlice({
             const figure = state.board.Figures.find(x => x.Square.Name === state.board.activeFigure!.Square.Name)
             figure!.Square = clickedSquare
 
+            state.status.currentPlayerTurn = state.status.currentPlayerTurn !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
 
             //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
         },
@@ -150,11 +154,18 @@ export const gameSlice = createSlice({
             state.status.guestId = action.payload.guestId
         });
 
-        builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<Array<IFigure>>) => {
+        builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<IGetBoardResponseDTO>) => {
+            var figures = action.payload.figures.map((figure, i) => ({
+                Id: i,
+                Color: figure.player,
+                Type: figure.type,
+                Square: Squares.find(square => square.Name === figure.square) as ISquare,
+                EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
+            } as IFigure))
             state.board.activeFigure = undefined;
             state.board.destinationSquare = undefined;
             state.board.isValidMove = undefined;
-            state.board.Figures = action.payload
+            state.board.Figures = figures
         });
         builder.addCase(executeMove.fulfilled, (state, action) => {
 

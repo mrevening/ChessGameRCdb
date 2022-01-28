@@ -17,7 +17,7 @@ namespace ChessGame.Query
         {
             _context = boardContext;
         }
-        public IEnumerable<FigureDTO> GetBoard(int id)
+        public GetBoardResponseDTO GetBoard(int gameId)
         {
             var figures = new List<IFigure>();
             var logs = new List<Log>();
@@ -63,7 +63,7 @@ namespace ChessGame.Query
                 .Include(game => game.NotationLogs)
                     .ThenInclude(log => log.NotationLogComplexMove)
                         .ThenInclude(log => log.EndRow)
-                .Single(x => x.Id == id);
+                .Single(x => x.Id == gameId);
 
             foreach (var boardConfiguration in game.BoardConfiguration.BoardConfigurationToFigure)
             {
@@ -112,7 +112,8 @@ namespace ChessGame.Query
             var color = logs.Count % 2 == 0 ? Color.White : Color.Black;
 
             var board = new Board(figures, color);
-            return board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions(board)));
+            var result = board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions(board)));
+            return new GetBoardResponseDTO { Figures = result };
         }
     }
 }

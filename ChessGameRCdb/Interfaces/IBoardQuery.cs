@@ -5,6 +5,6 @@ namespace ChessGame.Interface
 {
     public interface IBoardQuery
     {
-        IEnumerable<FigureDTO> GetBoard(int id);
+        GetBoardResponseDTO GetBoard(int gameId);
     }
 }

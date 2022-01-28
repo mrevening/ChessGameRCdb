@@ -13,10 +13,10 @@ export const GameAPI = {
                 },
                 body: JSON.stringify(args),
             })
-                .then(response => response.json() as Promise<ICreateGameResponseDTO>)
-                .then((data) => {
-                    resolve({ response: data })
-                })
+            .then(response => response.json() as Promise<ICreateGameResponseDTO>)
+            .then((data) => {
+                resolve({ response: data })
+            })
         );
     },
     async joinGame(args: IJoinGameRequestDTO) {
@@ -28,10 +28,10 @@ export const GameAPI = {
                 },
                 body: JSON.stringify( args ),
             })
-                .then(response => response.json() as Promise<IJoinGameResponseDTO>)
-                .then((data) => {
-                    resolve({ response: data })
-                })
+            .then(response => response.json() as Promise<IJoinGameResponseDTO>)
+            .then((data) => {
+                resolve({ response: data })
+            })
         );
     }
 }

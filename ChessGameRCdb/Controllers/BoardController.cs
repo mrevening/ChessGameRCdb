@@ -25,11 +25,11 @@ namespace ChessGame.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<FigureDTO>> GetBoard(int gid)
+        public async Task<GetBoardResponseDTO> GetBoard(int gameId)
         {
-            var board = _boardQuery.GetBoard(gid);
-            await _moveHub.Clients.Group(gid.ToString()).ReceiveMove(new MoveMessage() { Board = board });
-            return _boardQuery.GetBoard(gid);
+            var board = _boardQuery.GetBoard(gameId);
+            await _moveHub.Clients.Group(gameId.ToString()).ReceiveMove(new MoveMessage() { Board = board.Figures });
+            return board;
         }
 
         [HttpPost]

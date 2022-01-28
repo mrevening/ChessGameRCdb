@@ -14,11 +14,11 @@ interface IStatus {
     guestId: string | undefined
     thisPlayer: IPlayer | undefined
     oponent: IPlayer | undefined
+    currentPlayerTurn: PlayerColor
 }
 
 interface IBoard {
     activeFigure: IFigure | undefined
-    currentPlayerTurn: PlayerColor
     Squares: Array<ISquare>
     Figures: Array<IFigure>
     PionPromotion: IPionPromotion | undefined
