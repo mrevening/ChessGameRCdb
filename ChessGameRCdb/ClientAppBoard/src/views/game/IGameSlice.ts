@@ -10,11 +10,11 @@ export default interface IGameSlice {
 
 interface IStatus {
     gameId: number | undefined
-    hostId: string | undefined
-    guestId: string | undefined
-    thisPlayer: IPlayer | undefined
-    oponent: IPlayer | undefined
     currentPlayerTurn: PlayerColor
+    host: IPlayer | undefined
+    guest: IPlayer | undefined
+    thisPlayer: IPlayer | undefined
+    opponent: IPlayer | undefined
 }
 
 interface IBoard {
@@ -27,6 +27,9 @@ interface IBoard {
 }
 
 interface IPlayer {
-    playerId: string | undefined
-    playerColor: PlayerColor | undefined
+    id: string | undefined
+    name: string | undefined
+    token: string | undefined
+    color: PlayerColor | undefined
 }
+enum ThisPlayer { Host, Guest }

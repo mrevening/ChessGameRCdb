@@ -13,14 +13,17 @@ const initialState: IMenuSlice = {
     showCreditsView: false,
     showGameView: true,
     isLoggedIn: false,
-    userId: undefined,
+    loggedInUser: undefined
 }
 
 
 export const loggedIn = createAsyncThunk(
     'menu/loggedIn',
-    async (loggedIn: ILoggedInRequest, thunkAPI) => {
-        var result = await menuAPI.createloggedInEntry(loggedIn)
+    async (request: ILoggedInRequest) => {
+        var result = await menuAPI.createloggedInEntry(request)
+        result.response.id = request.id
+        result.response.name = request.name
+        result.response.token = request.token
         return result.response
     }
 )
@@ -69,7 +72,11 @@ export const menuSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(loggedIn.fulfilled, (state, action: PayloadAction<ILoggedInResponse>) => {
-            state.userId = action.payload.userId
+            state.loggedInUser = {
+                userId: action.payload.id,
+                username: action.payload.name,
+                token: action.payload.token,
+            }
             state.isLoggedIn = true
             state.showLinks = true
         });

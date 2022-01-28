@@ -10,7 +10,7 @@ export const menuAPI = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    tokenId: loggedIn.tokenId,
+                    tokenId: loggedIn.token,
                     name: loggedIn.name
                 }),
             })

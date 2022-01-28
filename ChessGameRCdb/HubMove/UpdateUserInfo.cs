@@ -1,8 +1,9 @@
+﻿using ChessGame.DTO;
 using System.Collections.Generic;
 
-namespace ChessGame.DTO
+namespace ChessGame.HubMove
 {
-    public class LoggedInResponseDTO
+    public class UpdateUserInfo
     {
         public string Id { get; set; }
         public string Name { get; set; }

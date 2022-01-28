@@ -1,4 +1,5 @@
 export default interface ILoggedInRequest {
-    tokenId: String
-    name: String
+    id: string
+    name: string
+    token: string
 }

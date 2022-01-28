@@ -4,7 +4,8 @@ namespace ChessGame.DTO
 {
     public class LoggedInRequestDTO
     {
-        public string TokenId { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
+        public string Token { get; set; }
     }
 }

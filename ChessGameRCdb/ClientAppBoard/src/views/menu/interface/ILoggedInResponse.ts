@@ -1,3 +1,5 @@
 export default interface ILoggedInResponse {
-    userId: string
+    id: string
+    name: string
+    token: string
 }

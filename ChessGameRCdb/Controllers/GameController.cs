@@ -34,6 +34,7 @@ namespace ChessGame.Controllers
         public JoinGameResponseDTO JoinGame([FromBody] JoinGameRequestDTO request)
         {
             var result = _command.JoinGame(request);
+            _moveHub.Clients.Group(result.GameId.ToString()).UpdateGuestInfo(new UpdateUserInfo() { Id = result.GuestId, Name = result.GuestName, Token = result.GuestToken });
             return result;
         }
     }

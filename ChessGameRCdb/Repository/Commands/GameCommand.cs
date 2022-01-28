@@ -18,7 +18,9 @@ namespace ChessGame.Command
         {
             var newGame = new Game()
             {
-                HostId = request.HostId,
+                HostId = request.HostName,
+                HostName = request.HostName,
+                HostToken = request.HostToken,
                 HostColorId = request.HostColor,
                 BoardConfigurationId = 1
             };
@@ -26,7 +28,7 @@ namespace ChessGame.Command
             _boardcontext.Game.Add(newGame);
 
             _boardcontext.SaveChanges();
-            return new NewGameResponseDTO() { GameId = newGame.Id };
+            return new NewGameResponseDTO() { GameId = newGame.Id, HostId = request.HostId, HostName = request.HostName, HostToken = request.HostToken, HostColor = request.HostColor };
         }
         public JoinGameResponseDTO JoinGame(JoinGameRequestDTO request)
         {
@@ -34,7 +36,15 @@ namespace ChessGame.Command
             game.GuestId = request.GuestId;
              _boardcontext.SaveChanges();
 
-            return new JoinGameResponseDTO() { GameId = request.GameId, GuestId = request.GuestId, HostId = game.HostId, HostColorId = game.HostColorId };
+            return new JoinGameResponseDTO() { 
+                GameId = request.GameId, 
+                GuestId = request.GuestId, 
+                GuestName = game.GuestName,
+                GuestToken = game.GuestToken,
+                HostId = game.HostId,
+                HostName = game.HostName,
+                HostToken = game.HostToken,
+                HostColorId = game.HostColorId };
         }
     }
 }

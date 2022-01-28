@@ -4,7 +4,7 @@ import { Container } from 'reactstrap'
 import BoardRow from './components/BoardRow'
 import { useAppDispatch } from 'state/hooks'
 import { Rows } from './repository/Rows'
-import { getBoard, updateBoard } from '../GameSlice'
+import { getBoard, updateBoard, updateGuestInfo } from '../GameSlice'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
 interface IBoardProps {
@@ -29,6 +29,9 @@ export default function Board({ gameId }: IBoardProps) {
 
                 connection.on('ReceiveMove', message => {
                     dispatch(updateBoard(message))
+                });
+                connection.on('UpdateGuestInfo', message => {
+                    dispatch(updateGuestInfo(message))
                 });
                 connection.invoke("JoinRoom", gameId.toString())
             })

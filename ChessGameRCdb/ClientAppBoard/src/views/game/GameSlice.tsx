@@ -12,16 +12,15 @@ import { ICreateGameRequestDTO } from './api/gameAPI/dto/ICreateGameRequestDTO'
 import { ICreateGameResponseDTO } from './api/gameAPI/dto/ICreateGameResponseDTO'
 import { IJoinGameRequestDTO } from './api/gameAPI/dto/IJoinGameRequestDTO'
 import { IJoinGameResponseDTO } from './api/gameAPI/dto/IJoinGameResponseDTO'
-import { IGetBoardRequestDTO } from './api/boardAPI/dto/IGetBoardRequestDTO'
 import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
 
 const initialState: IGameSlice = {
     status: {
         gameId: undefined,
-        hostId: undefined,
-        guestId: undefined,
+        host: undefined,
+        guest: undefined,
         thisPlayer: undefined,
-        oponent: undefined,
+        opponent: undefined,
         currentPlayerTurn: PlayerColor.White,
     },
     board: {
@@ -43,12 +42,16 @@ interface IMove {
     currentPlayerTurn: PlayerColor
 }
 
+interface IUpdateUserInfo {
+    id: string
+    name: string
+    token: string
+}
+
 export const createNewGame = createAsyncThunk(
     'game/createNewGame',
     async (request: ICreateGameRequestDTO) => {
         var result = await GameAPI.createNewGame(request)
-        result.response.hostId = request.hostId
-        result.response.hostColor = request.hostColor
         return result.response
     }
 )
@@ -92,6 +95,7 @@ const saveMove = createAsyncThunk(
     }
 )
 
+
 export const gameSlice = createSlice({
     name: 'game',
     initialState,
@@ -99,7 +103,7 @@ export const gameSlice = createSlice({
         click: (state, action: PayloadAction<ClickSquare>) => {
             const clickedSquare = action.payload.square;
             var figure = state.board.Figures.find(f => f.Square.Id === clickedSquare.Id);
-            if (figure && figure.Color !== state.status.thisPlayer?.playerColor) return
+            if (figure && figure.Color !== state.status.thisPlayer?.color) return
             state.board.activeFigure = figure
         },
         release: (state, action: PayloadAction<ClickSquare>) => {
@@ -136,22 +140,29 @@ export const gameSlice = createSlice({
 
             state.board.Figures = result
         },
+        updateGuestInfo: (state, action: PayloadAction<IUpdateUserInfo>) => {
+            var guestColor = state.status.host?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
+            state.status.host = {
+                id: action.payload.id,
+                name: action.payload.name,
+                token: action.payload.token,
+                color: guestColor
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(createNewGame.fulfilled, (state, action: PayloadAction<ICreateGameResponseDTO>) => {
-            var oponnentColor = action.payload.hostColor !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
             state.status.gameId = action.payload.gameId
-            state.status.thisPlayer = { playerId: action.payload.hostId, playerColor: action.payload.hostColor }
-            state.status.oponent = { playerId: undefined, playerColor: oponnentColor }
-            state.status.hostId = action.payload.hostId
+            state.status.host = { id: action.payload.hostId, name: action.payload.hostName, token: action.payload.hostToken, color: action.payload.hostColor }
+            state.status.thisPlayer = state.status.host
         });
         builder.addCase(joinGame.fulfilled, (state, action: PayloadAction<IJoinGameResponseDTO>) => {
-            var color = action.payload.hostColorId !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
+            var guestColor = action.payload.hostColorId !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
             state.status.gameId = action.payload.gameId
-            state.status.thisPlayer = { playerId: action.payload.guestId, playerColor: color }
-            state.status.oponent = { playerId: action.payload.hostId, playerColor: action.payload.hostColorId }
-            state.status.hostId = action.payload.hostId
-            state.status.guestId = action.payload.guestId
+            state.status.host = { id: action.payload.hostId, name: action.payload.hostName, token: action.payload.hostToken, color: action.payload.hostColorId }
+            state.status.guest = { id: action.payload.guestId, name: action.payload.guestName, token: action.payload.guestToken, color: guestColor }
+            state.status.thisPlayer = state.status.guest
+            state.status.opponent = state.status.host
         });
 
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<IGetBoardResponseDTO>) => {
@@ -184,6 +195,6 @@ export const gameSlice = createSlice({
     }
 })
 
-export const { click, release, pionPromotion, updateBoard } = gameSlice.actions
+export const { click, release, pionPromotion, updateBoard, updateGuestInfo } = gameSlice.actions
 
 export default gameSlice.reducer

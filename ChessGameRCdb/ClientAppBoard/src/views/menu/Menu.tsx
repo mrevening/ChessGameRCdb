@@ -19,7 +19,7 @@ export default function Menu() {
         <>
             <Modal isOpen={true} style={{ textAlign: "center" }} scrollable={false} centered={true} size="sm">
                 <ModalHeader style={{ textAlign: "center" }}>
-                    Jakub's Personal Chessboard!
+                    JW's Cheessboard!
                 </ModalHeader>
                 <ModalBody>
                     {
@@ -35,7 +35,7 @@ export default function Menu() {
                 </ModalBody>
 
                 <ModalFooter style={{ textAlign: "left" }}>
-                    @Copyright 2022 mrevening
+                    Created by mrevening
                 </ModalFooter>
             </Modal>
         </>

@@ -10,11 +10,13 @@ function Login() {
     const dispatch = useAppDispatch();
 
     const onSuccess = (res: any) => {
-        var tokenId = res.tokenId;
+        var userId = res.profileObj.googleId;
         var name = res.profileObj.name;
+        var tokenId = res.tokenId;
 
         dispatch(loggedIn({
-            tokenId: tokenId,
+            id: userId,
+            token: tokenId,
             name: name
         }))
 
