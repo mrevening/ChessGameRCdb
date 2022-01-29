@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ChessGame.Logic
 {
-    internal class Castling : IMove
+    internal class Castling 
     {
 
     }

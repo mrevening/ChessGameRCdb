@@ -7,7 +7,7 @@ namespace ChessGame.Logic
 {
     public interface IMove
     {
-        //Prioritet
-        //bool IsMoveAllowed();
+        //MoveType MoveType { get; set; }
+        IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction);
     }
 }

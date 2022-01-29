@@ -11,8 +11,8 @@ namespace ChessGame.Logic
 
         public Board(IEnumerable<IFigure> startBoardSetup, Color currentPlayerColor)
         {
-            Figures = new List<IFigure>(startBoardSetup);
             CurrentPlayerColor = currentPlayerColor;
+            Figures = new List<IFigure>(startBoardSetup);
         }
 
         public bool IsPlayersFigure(Color player, Coordinate endPoint)

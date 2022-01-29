@@ -9,7 +9,8 @@ namespace ChessGame.Logic
         public abstract FigureType FigureType { get; }
         public Color Color { get; private set; }
         public Coordinate Coordinate { get; private set; }
-        public abstract IEnumerable<IMove> PossibleMoves { get; }
+        public abstract List<IMove> MoveTypes { get; }
+        public List<MoveOption> MoveOptions { get; set; }
 
         public static Figure WhitePawn = new Pawn(Color.White);
         public static Figure WhiteKnight = new Knight(Color.White);
@@ -24,12 +25,10 @@ namespace ChessGame.Logic
         public static Figure BlackQueen = new Queen(Color.Black);
         public static Figure BlackKing = new King(Color.Black);
 
-        public Figure(Color color) { Color = color; }
-        public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; }
-        public Figure(Color color, Column column, Row row) { Color = color; Coordinate = new Coordinate(column, row); }
+        public Figure(Color color) { Color = color; MoveOptions = new List<MoveOption>(); }
+        public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; MoveOptions = new List<MoveOption>(); }
+        public Figure(Color color, Column column, Row row) { Color = color; Coordinate = new Coordinate(column, row); MoveOptions = new List<MoveOption>(); }
         public abstract bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint);
-        public abstract IEnumerable<MoveOption> MoveOptions(IBoard board);
-        public virtual bool IsAttackingOpponentsKingOnPlayersMove(IBoard board) => false;
         public bool IsInPosition(Coordinate position) => Coordinate == position;
         public void SetPosition(Coordinate position) => Coordinate = new Coordinate(position.Column, position.Row);
         public bool IsPlayersFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer && Coordinate == position;
@@ -40,19 +39,5 @@ namespace ChessGame.Logic
         public static bool operator == (Figure lf, Figure rf) => lf.Equals(rf);
         public static bool operator != (Figure lf, Figure rf) => !lf.Equals(rf);
         public override int GetHashCode() => (FigureType, Color, Coordinate).GetHashCode();
-        protected void AddLongDistanceActions(List<MoveOption> allMoveOptions, IBoard board, IEnumerable<Coordinate> coordinates)
-        {
-            var isLastMoveCapture = false;
-            var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c =>
-            {
-                if (isLastMoveCapture) return false;
-                var figureInPosition = board.GetFigure(c);
-                if (figureInPosition != null && figureInPosition.Color != Color) isLastMoveCapture = true;
-                return figureInPosition == null || figureInPosition.Color != Color;
-            }
-            );
-            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(c, ActionType.Move)));
-            if (isLastMoveCapture) allMoveOptions.Last().AddAction(ActionType.Capture);
-        }
     }
 }

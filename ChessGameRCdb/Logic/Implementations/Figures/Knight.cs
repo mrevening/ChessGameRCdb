@@ -6,7 +6,7 @@ namespace ChessGame.Logic
     internal class Knight : Figure
     {
         public override FigureType FigureType { get { return FigureType.Knight; } }
-        public override IEnumerable<IMove> PossibleMoves { get => new List<IMove>() { MoveType.DiagonalAllDirection }; }
+        public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
 
         public Knight(Color player) : base(player) { }
         public Knight(Color player, Column column, Row row) : base(player, column, row) { }
@@ -15,14 +15,6 @@ namespace ChessGame.Logic
         public override bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint)
         {
             return true;
-        }
-        public override IEnumerable<MoveOption> MoveOptions(IBoard board)
-        {
-            if (board.IsEnemysFigure(board.CurrentPlayerColor, Coordinate))
-            {
-                return new List<MoveOption>();
-            }
-            return new List<MoveOption>();
         }
     }
 }

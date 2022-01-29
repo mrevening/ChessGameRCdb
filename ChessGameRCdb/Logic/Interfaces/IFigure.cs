@@ -7,13 +7,12 @@ namespace ChessGame.Logic
         Color Color { get; }
         Coordinate Coordinate { get; }
         FigureType FigureType { get; }
-        IEnumerable<IMove> PossibleMoves { get; }
-        IEnumerable<MoveOption> MoveOptions(IBoard board);
+        List<IMove> MoveTypes { get; }
+        List<MoveOption> MoveOptions { get; set; }
         bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint);
         bool IsPlayersFigure(Color player, Coordinate endPoint);
         bool IsEnemysFigure(Color player, Coordinate endPoint);
         bool IsInPosition(Coordinate endPoint);
         void SetPosition(Coordinate endPoint);
-        bool IsAttackingOpponentsKingOnPlayersMove(IBoard board);
     }
 }

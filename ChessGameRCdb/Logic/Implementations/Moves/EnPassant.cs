@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ChessGame.Logic
 {
-    internal class EnPassant : IMove
+    internal class EnPassant
     {
 
     }

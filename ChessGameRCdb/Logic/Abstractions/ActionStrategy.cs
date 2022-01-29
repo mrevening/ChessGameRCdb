@@ -1,4 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace ChessGame.Logic
 {
@@ -15,12 +17,13 @@ namespace ChessGame.Logic
         public ActionStrategy(IBoard board)
         {
             InputBoard = board;
+            InputBoard.Figures.ForEach(x => x.MoveTypes.ForEach(y =>  x.MoveOptions.AddRange(y.GetMoveOptions(InputBoard, x, Direction))));
         }
 
-        public void SelectFigure(Coordinate startPoint) 
+        public void SelectFigure(Coordinate startPoint)
         {
-            if (!InputBoard.IsPlayersFigure(CurrentPlayer, startPoint))  throw new NotPlayersFigureException();
-            CurrentlySelectedFigure = InputBoard.GetFigure(startPoint); 
+            if (!InputBoard.IsPlayersFigure(CurrentPlayer, startPoint)) throw new NotPlayersFigureException();
+            CurrentlySelectedFigure = InputBoard.GetFigure(startPoint);
         }
         public void PrimaryCheck(Coordinate endPoint)
         {
@@ -42,7 +45,6 @@ namespace ChessGame.Logic
                 if (endGameScenario.VerifyScenario(OutputBoard)) GeneratedState = endGameScenario.Type;
             }
         }
-
         private void RewriteBoard()
         {
             OutputBoard = new Board(ImmutableList.CreateRange(InputBoard.Figures).ToImmutableList(), CurrentPlayer);

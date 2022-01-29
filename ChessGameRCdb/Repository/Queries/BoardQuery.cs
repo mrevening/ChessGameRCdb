@@ -111,8 +111,12 @@ namespace ChessGame.Query
 
             var color = logs.Count % 2 == 0 ? Color.White : Color.Black;
 
-            var board = new Board(figures, color);
-            var result = board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions(board)));
+            var board = color == Color.White
+                ? new MoveWhiteFigure(new Board(figures, color)).InputBoard
+                : new MoveBlackFigure(new Board(figures, color)).InputBoard;
+
+            var result = board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+
             return new GetBoardResponseDTO { Figures = result };
         }
     }
