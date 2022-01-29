@@ -1,0 +1,1 @@
+export enum ActionType { Move = 1, Capture, EnPassant, Promotion, Castle, Check, Mate }

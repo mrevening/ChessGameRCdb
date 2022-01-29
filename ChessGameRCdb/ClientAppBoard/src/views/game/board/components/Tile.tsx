@@ -22,7 +22,7 @@ export default function Tile({ col, row }: TileProps) {
     const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)
     const isActiveFigure = activeFigure && activeFigure.Square === square
     const figureImg = figure && FigureImagePaths.find(p => p.Color === figure.Color && p.FigureType === figure.Type)?.ImgPath
-    const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Column === square.Column && af.Row === square.Row)
+    const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Square.Column === square.Column && af.Square.Row === square.Row)
 
     const colorClass = square.Color === Color.Dark ? 'blackTile' : 'whiteTile'
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''

@@ -16,12 +16,12 @@ namespace ChessGame.Logic
 
         public override string ToString() => Name;
 
-        public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
+        public static List<T> GetAll<T>() where T : Enumeration =>
             typeof(T).GetFields(BindingFlags.Public |
                                 BindingFlags.Static |
                                 BindingFlags.DeclaredOnly)
                         .Select(f => f.GetValue(null))
-                        .Cast<T>();
+                        .Cast<T>().ToList();
 
         public override bool Equals(object obj)
         {

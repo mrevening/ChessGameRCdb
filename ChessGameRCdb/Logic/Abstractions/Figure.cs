@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessGame.Logic
 {
@@ -27,7 +28,8 @@ namespace ChessGame.Logic
         public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; }
         public Figure(Color color, Column column, Row row) { Color = color; Coordinate = new Coordinate(column, row); }
         public abstract bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint);
-        public abstract IEnumerable<Coordinate> MoveOptions(IBoard board);
+        public abstract IEnumerable<MoveOption> MoveOptions(IBoard board);
+        public virtual bool IsAttackingOpponentsKingOnPlayersMove(IBoard board) => false;
         public bool IsInPosition(Coordinate position) => Coordinate == position;
         public void SetPosition(Coordinate position) => Coordinate = new Coordinate(position.Column, position.Row);
         public bool IsPlayersFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer && Coordinate == position;
@@ -38,5 +40,19 @@ namespace ChessGame.Logic
         public static bool operator == (Figure lf, Figure rf) => lf.Equals(rf);
         public static bool operator != (Figure lf, Figure rf) => !lf.Equals(rf);
         public override int GetHashCode() => (FigureType, Color, Coordinate).GetHashCode();
+        protected void AddLongDistanceActions(List<MoveOption> allMoveOptions, IBoard board, IEnumerable<Coordinate> coordinates)
+        {
+            var isLastMoveCapture = false;
+            var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c =>
+            {
+                if (isLastMoveCapture) return false;
+                var figureInPosition = board.GetFigure(c);
+                if (figureInPosition != null && figureInPosition.Color != Color) isLastMoveCapture = true;
+                return figureInPosition == null || figureInPosition.Color != Color;
+            }
+            );
+            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(c, ActionType.Move)));
+            if (isLastMoveCapture) allMoveOptions.Last().AddAction(ActionType.Capture);
+        }
     }
 }

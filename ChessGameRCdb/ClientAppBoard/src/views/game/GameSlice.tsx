@@ -13,6 +13,8 @@ import { IJoinGameRequestDTO } from './api/gameAPI/dto/IJoinGameRequestDTO'
 import { IJoinGameResponseDTO } from './api/gameAPI/dto/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
 import { IUpdateBoardDTO } from './api/boardAPI/dto/IUpdateBoardDTO'
+import IActionMove from './board/interface/IActionMove'
+import { ActionType } from './board/enum/ActionType'
 
 const initialState: IGameSlice = {
     status: {
@@ -62,7 +64,7 @@ export const joinGame = createAsyncThunk(
 export const getBoard = createAsyncThunk(
     'game/getBoard',
     async (gameId: number) => {
-        const result = await BoardAPI.getBoard( gameId )
+        const result = await BoardAPI.getBoard(gameId)
         return result.response
     }
 )
@@ -105,7 +107,7 @@ export const gameSlice = createSlice({
         release: (state, action: PayloadAction<ClickSquare>) => {
             console.log("relase")
             const clickedSquare = action.payload.square
-            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Name === clickedSquare.Name)!
+            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Square.Name === clickedSquare.Name)!
             state.board.isValidMove = isValidMove
             if (!isValidMove) {
                 state.board.activeFigure = undefined;
@@ -131,7 +133,10 @@ export const gameSlice = createSlice({
                 Color: figure.player,
                 Type: figure.type,
                 Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
+                EnableMoves: figure.possibleMoves.map(x => {
+                    var square = Squares.find(square => square.Name === x.square)
+                    return { Square: square, ActionType: x.actionTypes  } as IActionMove
+                })
             } as IFigure))
 
             state.board.Figures = result
@@ -168,7 +173,10 @@ export const gameSlice = createSlice({
                 Color: figure.player,
                 Type: figure.type,
                 Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                EnableMoves: figure.possibleMoves?.map(eM => Squares.find(square => square.Name === eM) as ISquare)
+                EnableMoves: figure.possibleMoves.map(x => {
+                    var square = Squares.find(square => square.Name === x.square)
+                    return { Square: square, ActionType: x.actionTypes } as IActionMove
+                })
             } as IFigure))
             state.board.activeFigure = undefined;
             state.board.destinationSquare = undefined;

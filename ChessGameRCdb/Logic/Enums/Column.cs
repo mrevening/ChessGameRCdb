@@ -37,13 +37,21 @@ namespace ChessGame.Logic
             if (origin == A) throw new Exception("Cannot perform -- operation on first column");
             return FromValue<Column>(origin.Id - 1);
         }
+        public static bool operator >=(Column left, Column rigth)
+        {
+            return left.Id >= rigth.Id;
+        }
         public static bool operator <= (Column left, Column rigth)
         {
             return left.Id <= rigth.Id;
         }
-        public static bool operator >=(Column left, Column rigth)
+        public static bool operator >(Column left, Column rigth)
         {
-            return left.Id >= rigth.Id;
+            return left.Id > rigth.Id;
+        }
+        public static bool operator <(Column left, Column rigth)
+        {
+            return left.Id < rigth.Id;
         }
     }
 }

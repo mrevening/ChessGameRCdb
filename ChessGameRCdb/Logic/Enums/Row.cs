@@ -1,4 +1,5 @@
 ﻿using ChessGame.Logic;
+using System;
 
 namespace ChessGame.Logic
 {
@@ -14,5 +15,42 @@ namespace ChessGame.Logic
         public static Row Eight = new Row(8, nameof(Eight));
 
         public Row(int id, string name) : base(id, name) { }
+
+        public static Row operator +(Row left, int right)
+        {
+            if (left.Id + right > Eight.Id) throw new Exception("Cannot perform + operation");
+            return FromValue<Row>(left.Id + right);
+        }
+        public static Row operator -(Row left, int right)
+        {
+            if (left.Id - right < One.Id) throw new Exception("Cannot perform - operation");
+            return FromValue<Row>(left.Id - right);
+        }
+        public static Row operator ++(Row origin)
+        {
+            if (origin == Eight) throw new Exception("Cannot perform ++ operation on last Row");
+            return FromValue<Row>(origin.Id + 1);
+        }
+        public static Row operator --(Row origin)
+        {
+            if (origin == One) throw new Exception("Cannot perform -- operation on first Row");
+            return FromValue<Row>(origin.Id - 1);
+        }
+        public static bool operator >=(Row left, Row rigth)
+        {
+            return left.Id >= rigth.Id;
+        }
+        public static bool operator <=(Row left, Row rigth)
+        {
+            return left.Id <= rigth.Id;
+        }
+        public static bool operator >(Row left, Row rigth)
+        {
+            return left.Id > rigth.Id;
+        }
+        public static bool operator <(Row left, Row rigth)
+        {
+            return left.Id < rigth.Id;
+        }
     }
 }

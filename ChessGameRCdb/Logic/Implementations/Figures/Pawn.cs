@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessGame.Logic
 {
@@ -15,9 +16,25 @@ namespace ChessGame.Logic
         {
             return true;
         }
-        public override IEnumerable<Coordinate> MoveOptions(IBoard board)
+        public override IEnumerable<MoveOption> MoveOptions(IBoard board)
         {
-            return new List<Coordinate>() { };
+            if (board.IsEnemysFigure(board.CurrentPlayerColor, Coordinate))
+            {
+                return new List<MoveOption>();
+            }
+
+            List<MoveOption> allMoveOptions = new List<MoveOption>();
+            var coordinatesUp = Enumeration.GetAll<Row>().Where(row => row > Coordinate.Row).Select(r => new Coordinate(Coordinate.Column, r));
+            var coordinatesDown = Enumeration.GetAll<Row>().Where(row => row < Coordinate.Row).Select(r => new Coordinate(Coordinate.Column, r));
+            var coordinatesLeft = Enumeration.GetAll<Column>().Where(col => col > Coordinate.Column).Select(c => new Coordinate(c, Coordinate.Row));
+            var coordinatesRight = Enumeration.GetAll<Column>().Where(col => col < Coordinate.Column).Select(c => new Coordinate(c, Coordinate.Row));
+
+            AddLongDistanceActions(allMoveOptions, board, coordinatesUp);
+            AddLongDistanceActions(allMoveOptions, board, coordinatesDown);
+            AddLongDistanceActions(allMoveOptions, board, coordinatesLeft);
+            AddLongDistanceActions(allMoveOptions, board, coordinatesRight);
+
+            return allMoveOptions;
         }
     }
 }
