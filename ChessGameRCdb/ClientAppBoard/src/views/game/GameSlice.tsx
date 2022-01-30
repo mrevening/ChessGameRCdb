@@ -117,8 +117,8 @@ export const gameSlice = createSlice({
             const figure = state.board.Figures.find(x => x.Square.Name === state.board.activeFigure!.Square.Name)
             figure!.Square = clickedSquare
 
-            var actionTypes = figure?.EnableMoves?.find(x => x.Square == clickedSquare)?.ActionType
-            actionTypes?.map(a => { if (a === ActionType.Promotion) state.board.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.board.activeFigure! } })
+            var actionTypes = figure?.EnableMoves?.find(x => x.Square === clickedSquare)?.ActionType
+            actionTypes?.map(a => { if (a === ActionType.Promotion) return state.board.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.board.activeFigure! } })
 
             state.status.currentPlayerTurn = state.status.currentPlayerTurn !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
 
