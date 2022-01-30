@@ -9,10 +9,11 @@ namespace ChessGame.Logic
         public List<Log> Logs { get; private set; }
         public Color CurrentPlayerColor { get; private set; }
 
-        public Board(IEnumerable<IFigure> startBoardSetup, Color currentPlayerColor)
+        public Board(IEnumerable<IFigure> startBoardSetup, Color currentPlayerColor, List<Log> logs)
         {
             CurrentPlayerColor = currentPlayerColor;
             Figures = new List<IFigure>(startBoardSetup);
+            Logs = logs;
         }
 
         public bool IsPlayersFigure(Color player, Coordinate endPoint) => Figures.Any(x => x.IsPlayersFigure(player, endPoint));

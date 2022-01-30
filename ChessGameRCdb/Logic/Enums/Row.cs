@@ -18,22 +18,22 @@ namespace ChessGame.Logic
 
         public static Row operator +(Row left, int right)
         {
-            if (left.Id + right > Eight.Id) throw new Exception("Cannot perform + operation");
+            if (left.Id + right > Eight.Id) return null;
             return FromValue<Row>(left.Id + right);
         }
         public static Row operator -(Row left, int right)
         {
-            if (left.Id - right < One.Id) throw new Exception("Cannot perform - operation");
+            if (left.Id - right < One.Id) return null;
             return FromValue<Row>(left.Id - right);
         }
         public static Row operator ++(Row origin)
         {
-            if (origin == Eight) throw new Exception("Cannot perform ++ operation on last Row");
+            if (origin == Eight) return null;
             return FromValue<Row>(origin.Id + 1);
         }
         public static Row operator --(Row origin)
         {
-            if (origin == One) throw new Exception("Cannot perform -- operation on first Row");
+            if (origin == One) return null;
             return FromValue<Row>(origin.Id - 1);
         }
         public static bool operator >=(Row left, Row rigth)

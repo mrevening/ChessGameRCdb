@@ -12,14 +12,14 @@ namespace ChessGame.Logic
 
             var c = figure.Coordinate;
 
-            var upRight = new Coordinate(c.Column.Id + 1, c.Row.Id + 2);
-            var upLeft = new Coordinate(c.Column.Id - 1, c.Row.Id + 2);
-            var leftUp = new Coordinate(c.Column.Id - 2, c.Row.Id + 1);
-            var leftDown = new Coordinate(c.Column.Id - 2, c.Row.Id - 1);
-            var downLeft = new Coordinate(c.Column.Id - 1, c.Row.Id - 2);
-            var downRight = new Coordinate(c.Column.Id + 1, c.Row.Id - 2);
-            var rightDown = new Coordinate(c.Column.Id + 2, c.Row.Id - 1);
-            var rightUp = new Coordinate(c.Column.Id + 2, c.Row.Id + 1);
+            var upRight = new Coordinate(c.Column + 1, c.Row + 2);
+            var upLeft = new Coordinate(c.Column - 1, c.Row + 2);
+            var leftUp = new Coordinate(c.Column - 2, c.Row + 1);
+            var leftDown = new Coordinate(c.Column - 2, c.Row - 1);
+            var downLeft = new Coordinate(c.Column - 1, c.Row - 2);
+            var downRight = new Coordinate(c.Column + 1, c.Row - 2);
+            var rightDown = new Coordinate(c.Column + 2, c.Row - 1);
+            var rightUp = new Coordinate(c.Column + 2, c.Row + 1);
 
             var possibleCoordinates = new List<Coordinate>() { upRight, upLeft, leftUp, leftDown, downLeft, downRight, rightDown, rightUp };
             possibleCoordinates.RemoveAll(x => x.Column == null || x.Row == null || board.IsPlayersFigure(figure.Color, x));

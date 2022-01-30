@@ -47,7 +47,7 @@ namespace ChessGame.Logic
         }
         private void RewriteBoard()
         {
-            OutputBoard = new Board(ImmutableList.CreateRange(InputBoard.Figures).ToImmutableList(), CurrentPlayer);
+            OutputBoard = new Board(ImmutableList.CreateRange(InputBoard.Figures).ToImmutableList(), CurrentPlayer, InputBoard.Logs);
         }
     }
 }

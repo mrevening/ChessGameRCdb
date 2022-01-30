@@ -12,7 +12,6 @@ namespace ChessGame.Logic
             var isUp = direction == Direction.Up;
             var initRow = isUp ? Row.Two : Row.Seven;
             if (figure.Coordinate.Row != initRow) return allMoveOptions;
-            if (board.IsEnemysFigure(board.CurrentPlayerColor, figure.Coordinate)) return allMoveOptions;
 
             var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => isUp ? row > figure.Coordinate.Row : row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).Take(2);
 

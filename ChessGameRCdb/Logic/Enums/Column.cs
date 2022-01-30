@@ -19,22 +19,22 @@ namespace ChessGame.Logic
 
         public static Column operator +(Column left, int right)
         {
-            if (left.Id + right > H.Id) throw new Exception("Cannot perform + operation");
+            if (left.Id + right > H.Id) return null;
             return FromValue<Column>(left.Id + right);
         }
         public static Column operator -(Column left, int right)
         {
-            if (left.Id - right < A.Id) throw new Exception("Cannot perform - operation");
+            if (left.Id - right < A.Id) return null;
             return FromValue<Column>(left.Id - right);
         }
         public static Column operator ++(Column origin)
         {
-            if (origin == H) throw new Exception("Cannot perform ++ operation on last column");
+            if (origin == H) return null;
             return FromValue<Column>(origin.Id + 1);
         }
         public static Column operator --(Column origin)
         {
-            if (origin == A) throw new Exception("Cannot perform -- operation on first column");
+            if (origin == A) return null;
             return FromValue<Column>(origin.Id - 1);
         }
         public static bool operator >=(Column left, Column rigth)
