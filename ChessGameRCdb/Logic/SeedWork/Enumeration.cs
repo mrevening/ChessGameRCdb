@@ -23,8 +23,8 @@ namespace ChessGame.Logic
                         .Select(f => f.GetValue(null))
                         .Cast<T>().ToList();
 
-        public static List<T> GetAll<T>(bool aesc = true) where T : Enumeration => aesc 
-            ? typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly).Select(f => f.GetValue(null)).Cast<T>().ToList()
+        public static List<T> GetAll<T>(bool asc = true) where T : Enumeration => asc 
+            ? typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly).Select(f => f.GetValue(null)).Cast<T>().OrderBy(x => x.Id).ToList()
             : typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly).Select(f => f.GetValue(null)).Cast<T>().OrderByDescending(x => x.Id).ToList();
 
         public override bool Equals(object obj)

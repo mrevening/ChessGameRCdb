@@ -14,7 +14,7 @@ namespace ChessGame.Logic
             if (figure.Coordinate.Row != initRow) return allMoveOptions;
             if (board.IsEnemysFigure(board.CurrentPlayerColor, figure.Coordinate)) return allMoveOptions;
 
-            var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => row > figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).Take(2);
+            var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => isUp ? row > figure.Coordinate.Row : row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).Take(2);
 
             AddLongDistanceWithoutCaptureActions(allMoveOptions, board, figure, coordinatesUp);
             return allMoveOptions;
