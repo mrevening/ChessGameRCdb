@@ -6,7 +6,7 @@ namespace ChessGame.Logic
     internal class Pawn : Figure
     {
         public override FigureType FigureType { get { return FigureType.Pawn; } }
-        public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
+        public override List<IMove> MoveTypes { get => new List<IMove>() { new TwoTilesForward() }; }
 
         public Pawn(Color player) : base(player) { }
         public Pawn(Color player, Column column, Row row) : base(player, column, row) { }

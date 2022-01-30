@@ -2,7 +2,7 @@
 {
     public class ActionType : Enumeration
     {
-        public static ActionType Move = new ActionType(1, nameof(Capture));
+        public static ActionType Move = new ActionType(1, nameof(Move));
         public static ActionType Capture = new ActionType(2, nameof(Capture));
         public static ActionType EnPassant = new ActionType(3, nameof(EnPassant));
         public static ActionType Promotion = new ActionType(4, nameof(Promotion));

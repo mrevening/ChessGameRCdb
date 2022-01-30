@@ -15,18 +15,11 @@ namespace ChessGame.Logic
             Figures = new List<IFigure>(startBoardSetup);
         }
 
-        public bool IsPlayersFigure(Color player, Coordinate endPoint)
-        {
-            return Figures.Any(x => x.IsPlayersFigure(player, endPoint));
-        }
-        public bool IsEnemysFigure(Color player, Coordinate endPoint)
-        {
-            return Figures.Any(x => x.IsEnemysFigure(player, endPoint));
-        }
-        public bool IsEmptyField(Coordinate endPoint) => !Figures.Any(x => x.IsInPosition(endPoint));
-
+        public bool IsPlayersFigure(Color player, Coordinate endPoint) => Figures.Any(x => x.IsPlayersFigure(player, endPoint));
+        public bool IsEnemysFigure(Color player, Coordinate endPoint) => Figures.Any(x => x.IsEnemysFigure(player, endPoint));
         public IFigure? GetFigure(Column column, Row row) => GetFigure(new Coordinate(column, row));
-        public IFigure? GetFigure(Coordinate endPoint) { return Figures.FirstOrDefault(x => x.IsInPosition(endPoint)); }
+        public IFigure? GetFigure(Coordinate endPoint) => Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
+        public bool IsEmptyField(Coordinate c) => GetFigure(c) == null;
         public void MoveFigure(IFigure currentFigure, Coordinate endPoint)
         {
             var enemyFigure = GetFigure(endPoint);

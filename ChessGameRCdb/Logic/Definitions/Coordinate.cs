@@ -14,8 +14,11 @@ namespace ChessGame.Logic
         }
         public Coordinate(int column, int row)
         {
-            Column = Enumeration.FromValue<Column>(column);
-            Row = Enumeration.FromValue<Row>(row); ;
+            if (column >= Column.A.Id && column <= Column.H.Id && row >= Row.One.Id && row <= Row.Eight.Id)
+            {
+                Column = Enumeration.FromValue<Column>(column);
+                Row = Enumeration.FromValue<Row>(row);
+            }
         }
 
         public override string ToString() => Column.ToString() + Row.Id.ToString(); 
