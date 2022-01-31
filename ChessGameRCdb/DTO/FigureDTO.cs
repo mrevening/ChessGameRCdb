@@ -6,20 +6,15 @@ namespace ChessGame.DTO
 {
     public class FigureDTO
     {
-        public int Id { get; set; }
-
         public int Type { get; set; }
-
-        public int Player { get; set; }
-
+        public int Color { get; set; }
         public string Square { get; set; }
         public IEnumerable<MoveOptionDTO> PossibleMoves { get; set; }
 
-        public FigureDTO(int id, int type, int player, Coordinate square, IEnumerable<MoveOption> possibleMoves) 
+        public FigureDTO(int type, int player, Coordinate square, IEnumerable<MoveOption> possibleMoves) 
         {
-            Id = id;
             Type = type;
-            Player = player;
+            Color = player;
             Square = square.ToString();
             PossibleMoves = possibleMoves.Select(x => new MoveOptionDTO(x));
         }

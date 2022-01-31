@@ -13,7 +13,7 @@ import { IJoinGameRequestDTO } from './api/gameAPI/dto/IJoinGameRequestDTO'
 import { IJoinGameResponseDTO } from './api/gameAPI/dto/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
 import { IUpdateBoardDTO } from './api/boardAPI/dto/IUpdateBoardDTO'
-import IActionMove from './board/interface/IActionMove'
+import IMoveOption from './board/interface/IActionMove'
 
 const initialState: IGameSlice = {
     status: {
@@ -106,7 +106,7 @@ export const gameSlice = createSlice({
         release: (state, action: PayloadAction<ClickSquare>) => {
             console.log("relase")
             const clickedSquare = action.payload.square
-            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Square.Name === clickedSquare.Name)!
+            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Log?.endPoint?.Name === clickedSquare.Name)!
             state.board.isValidMove = isValidMove
             if (!isValidMove) {
                 state.board.activeFigure = undefined;
@@ -130,15 +130,22 @@ export const gameSlice = createSlice({
         updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
             console.log("updateGame")
             const board = action.payload.board;
-            var result = board.map((figure, i) => ({
-                Id: i,
-                Color: figure.player,
+            var result = board.map((figure) => ({
+                Color: figure.color,
                 Type: figure.type,
                 Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                EnableMoves: figure.possibleMoves.map(x => {
-                    var square = Squares.find(square => square.Name === x.square)
-                    return { Square: square, ActionType: x.actionTypes  } as IActionMove
-                })
+                EnableMoves: figure.possibleMoves && figure.possibleMoves.map(x => ({
+                    ActionType: x.action,
+                    Log: {
+                        startPoint: Squares.find(s => s.Name === x.log.startPoint),
+                        endPoint: Squares.find(s => s.Name === x.log.endPoint),
+                        logSupplement: x.log.logSupplement?.map(ls => ({
+                            startPoint: Squares.find(z => z.Name === ls.startPoint),
+                            endPoint: Squares.find(z => z.Name === ls.endPoint),
+                            figure: ls.figure && FigureType[ls.figure]
+                        }))
+                    }
+                }) as IMoveOption)
             } as IFigure))
 
             state.board.Figures = result
@@ -172,14 +179,22 @@ export const gameSlice = createSlice({
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<IGetBoardResponseDTO>) => {
             var figures = action.payload.figures.map((figure, i) => ({
                 Id: i,
-                Color: figure.player,
+                Color: figure.color,
                 Type: figure.type,
-                Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                EnableMoves: figure.possibleMoves.map(x => {
-                    var square = Squares.find(square => square.Name === x.square)
-                    return { Square: square, ActionType: x.actionTypes } as IActionMove
-                })
-            } as IFigure))
+                Square: Squares.find(square => square.Name === figure.square),
+                EnableMoves: figure.possibleMoves && figure.possibleMoves.map(x => ({
+                    ActionType: x.action,
+                    Log: {
+                        startPoint: Squares.find(s => s.Name === x.log.startPoint),
+                        endPoint: Squares.find(s => s.Name === x.log.endPoint),
+                        logSupplement: x.log.logSupplement?.map(ls => ({
+                            startPoint: Squares.find(z => z.Name === ls.startPoint),
+                            endPoint: Squares.find(z => z.Name === ls.endPoint),
+                            figure: ls.figure && FigureType[ls.figure]
+                        }))
+                    }
+                }) as IMoveOption)
+            }) as IFigure)
             state.board.activeFigure = undefined;
             state.board.destinationSquare = undefined;
             state.board.isValidMove = undefined;

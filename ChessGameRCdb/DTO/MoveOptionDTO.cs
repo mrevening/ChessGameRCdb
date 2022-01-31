@@ -6,13 +6,13 @@ namespace ChessGame.DTO
 {
     public class MoveOptionDTO
     {
-        public string Square { get; set; }
-        public IEnumerable<int> ActionTypes { get; set; }
-
-        public MoveOptionDTO(MoveOption moveOption) 
+        public int Action { get; set; }
+        public LogDTO Log { get; set; }
+        
+        public MoveOptionDTO(MoveOption m) 
         {
-            Square = moveOption.Coordinate.ToString();
-            ActionTypes = moveOption.Actions.Select(x => x.Id);
+            Action = m.Action.Id;
+            Log = new LogDTO(m.Log);
         }
     }
 }

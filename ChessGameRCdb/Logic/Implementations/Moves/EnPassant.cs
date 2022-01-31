@@ -28,7 +28,7 @@ namespace ChessGame.Logic
                 || log.EndPoint.Row != eER
             ) return allMoveOptions;
 
-            allMoveOptions.Add(new MoveOption(new Coordinate(eF.Coordinate.Column, f.Coordinate.Row + i), new List<ActionType>() { ActionType.Move, ActionType.Capture, ActionType.EnPassant }));
+            allMoveOptions.Add(new MoveOption(ActionType.EnPassant, new Log(f.Coordinate, new Coordinate(eF.Coordinate.Column, f.Coordinate.Row + i)) ));
             return allMoveOptions;
         }
     }

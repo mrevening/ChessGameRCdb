@@ -24,8 +24,8 @@ namespace ChessGame.Logic
             var possibleCoordinates = new List<Coordinate>() { upRight, upLeft, leftUp, leftDown, downLeft, downRight, rightDown, rightUp };
             possibleCoordinates.RemoveAll(x => x.Column == null || x.Row == null || board.IsPlayersFigure(figure.Color, x));
             allMoveOptions.AddRange(possibleCoordinates.Select(c => {
-                if (board.IsEnemysFigure(figure.Color, c)) return new MoveOption(c, new List<ActionType>() { ActionType.Move, ActionType.Capture });
-                else return new MoveOption(c, ActionType.Move);
+                if (board.IsEnemysFigure(figure.Color, c)) return new MoveOption(ActionType.Capture, new Log(figure.Coordinate, c));
+                else return new MoveOption(ActionType.Move, new Log(figure.Coordinate, c));
             }));
             return allMoveOptions;
         }

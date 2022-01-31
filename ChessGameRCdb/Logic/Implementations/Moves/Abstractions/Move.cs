@@ -22,14 +22,22 @@ namespace ChessGame.Logic
                 if (figureInPosition != null && figureInPosition.Color != figure.Color) isLastMoveCapture = true;
                 return figureInPosition == null || figureInPosition.Color != figure.Color;
             });
-            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(c, ActionType.Move)));
-            if (isLastMoveCapture) allMoveOptions.Last().AddAction(ActionType.Capture);
+            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
+            if (isLastMoveCapture) allMoveOptions.Last().Action = ActionType.Capture;
         }
 
         protected void AddLongDistanceWithoutCaptureActions(List<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
             var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c => board.IsEmptyField(c));
-            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(c, ActionType.Move)));
+            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
+        }
+        protected void RemoveActionsCheckingKing(List<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
+        {
+            foreach (var action in allMoveOptions)
+            {
+                //var k = figure
+                //if ()
+            }
         }
     }
 }

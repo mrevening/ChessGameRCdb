@@ -1,7 +1,7 @@
 import { ActionType } from "../enum/ActionType";
-import ISquare from "./ISquare";
+import ILog from "./ILog";
 
-export default interface IActionMove {
-    Square: ISquare
-    ActionType: Array<ActionType> | undefined
+export default interface IMoveOption {
+    ActionType: ActionType
+    Log: ILog
 }

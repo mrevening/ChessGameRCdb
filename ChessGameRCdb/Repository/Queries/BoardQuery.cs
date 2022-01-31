@@ -93,10 +93,11 @@ namespace ChessGame.Query
                     var startRowCM = Enumeration.FromValue<Row>(complexMove.StartRow.Id);
                     var endColumnCM = Enumeration.FromValue<Column>(complexMove.EndColumn.Id);
                     var endRowCM = Enumeration.FromValue<Row>(complexMove.EndRow.Id);
-                    complexMoves.Add(new LogComplexMove(new Coordinate(startColumnCM, startRowCM), new Coordinate(endColumnCM, endRowCM)));
+                    var figureType = Enumeration.FromValue<FigureType>(complexMove.FigureType.Id);
+                    complexMoves.Add(new LogComplexMove(new Coordinate(startColumnCM, startRowCM), new Coordinate(endColumnCM, endRowCM), figureType));
                 }
 
-                logs.Add(new Log(game.Id, new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
+                logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
             }
 
             foreach (var log in logs)
@@ -115,7 +116,7 @@ namespace ChessGame.Query
                 ? new MoveWhiteFigure(new Board(figures, color, logs)).InputBoard
                 : new MoveBlackFigure(new Board(figures, color, logs)).InputBoard;
 
-            var result = board.Figures.Select((x, i) => new FigureDTO(i, x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            var result = board.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
 
             return new GetBoardResponseDTO { Figures = result };
         }

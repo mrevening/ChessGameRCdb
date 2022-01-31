@@ -2,13 +2,14 @@
 {
     public class LogComplexMove
     {
-        public LogComplexMove(Coordinate startPoint, Coordinate endPoint)
+        public LogComplexMove(Coordinate startPoint, Coordinate endPoint, FigureType figure)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
+            FigureType = figure;
         }
         public Coordinate StartPoint { get; private set; }
         public Coordinate EndPoint { get; private set; }
-        public Log Log { get; private set; }
+        public FigureType FigureType { get; private set; }
     }
 }

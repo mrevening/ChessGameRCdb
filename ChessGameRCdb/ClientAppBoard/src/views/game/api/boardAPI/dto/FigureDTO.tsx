@@ -1,8 +1,8 @@
-import { ActionMoveDTO } from "./ActionMoveDTO";
+import { MoveOptionDTO } from "./MoveOptionDTO";
 
 export interface FigureDTO {
     type: number;
-    player: number;
+    color: number;
     square: string;
-    possibleMoves: Array<ActionMoveDTO>
+    possibleMoves: Array<MoveOptionDTO>
 }

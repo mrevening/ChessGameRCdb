@@ -14,8 +14,8 @@ namespace ChessGame.Logic
             var rf = isUp ? Row.Eight : Row.One;
             var c = new Coordinate(figure.Coordinate.Column.Id, figure.Coordinate.Row.Id + i);
             if (!board.IsEmptyField(c)) return allMoveOptions;
-            allMoveOptions.Add(new MoveOption(c, ActionType.Move));
-            if (figure.Coordinate.Row == rf) allMoveOptions.FirstOrDefault().AddAction(ActionType.Promotion);
+            allMoveOptions.Add(new MoveOption(ActionType.Move, new Log(figure.Coordinate, c)));
+            if (figure.Coordinate.Row == rf) allMoveOptions.FirstOrDefault().Action = ActionType.Promotion;
 
             return allMoveOptions;
         }

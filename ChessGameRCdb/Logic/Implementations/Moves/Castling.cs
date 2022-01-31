@@ -11,6 +11,7 @@ namespace ChessGame.Logic
             if (InitCheck(board, figure)) return allMoveOptions;
             var isUp = direction == Direction.Up;
 
+
             return allMoveOptions;
         }
     }

@@ -5,21 +5,12 @@ namespace ChessGame.Logic
 {
     public class MoveOption
     {
-        public Coordinate Coordinate { get; }
-        public List<ActionType> Actions { get; private set; }
-        public MoveOption(Coordinate c, ActionType action)
+        public ActionType Action { get; set; }
+        public Log Log { get; private set; }
+        public MoveOption(ActionType action, Log log)
         {
-            Coordinate = c;
-            Actions = new List<ActionType>() { action };
-        }
-        public MoveOption(Coordinate c, List<ActionType> actionTypes)
-        {
-            Coordinate = c;
-            Actions = actionTypes;
-        }
-        public void AddAction(ActionType action)
-        {
-            Actions.Add(action);
+            Action = action;
+            Log = log;
         }
     }
 }

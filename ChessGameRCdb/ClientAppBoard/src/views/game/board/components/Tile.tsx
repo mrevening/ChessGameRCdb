@@ -19,10 +19,10 @@ export default function Tile({ col, row }: TileProps) {
     const activeFigure = useAppSelector(store => store.game.board.activeFigure)
 
     const square = squares.find(f => f.Column === col && f.Row === row)!
-    const figure = figures.find(f => f.Square.Column === square.Column && f.Square.Row === square.Row)
+    const figure = figures.find(f => f.Square === square)
     const isActiveFigure = activeFigure && activeFigure.Square === square
     const figureImg = figure && FigureImagePaths.find(p => p.Color === figure.Color && p.FigureType === figure.Type)?.ImgPath
-    const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Square.Column === square.Column && af.Square.Row === square.Row)
+    const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Log?.endPoint === square)
 
     const colorClass = square.Color === Color.Dark ? 'blackTile' : 'whiteTile'
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''
