@@ -29,6 +29,7 @@ namespace ChessGame.Logic
             ) return allMoveOptions;
 
             allMoveOptions.Add(new MoveOption(ActionType.EnPassant, new Log(f.Coordinate, new Coordinate(eF.Coordinate.Column, f.Coordinate.Row + i)) ));
+
             return allMoveOptions;
         }
     }

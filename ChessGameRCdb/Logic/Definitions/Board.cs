@@ -21,6 +21,8 @@ namespace ChessGame.Logic
         public IFigure? GetFigure(Column column, Row row) => GetFigure(new Coordinate(column, row));
         public IFigure? GetFigure(Coordinate endPoint) => Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
         public bool IsEmptyField(Coordinate c) => GetFigure(c) == null;
+        public IFigure GetPlayersKing() => Figures.First(x => x.FigureType == FigureType.King && x.Color == CurrentPlayerColor);
+        public IFigure GetEnemysKing() => Figures.First(x => x.FigureType == FigureType.King && x.Color == CurrentPlayerColor.Switch());
         public void MoveFigure(IFigure currentFigure, Coordinate endPoint)
         {
             var enemyFigure = GetFigure(endPoint);

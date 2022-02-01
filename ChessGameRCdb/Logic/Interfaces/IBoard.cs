@@ -11,6 +11,8 @@ namespace ChessGame.Logic
         bool IsEnemysFigure(Color currentPlayer, Coordinate position);
         bool IsEmptyField(Coordinate position);
         IFigure? GetFigure(Coordinate position);
+        IFigure GetPlayersKing();
+        IFigure GetEnemysKing();
         void MoveFigure(IFigure figure, Coordinate endPoint);
     }
 }

@@ -27,6 +27,7 @@ namespace ChessGame.Logic
                 if (board.IsEnemysFigure(figure.Color, c)) return new MoveOption(ActionType.Capture, new Log(figure.Coordinate, c));
                 else return new MoveOption(ActionType.Move, new Log(figure.Coordinate, c));
             }));
+
             return allMoveOptions;
         }
     }

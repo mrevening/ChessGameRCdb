@@ -16,6 +16,7 @@ namespace ChessGame.Logic
             var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => isUp ? row > figure.Coordinate.Row : row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).Take(2);
 
             AddLongDistanceWithoutCaptureActions(allMoveOptions, board, figure, coordinatesUp);
+
             return allMoveOptions;
         }
     }
