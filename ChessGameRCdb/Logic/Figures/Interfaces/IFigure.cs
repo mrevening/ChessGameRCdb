@@ -9,7 +9,6 @@ namespace ChessGame.Logic
         FigureType FigureType { get; }
         List<IMove> MoveTypes { get; }
         List<MoveOption> MoveOptions { get; set; }
-        bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint);
         bool IsPlayersFigure(Color player, Coordinate endPoint);
         bool IsEnemysFigure(Color player, Coordinate endPoint);
         bool IsInPosition(Coordinate endPoint);

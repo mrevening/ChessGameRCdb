@@ -29,10 +29,6 @@ namespace ChessGame.Logic
         {
             if (CurrentlySelectedFigure.Coordinate == endPoint) throw new StartAndEndPointAreTheSameException();
         }
-        public void DetermineMove(Coordinate endPoint)
-        {
-            CurrentlySelectedFigure.IsMoveAllowed(OutputBoard, endPoint);
-        }
         public void Execute(Coordinate endPoint)
         {
             RewriteBoard();

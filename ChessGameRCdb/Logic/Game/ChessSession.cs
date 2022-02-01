@@ -14,7 +14,6 @@
             var action = GetAction(player);
             action.SelectFigure(startPoint);
             action.PrimaryCheck(endPoint);
-            action.DetermineMove(endPoint);
             action.Execute(endPoint);
             action.EndOfTheGameCheck();
 

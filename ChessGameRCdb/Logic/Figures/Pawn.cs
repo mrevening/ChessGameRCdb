@@ -12,9 +12,5 @@ namespace ChessGame.Logic
         public Pawn(Color player, Column column, Row row) : base(player, column, row) { }
         public Pawn(Color player, Coordinate position) : base( player, position) { }
 
-        public override bool IsMoveAllowed(IBoard currentBoard, Coordinate endPoint)
-        {
-            return true;
-        }
     }
 }
