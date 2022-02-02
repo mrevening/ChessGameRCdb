@@ -1,15 +1,12 @@
 ﻿namespace ChessGame.Logic
 {
-    public class LogComplexMove
+    public class LogComplexMove : Log
     {
-        public LogComplexMove(Coordinate startPoint, Coordinate endPoint, FigureType figure)
+        public FigureType FigureType { get; private set; }
+
+        public LogComplexMove(Coordinate startPoint, Coordinate endPoint, FigureType figure) : base(startPoint, endPoint)
         {
-            StartPoint = startPoint;
-            EndPoint = endPoint;
             FigureType = figure;
         }
-        public Coordinate StartPoint { get; private set; }
-        public Coordinate EndPoint { get; private set; }
-        public FigureType FigureType { get; private set; }
     }
 }

@@ -5,10 +5,9 @@ namespace ChessGame.Logic
 {
     internal class TwoTilesForward : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction)
+        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog)
         {
             var allMoveOptions = new List<MoveOption>();
-            if (InitCheck(board, figure)) return allMoveOptions;
             var isUp = direction == Direction.Up;
             var initRow = isUp ? Row.Two : Row.Seven;
             if (figure.Coordinate.Row != initRow) return allMoveOptions;

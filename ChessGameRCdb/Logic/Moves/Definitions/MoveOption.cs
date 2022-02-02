@@ -7,6 +7,7 @@ namespace ChessGame.Logic
     {
         public ActionType Action { get; set; }
         public Log Log { get; private set; }
+        public IEnumerable<MoveOption> MoveConsequences { get; private set; }
         public MoveOption(ActionType action, Log log)
         {
             Action = action;

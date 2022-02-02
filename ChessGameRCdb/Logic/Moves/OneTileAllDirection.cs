@@ -5,10 +5,9 @@ namespace ChessGame.Logic
 {
     internal class OneTileAllDirection : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction)
+        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog)
         {
             var allMoveOptions = new List<MoveOption>();
-            if (InitCheck(board, figure)) return allMoveOptions;
             var isUp = direction == Direction.Up;
 
             return allMoveOptions;

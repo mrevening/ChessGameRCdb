@@ -100,23 +100,9 @@ namespace ChessGame.Query
                 logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
             }
 
-            foreach (var log in logs)
-            {
-                figures.First(x => x.Coordinate == log.StartPoint).SetPosition(log.EndPoint);
+            var processor = new BoardProcessor(new Board(figures), logs);
 
-                foreach (var supplement in log.LogComplexMove)
-                {
-                    figures.First(x => x.Coordinate == supplement.StartPoint).SetPosition(supplement.EndPoint);
-                }
-            }
-
-            var color = logs.Count % 2 == 0 ? Color.White : Color.Black;
-
-            var board = color == Color.White
-                ? new MoveWhiteFigure(new Board(figures, color, logs)).InputBoard
-                : new MoveBlackFigure(new Board(figures, color, logs)).InputBoard;
-
-            var result = board.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            var result = processor.OutputBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
 
             return new GetBoardResponseDTO { Figures = result };
         }

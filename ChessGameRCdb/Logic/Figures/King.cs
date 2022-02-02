@@ -5,7 +5,7 @@ namespace ChessGame.Logic
 {
     internal class King : Figure, IUnremovable
     {
-        public override FigureType FigureType { get { return FigureType.King; } }
+        public override FigureType FigureType { get => FigureType.King; }
         public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
 
         public King(Color player) : base(player) { }

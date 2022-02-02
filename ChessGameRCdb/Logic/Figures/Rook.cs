@@ -5,7 +5,7 @@ namespace ChessGame.Logic
 {
     internal class Rook : Figure
     {
-        public override FigureType FigureType { get { return FigureType.Rook; } }
+        public override FigureType FigureType { get => FigureType.Rook; }
         public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
 
         public Rook(Color player) : base(player) { }

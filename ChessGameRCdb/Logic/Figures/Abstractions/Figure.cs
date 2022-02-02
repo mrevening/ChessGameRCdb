@@ -32,7 +32,7 @@ namespace ChessGame.Logic
         public bool IsInPosition(Coordinate position) => Coordinate == position;
         public void SetPosition(Coordinate position) => Coordinate = new Coordinate(position.Column, position.Row);
         public bool IsPlayersFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer && Coordinate == position;
-        public bool IsEnemysFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer.Switch() && Coordinate == position;
+        public bool IsOpponentFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer.Switch() && Coordinate == position;
 
         public override bool Equals(object other) => other is Figure && Equals(other);
         public bool Equals(Figure f) => FigureType == f.FigureType && Color == f.Color;

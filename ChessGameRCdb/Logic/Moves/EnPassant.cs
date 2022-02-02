@@ -5,15 +5,13 @@ namespace ChessGame.Logic
 {
     internal class EnPassant : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure f, Direction direction)
+        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog)
         {
             var allMoveOptions = new List<MoveOption>();
-            if (InitCheck(board, f)) return allMoveOptions;
-            if (board.Logs.Count <= 0) return allMoveOptions;
-            var log = board.Logs.TakeLast(1).FirstOrDefault();
-            var eF = board.GetFigure(log.EndPoint);
+            if (previousLog == null) return allMoveOptions;
+            var eF = board.GetFigure(previousLog.EndPoint);
             var isUp = direction == Direction.Up;
-            var col = f.Coordinate.Column;
+            var col = figure.Coordinate.Column;
             var r = isUp ? Row.Five : Row.Four;
             var eSR = isUp ? Row.Seven : Row.Two;
             var eER = isUp ? Row.Five : Row.Four;
@@ -22,13 +20,13 @@ namespace ChessGame.Logic
             eCols.Remove(null);
 
             if (eF.FigureType != FigureType.Pawn 
-                || f.Coordinate.Row != r 
+                || figure.Coordinate.Row != r 
                 || !eCols.Exists(c => c == eF.Coordinate.Column) 
-                || log.StartPoint.Row != eSR
-                || log.EndPoint.Row != eER
+                || previousLog.StartPoint.Row != eSR
+                || previousLog.EndPoint.Row != eER
             ) return allMoveOptions;
 
-            allMoveOptions.Add(new MoveOption(ActionType.EnPassant, new Log(f.Coordinate, new Coordinate(eF.Coordinate.Column, f.Coordinate.Row + i)) ));
+            allMoveOptions.Add(new MoveOption(ActionType.EnPassant, new Log(figure.Coordinate, new Coordinate(eF.Coordinate.Column, figure.Coordinate.Row + i)) ));
 
             return allMoveOptions;
         }

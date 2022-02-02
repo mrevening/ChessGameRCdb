@@ -10,7 +10,7 @@ namespace ChessGame.Logic
         List<IMove> MoveTypes { get; }
         List<MoveOption> MoveOptions { get; set; }
         bool IsPlayersFigure(Color player, Coordinate endPoint);
-        bool IsEnemysFigure(Color player, Coordinate endPoint);
+        bool IsOpponentFigure(Color player, Coordinate endPoint);
         bool IsInPosition(Coordinate endPoint);
         void SetPosition(Coordinate endPoint);
     }

@@ -6,28 +6,22 @@ namespace ChessGame.Logic
     public class Board : IBoard
     {
         public List<IFigure> Figures { get; private set; }
-        public List<Log> Logs { get; private set; }
-        public Color CurrentPlayerColor { get; private set; }
 
-        public Board(IEnumerable<IFigure> startBoardSetup, Color currentPlayerColor, List<Log> logs)
+        public Board(IEnumerable<IFigure> startBoardSetup)
         {
-            CurrentPlayerColor = currentPlayerColor;
             Figures = new List<IFigure>(startBoardSetup);
-            Logs = logs;
         }
 
-        public bool IsPlayersFigure(Color player, Coordinate endPoint) => Figures.Any(x => x.IsPlayersFigure(player, endPoint));
-        public bool IsEnemysFigure(Color player, Coordinate endPoint) => Figures.Any(x => x.IsEnemysFigure(player, endPoint));
-        public IFigure? GetFigure(Column column, Row row) => GetFigure(new Coordinate(column, row));
-        public IFigure? GetFigure(Coordinate endPoint) => Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
-        public bool IsEmptyField(Coordinate c) => GetFigure(c) == null;
-        public IFigure GetPlayersKing() => Figures.First(x => x.FigureType == FigureType.King && x.Color == CurrentPlayerColor);
-        public IFigure GetEnemysKing() => Figures.First(x => x.FigureType == FigureType.King && x.Color == CurrentPlayerColor.Switch());
-        public void MoveFigure(IFigure currentFigure, Coordinate endPoint)
+        public void ExecuteLog(Log log)
         {
-            var enemyFigure = GetFigure(endPoint);
-            if (enemyFigure != null) Figures.Remove(enemyFigure);
-            currentFigure.SetPosition(endPoint);
+            var color = this.GetCurrentColor(log);
+            this.SetPosition(log, color);
+            log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
+        }
+
+        public void EvaluateBoard(Log log, Log previousLog) {
+            var direction = this.GetCurrentColor(log) == Color.White ? Direction.Up : Direction.Down;
+            Figures.ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.AddRange(y.GetMoveOptions(this, x, direction, previousLog))));
         }
     }
 }
