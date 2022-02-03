@@ -16,17 +16,8 @@ namespace ChessGame.Logic
             LogComplexMove = logComplexMove ?? new List<LogComplexMove>();
         }
         public override string ToString() => StartPoint.ToString() + EndPoint.ToString();
-
-
-        public override bool Equals(object obj)
-        {
-            var stu = obj as Log;
-            if (stu == null) return false;
-            return StartPoint.ToString() == stu.StartPoint.ToString() && EndPoint.ToString() == stu.EndPoint.ToString();
-        }
-        public override int GetHashCode()
-        {
-            return StartPoint.ToString().GetHashCode() * EndPoint.ToString().GetHashCode();
-        }
+        public override bool Equals(object obj) => obj != null && Equals(obj as Log);
+        public bool Equals(Log log) => StartPoint == log.StartPoint && EndPoint == log.EndPoint;
+        public override int GetHashCode() => (StartPoint, EndPoint).GetHashCode();
     }
 }

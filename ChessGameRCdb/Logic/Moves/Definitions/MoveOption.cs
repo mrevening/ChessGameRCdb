@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ChessGame.Logic
+﻿namespace ChessGame.Logic
 {
     public class MoveOption
     {
@@ -15,16 +12,8 @@ namespace ChessGame.Logic
         }
 
         public override string ToString() => Action.ToString() + Log.StartPoint.ToString() + Log.EndPoint.ToString();
-
-        public override bool Equals(object obj)
-        {
-            var stu = obj as MoveOption;
-            if (stu == null) return false;
-            return Action == stu.Action && Log.ToString() == stu.Log.ToString();
-        }
-        public override int GetHashCode()
-        {
-            return Action.GetHashCode() * Log.ToString().GetHashCode();
-        }
+        public override bool Equals(object obj) => obj != null && Equals(obj as MoveOption);
+        public bool Equals(MoveOption moveOption) => Action == moveOption.Action && Log.ToString() == moveOption.Log.ToString();
+        public override int GetHashCode() => (Action, Log).GetHashCode();
     }
 }
