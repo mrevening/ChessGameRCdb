@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class Knight : Figure
+    public class Knight : Figure
     {
         public override FigureType FigureType { get => FigureType.Knight; }
         public override List<IMove> MoveTypes { get => new List<IMove>() { new LShape() }; }

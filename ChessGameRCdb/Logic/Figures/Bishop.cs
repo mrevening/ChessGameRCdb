@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class Bishop : Figure
+    public class Bishop : Figure
     {
         public override FigureType FigureType { get => FigureType.Bishop; }
         public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }

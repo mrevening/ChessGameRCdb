@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class Pawn : Figure
+    public class Pawn : Figure
     {
         public override FigureType FigureType { get => FigureType.Pawn; }
         public override List<IMove> MoveTypes { get => new List<IMove>() { new OneTileForward(), new TwoTilesForward(), new EnPassant() }; }

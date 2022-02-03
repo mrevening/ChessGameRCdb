@@ -12,8 +12,8 @@ namespace ChessGameTests
         [Fact]
         public void StandardSetup_InputBoardHasAllFigures()
         {
-            var processed = new BoardProcessor(new Board(setup.GetStandardSetup()), new List<Log>());
-            Assert.Equal(32, processed.OutputBoard.Figures.Count());
+            var processed = new BoardProcessor(new Board(setup.GetStandardSetup()));
+            Assert.Equal(32, processed.CalculateInitBoard(Color.White).Figures.Count());
         }
         [Fact]
         public void StartAndEndPointsAreTheSame_Error()
@@ -22,7 +22,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Two))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList);
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateBoard(logList);
             Assert.Throws<IllegalMoveException>(action);
         }
         [Fact]
@@ -32,7 +32,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Seven), new Coordinate(Column.D, Row.Six))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList);
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateBoard(logList);
             Assert.Throws<IllegalMoveException>(action);
         }
     }

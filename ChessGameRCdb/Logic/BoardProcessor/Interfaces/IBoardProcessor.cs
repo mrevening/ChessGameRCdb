@@ -1,7 +1,9 @@
-﻿namespace ChessGame.Logic
+﻿using System.Collections.Generic;
+
+namespace ChessGame.Logic
 {
     public interface IBoardProcessor
     {
-        IBoard OutputBoard { get; }
+        IBoard CalculateBoard(List<Log> logs);
     }
 }

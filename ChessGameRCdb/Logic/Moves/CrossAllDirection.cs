@@ -5,7 +5,7 @@ namespace ChessGame.Logic
 {
     internal class CrossAllDirection : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog)
+        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog = null)
         {
             var isUp = direction == Direction.Up;
 

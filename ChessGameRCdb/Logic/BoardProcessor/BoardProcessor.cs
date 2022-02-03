@@ -6,19 +6,25 @@ namespace ChessGame.Logic
 {
     public class BoardProcessor : IBoardProcessor
     {
-        public IBoard OutputBoard { get; private set; }
+        private IBoard Board { get; }
 
-        public BoardProcessor(IBoard inputBoard, List<Log> logs)
-        {
-            OutputBoard = CalculateBoard(inputBoard, logs);
+        public BoardProcessor(IBoard inputBoard) {
+            Board = inputBoard;
         }
 
-        private IBoard CalculateBoard(IBoard board, List<Log> logs)
+        public IBoard CalculateInitBoard(Color startPlayer)
         {
-            logs.ForEach(log => board.ExecuteLog(log));
-            board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault(), logs.SkipLast(1).TakeLast(1).FirstOrDefault());
+            Board.EvaluateInitBoard(startPlayer.GetDirection());
 
-            return new Board(ImmutableList.CreateRange(board.Figures).ToImmutableList());
+            return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());
+        }
+
+        public IBoard CalculateBoard(List<Log> logs)
+        {
+            logs.ForEach(log => Board.ExecuteLog(log));
+            Board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault(), logs.SkipLast(1).TakeLast(1).FirstOrDefault());
+
+            return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());
         }
     }
 }

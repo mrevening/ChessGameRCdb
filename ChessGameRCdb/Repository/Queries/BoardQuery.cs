@@ -100,9 +100,8 @@ namespace ChessGame.Query
                 logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
             }
 
-            var processor = new BoardProcessor(new Board(figures), logs);
-
-            var result = processor.OutputBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            var processor = new BoardProcessor(new Board(figures));
+            var result = processor.CalculateBoard(logs).Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
 
             return new GetBoardResponseDTO { Figures = result };
         }
