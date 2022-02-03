@@ -20,7 +20,7 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log(initCoordinate, new Coordinate(initCol, Row.Three))),
                     new MoveOption(ActionType.Move, new Log(initCoordinate, new Coordinate(initCol, Row.Four)))
                 };
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(initCoordinate).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(initCoordinate).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptions);
         }
         [Fact]
@@ -60,7 +60,7 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(initCoordinateBlack, new Coordinate(initCol, Row.Five))),
                 new MoveOption(ActionType.Move, new Log(initCoordinateBlack, new Coordinate(initCol, Row.Six)))
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(initCoordinateWhite).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(initCoordinateWhite).MoveOptions;
             var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initCoordinateBlack).MoveOptions;
             Assert.Equal(correctOptionsWhite, calculatedOptionsWhite);
             Assert.Equal(correctOptionsBlack, calculatedOptionsBlack);
@@ -87,7 +87,7 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log(new Coordinate(col, Row.Two), new Coordinate(col, Row.Three))),
                     new MoveOption(ActionType.Move, new Log(new Coordinate(col, Row.Two), new Coordinate(col, Row.Four)))
                 };
-                var calculatedOptions = processor.CalculateInitBoard(Color.White).GetFigure(new Coordinate(col, Row.Two)).MoveOptions;
+                var calculatedOptions = processor.CalculateBoard().GetFigure(new Coordinate(col, Row.Two)).MoveOptions;
                 Assert.Equal(correctOptions, calculatedOptions);
             } 
         }
@@ -127,7 +127,7 @@ namespace ChessGameTests
             {
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Three), new Coordinate(Column.D, Row.Four)))
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(new Coordinate(Column.D, Row.Three)).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Three)).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptionsWhite);
         }
 
@@ -138,7 +138,7 @@ namespace ChessGameTests
                 new Pawn(Color.White, Column.D, Row.Four),
                 new Pawn(Color.Black, Column.D, Row.Five)
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
             var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
             Assert.Equal(new HashSet<MoveOption>(), calculatedOptionsWhite);
             Assert.Equal(new HashSet<MoveOption>(), calculatedOptionsBlack);
@@ -153,7 +153,7 @@ namespace ChessGameTests
                 new Pawn(Color.White, initWhite),
                 new Pawn(Color.Black,initBlack)
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(initWhite).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(initWhite).MoveOptions;
             var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initBlack).MoveOptions;
             var moveOptionWhite = new HashSet<MoveOption>() 
             {

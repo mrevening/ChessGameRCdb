@@ -25,7 +25,7 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.F, Row.Three))),
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.F, Row.Five)))
             };
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptions);
         }
         [Fact]
