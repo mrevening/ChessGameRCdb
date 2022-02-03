@@ -66,6 +66,21 @@ namespace ChessGame.Logic
             return ImmutableList.CreateRange(list).ToImmutableList();
         }
 
+        public IImmutableList<IFigure> GetAllWhitePionsSetup()
+        {
+            var list = new List<IFigure>() {
+                new Pawn(Color.White, Column.A, Row.Two),
+                new Pawn(Color.White, Column.B, Row.Two),
+                new Pawn(Color.White, Column.C, Row.Two),
+                new Pawn(Color.White, Column.D, Row.Two),
+                new Pawn(Color.White, Column.E, Row.Two),
+                new Pawn(Color.White, Column.F, Row.Two),
+                new Pawn(Color.White, Column.G, Row.Two),
+                new Pawn(Color.White, Column.H, Row.Two),
+            };
+            return ImmutableList.CreateRange(list).ToImmutableList();
+        }
+
         public IImmutableList<IFigure> GetStandardSetup()
         {
             var list = new List<IFigure>() {

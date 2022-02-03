@@ -6,9 +6,9 @@ namespace ChessGame.Logic
     public abstract class Move : IMove
     {
         private List<ActionType> _dangerousAction = new List<ActionType>() { ActionType.Check, ActionType.Mate };
-        public abstract IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog);
+        public abstract IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog);
 
-        protected void AddLongDistanceWithCaptureActions(List<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
+        protected void AddLongDistanceWithCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
             var eK = figure.Color == Color.White ? Figure.BlackKing : Figure.WhiteKing;
             var isLastMoveCapture = false;
@@ -30,14 +30,15 @@ namespace ChessGame.Logic
                 if (figureInPosition != null && figureInPosition.Color != figure.Color) isLastMoveCapture = true;
                 return figureInPosition == null || figureInPosition.Color != figure.Color;
             });
-            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
+            allMoveOptions.UnionWith(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
             if (isLastMoveCapture) allMoveOptions.Last().Action = ActionType.Capture;
         }
 
-        protected void AddLongDistanceWithoutCaptureActions(List<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
+        protected void AddLongDistanceWithoutCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
-            var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c => board.IsEmptyField(c));
-            allMoveOptions.AddRange(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
+            var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c => board.IsEmptyField(c)).ToHashSet();
+            allMoveOptions.UnionWith(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
+            allMoveOptions.Distinct(new MoveOptionComparer());
         }
         //protected void HandleActionsCheckingKing(List<MoveOption> allMoveOptions, IBoard board)
         //{

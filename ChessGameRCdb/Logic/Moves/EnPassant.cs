@@ -5,9 +5,8 @@ namespace ChessGame.Logic
 {
     internal class EnPassant : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog)
+        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog)
         {
-            var allMoveOptions = new List<MoveOption>();
             if (previousLog == null) return allMoveOptions;
             var eF = board.GetFigure(previousLog.EndPoint);
             var isUp = direction == Direction.Up;

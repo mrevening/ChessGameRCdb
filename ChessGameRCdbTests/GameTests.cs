@@ -22,7 +22,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Two))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), new List<Log>());
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList);
             Assert.Throws<IllegalMoveException>(action);
         }
         [Fact]
@@ -32,7 +32,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Seven), new Coordinate(Column.D, Row.Six))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), new List<Log>());
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList);
             Assert.Throws<IllegalMoveException>(action);
         }
     }

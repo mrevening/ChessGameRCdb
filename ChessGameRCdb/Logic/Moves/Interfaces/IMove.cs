@@ -7,6 +7,6 @@ namespace ChessGame.Logic
 {
     public interface IMove
     {
-        IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog);
+        IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog);
     }
 }

@@ -7,7 +7,7 @@ namespace ChessGame.Logic
     public static class BoardOperations
     {
         public static IFigure? GetFigure(this IBoard board, Coordinate endPoint) => board.Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
-        public static Color GetCurrentColor(this IBoard board, Log log) => board.GetFigure(log.StartPoint)?.Color ?? throw new IllegalMoveException("Not touched player's figure.");
+        public static Color GetCurrentColor(this IBoard board, Log log) => log == null ? Color.White : board.GetFigure(log.StartPoint)?.Color ?? throw new IllegalMoveException("Not touched player's figure.");
         public static void RemoveFigure(this IBoard board, Log log) => board.Figures.Remove(board.GetFigure(log.EndPoint));
         public static bool IsPlayersFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer;
         public static bool IsOpponentFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer.Switch();

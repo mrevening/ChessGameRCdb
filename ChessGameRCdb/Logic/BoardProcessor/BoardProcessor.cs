@@ -15,8 +15,8 @@ namespace ChessGame.Logic
 
         private IBoard CalculateBoard(IBoard board, List<Log> logs)
         {
-            logs.ToList().ForEach(log => board.ExecuteLog(log));
-            logs.TakeLast(1).ToList().ForEach(log => board.EvaluateBoard(log, logs.TakeLast(2).FirstOrDefault()));
+            logs.ForEach(log => board.ExecuteLog(log));
+            board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault(), logs.SkipLast(1).TakeLast(1).FirstOrDefault());
 
             return new Board(ImmutableList.CreateRange(board.Figures).ToImmutableList());
         }

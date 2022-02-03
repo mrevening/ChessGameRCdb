@@ -5,9 +5,8 @@ namespace ChessGame.Logic
 {
     internal class LShape : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(IBoard board, IFigure figure, Direction direction, Log previousLog)
+        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog)
         {
-            var allMoveOptions = new List<MoveOption>();
 
             var c = figure.Coordinate;
 
@@ -22,7 +21,7 @@ namespace ChessGame.Logic
 
             var possibleCoordinates = new List<Coordinate>() { upRight, upLeft, leftUp, leftDown, downLeft, downRight, rightDown, rightUp };
             possibleCoordinates.RemoveAll(x => x.Column == null || x.Row == null || board.IsPlayersFigure(x, figure.Color));
-            allMoveOptions.AddRange(possibleCoordinates.Select(c => {
+            allMoveOptions.UnionWith(possibleCoordinates.Select(c => {
                 if (board.IsOpponentFigure(c, figure.Color)) return new MoveOption(ActionType.Capture, new Log(figure.Coordinate, c));
                 else return new MoveOption(ActionType.Move, new Log(figure.Coordinate, c));
             }));
