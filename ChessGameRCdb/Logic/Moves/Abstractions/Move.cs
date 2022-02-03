@@ -6,7 +6,7 @@ namespace ChessGame.Logic
     public abstract class Move : IMove
     {
         private List<ActionType> _dangerousAction = new List<ActionType>() { ActionType.Check, ActionType.Mate };
-        public abstract IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog = null);
+        public abstract IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
 
         protected void AddLongDistanceWithCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {

@@ -14,8 +14,6 @@ namespace ChessGameTests
             var figures = new List<IFigure>() {
                 new Knight(Color.White, Column.D, Row.Four)
             };
-            var processor = new BoardProcessor(new Board(figures));
-            var calculatedOptions = processor.CalculateInitBoard(Color.White).GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
             var correctOptions = new HashSet<MoveOption>()
             {
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.E, Row.Six))),
@@ -23,22 +21,23 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.B, Row.Five))),
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.B, Row.Three))),
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.C, Row.Two))),
-                new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.F, Row.Two))),
+                new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.E, Row.Two))),
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.F, Row.Three))),
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.F, Row.Five)))
             };
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.White).GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptions);
         }
         [Fact]
         public void OneKnightInitPosition_StandardBoard_2AvailableMoves()
         {
-            var processor = new BoardProcessor(new Board(setup.GetStandardSetup()));
-            var calculatedOptions = processor.CalculateInitBoard(Color.Black).GetFigure(new Coordinate(Column.B, Row.Seven)).MoveOptions;
+            var initPosition = new Coordinate(Column.B, Row.Eight);
             var correctOptions = new HashSet<MoveOption>()
             {
-                new MoveOption(ActionType.Move, new Log(new Coordinate(Column.B, Row.Seven), new Coordinate(Column.A, Row.Five))),
-                new MoveOption(ActionType.Move, new Log(new Coordinate(Column.B, Row.Seven), new Coordinate(Column.C, Row.Five))),
+                new MoveOption(ActionType.Move, new Log(initPosition, new Coordinate(Column.A, Row.Six))),
+                new MoveOption(ActionType.Move, new Log(initPosition, new Coordinate(Column.C, Row.Six))),
             };
+            var calculatedOptions = new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateInitBoard(Color.Black).GetFigure(initPosition).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptions);
         }
     }

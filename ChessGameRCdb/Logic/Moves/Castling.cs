@@ -5,9 +5,9 @@ namespace ChessGame.Logic
 {
     internal class Castling : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog = null)
+        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {
-            var isUp = direction == Direction.Up;
+            var isUp = figure.Color.GetDirection() == Direction.Up;
 
 
             return allMoveOptions;

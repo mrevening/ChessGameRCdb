@@ -12,9 +12,9 @@ namespace ChessGame.Logic
             Figures = new List<IFigure>(startBoardSetup);
         }
 
-        public void EvaluateInitBoard(Direction direction)
+        public void EvaluateInitBoard(Color color)
         {
-            Figures.ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, direction, null))));
+            Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, null))));
         }
         public void ExecuteLog(Log log)
         {
@@ -24,7 +24,7 @@ namespace ChessGame.Logic
         }
         public void EvaluateBoard(Log log, Log previousLog) {
             var direction = this.GetCurrentColor(log) == Color.White ? Direction.Up : Direction.Down;
-            Figures.ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, direction, previousLog))));
+            Figures.ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, previousLog))));
         }
     }
 }

@@ -5,9 +5,9 @@ namespace ChessGame.Logic
 {
     internal class OneTileForward : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Direction direction, Log previousLog)
+        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {
-            var isUp = direction == Direction.Up;
+            var isUp = figure.Color.GetDirection() == Direction.Up;
             var i = isUp ? 1 : -1;
             var rf = isUp ? Row.Eight : Row.One;
             var c = new Coordinate(figure.Coordinate.Column.Id, figure.Coordinate.Row.Id + i);

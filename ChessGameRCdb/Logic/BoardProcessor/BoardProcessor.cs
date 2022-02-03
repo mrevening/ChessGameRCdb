@@ -14,7 +14,7 @@ namespace ChessGame.Logic
 
         public IBoard CalculateInitBoard(Color startPlayer)
         {
-            Board.EvaluateInitBoard(startPlayer.GetDirection());
+            Board.EvaluateInitBoard(startPlayer);
 
             return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());
         }
