@@ -7,7 +7,7 @@ namespace ChessGame.Logic
     public static class BoardOperations
     {
         public static IFigure? GetFigure(this IBoard board, Coordinate endPoint) => board.Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
-        public static Color GetCurrentColor(this IBoard board, Log log) => log == null ? Color.White : board.GetFigure(log.StartPoint)?.Color ?? throw new IllegalMoveException("Not touched player's figure.");
+        public static Color GetCurrentColor(this IBoard board, Coordinate c) => board.GetFigure(c)?.Color ?? throw new IllegalMoveException("Not touched player's figure.");
         public static void RemoveFigure(this IBoard board, Log log) => board.Figures.Remove(board.GetFigure(log.EndPoint));
         public static bool IsPlayersFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer;
         public static bool IsOpponentFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer.Switch();
@@ -26,7 +26,7 @@ namespace ChessGame.Logic
             else board.SetPosition(log, player);
         }
         public static void Promote(this IBoard board, LogComplexMove log) {
-            var player = board.GetCurrentColor(log);
+            var player = board.GetCurrentColor(log.StartPoint);
             board.RemoveFigure(log);
             var typeName = typeof(IFigure).Namespace + "." + log.FigureType.ToString();
             var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { player, log.EndPoint });

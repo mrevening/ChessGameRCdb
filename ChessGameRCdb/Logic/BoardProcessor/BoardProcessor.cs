@@ -12,17 +12,21 @@ namespace ChessGame.Logic
             Board = inputBoard;
         }
 
-        public IBoard CalculateInitBoard(Color startPlayer)
+        public IBoard CalculateInitBoard(Color startPlayer = null)
         {
-            Board.EvaluateInitBoard(startPlayer);
+            Board.EvaluateInitBoard(startPlayer ?? Color.White);
 
             return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());
         }
 
-        public IBoard CalculateBoard(List<Log> logs)
+        public IBoard CalculateBoard(List<Log> logs = null)
         {
-            logs.ForEach(log => Board.ExecuteLog(log));
-            Board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault(), logs.SkipLast(1).TakeLast(1).FirstOrDefault());
+            if (logs == null || !logs.Any()) CalculateInitBoard();
+            else
+            {
+                logs.ForEach(log => Board.ExecuteLog(log));
+                Board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault());
+            };
 
             return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());
         }

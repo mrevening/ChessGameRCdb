@@ -13,7 +13,7 @@ namespace ChessGameTests
             var initCol = Column.A;
             var initCoordinate = new Coordinate(initCol, Row.Two);
             var figures = new List<IFigure>() {
-                new Pawn(Color.Black, initCoordinate)
+                new Pawn(Color.White, initCoordinate)
             };
             var correctOptions = new HashSet<MoveOption>()
                 {
@@ -157,12 +157,13 @@ namespace ChessGameTests
             var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initBlack).MoveOptions;
             var moveOptionWhite = new HashSet<MoveOption>() 
             {
-                new MoveOption(ActionType.Move, new Log(initWhite, new Coordinate(Column.E, Row.Five))),
-                new MoveOption(ActionType.Capture, new Log(initWhite, new Coordinate(Column.D, Row.Four))), 
+                new MoveOption(ActionType.Move, new Log(initWhite, new Coordinate(Column.D, Row.Five))),
+                new MoveOption(ActionType.Capture, new Log(initWhite, initBlack))
             };
             var moveOptionBlack = new HashSet<MoveOption>() 
-            { 
-                new MoveOption(ActionType.Capture, new Log(initBlack, initWhite)) 
+            {
+                new MoveOption(ActionType.Move, new Log(initBlack, new Coordinate(Column.E, Row.Four))),
+                new MoveOption(ActionType.Capture, new Log(initBlack, initWhite))
             };
             Assert.Equal(moveOptionWhite, calculatedOptionsWhite);
             Assert.Equal(moveOptionBlack, calculatedOptionsBlack);
@@ -203,6 +204,23 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Five), new Coordinate(Column.D, Row.Six))),
             };
             var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard(log).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
+
+            Assert.Equal(correctOptions, calculatedOptionsWhite);
+        }
+        [Fact]
+        public void WhitePion_Promotion_Success()
+        {
+            var initCol = Column.A;
+            var init = new Coordinate(initCol, Row.Seven);
+            var end = new Coordinate(initCol, Row.Eight);
+            var figures = new List<IFigure>() {
+                new Pawn(Color.White, init)
+            };
+            var correctOptions = new HashSet<MoveOption>()
+            {
+                new MoveOption(ActionType.Promotion, new Log(init, end))
+            };
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(init).MoveOptions;
 
             Assert.Equal(correctOptions, calculatedOptionsWhite);
         }

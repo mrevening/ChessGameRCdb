@@ -7,7 +7,7 @@ namespace ChessGame.Logic
     {
         public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {
-            var isUp = figure.Color.GetDirection() == Direction.Up;
+            var isUp = figure.Color.IsUp();
 
             var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => row > figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r));
             var coordinatesDown = Enumeration.GetAll<Row>(isUp).Where(row => row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r));

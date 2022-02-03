@@ -9,7 +9,7 @@ namespace ChessGame.Logic
         {
             if (previousLog == null) return allMoveOptions;
             var eF = board.GetFigure(previousLog.EndPoint);
-            var isUp = figure.Color.GetDirection() == Direction.Up;
+            var isUp = figure.Color.IsUp();
             var col = figure.Coordinate.Column;
             var r = isUp ? Row.Five : Row.Four;
             var eSR = isUp ? Row.Seven : Row.Two;

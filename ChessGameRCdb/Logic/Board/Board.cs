@@ -6,10 +6,12 @@ namespace ChessGame.Logic
     public class Board : IBoard
     {
         public List<IFigure> Figures { get; private set; }
+        private BoardValidator BoardValidator { get; }
 
         public Board(IEnumerable<IFigure> startBoardSetup)
         {
             Figures = new List<IFigure>(startBoardSetup);
+            BoardValidator = new BoardValidator();
         }
 
         public void EvaluateInitBoard(Color color)
@@ -18,13 +20,14 @@ namespace ChessGame.Logic
         }
         public void ExecuteLog(Log log)
         {
-            var color = this.GetCurrentColor(log);
+            BoardValidator.ValidateLogs(this, log);
+            var color = this.GetCurrentColor(log.StartPoint);
             this.SetPosition(log, color);
             log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
         }
-        public void EvaluateBoard(Log log, Log previousLog) {
-            var direction = this.GetCurrentColor(log) == Color.White ? Direction.Up : Direction.Down;
-            Figures.ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, previousLog))));
+        public void EvaluateBoard(Log previousLog) {
+            var color = this.GetCurrentColor(previousLog.EndPoint).Switch();
+            Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.GetMoveOptions(x.MoveOptions, this, x, previousLog))));
         }
     }
 }

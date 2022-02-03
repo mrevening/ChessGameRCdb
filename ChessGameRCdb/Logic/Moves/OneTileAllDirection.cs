@@ -7,7 +7,7 @@ namespace ChessGame.Logic
     {
         public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {
-            var isUp = figure.Color.GetDirection() == Direction.Up;
+            var isUp = figure.Color.IsUp();
 
             return allMoveOptions;
         }

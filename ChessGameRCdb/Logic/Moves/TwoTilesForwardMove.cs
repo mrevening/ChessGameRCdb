@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class TwoTilesForward : Move
+    internal class TwoTilesForwardMove : Move
     {
         public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {
-            var isUp = figure.Color.GetDirection() == Direction.Up;
+            var isUp = figure.Color.IsUp();
             var initRow = isUp ? Row.Two : Row.Seven;
             if (figure.Coordinate.Row != initRow) return allMoveOptions;
 
