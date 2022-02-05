@@ -14,9 +14,12 @@ namespace ChessGame.Logic
         public readonly static Column G = new Column(7, nameof(G));
         public readonly static Column H = new Column(8, nameof(H));
 
+        public readonly static Column Max = H;
+        public readonly static Column Min = A;
+
         public Column(int id, string name) : base(id, name) { }
 
-
+        public static bool Validate(int c) => c >= Min.Id && c <= Max.Id;
         public static Column operator +(Column left, int right)
         {
             if (left.Id + right > H.Id) return null;

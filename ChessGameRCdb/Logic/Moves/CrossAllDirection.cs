@@ -9,10 +9,10 @@ namespace ChessGame.Logic
         {
             var isUp = figure.Color.IsUp();
 
-            var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => row > figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r));
-            var coordinatesDown = Enumeration.GetAll<Row>(isUp).Where(row => row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r));
-            var coordinatesLeft = Enumeration.GetAll<Column>(isUp).Where(col => col > figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row));
-            var coordinatesRight = Enumeration.GetAll<Column>(isUp).Where(col => col < figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row));
+            var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => row > figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).ToList();
+            var coordinatesDown = Enumeration.GetAll<Row>(isUp).Where(row => row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).ToList();
+            var coordinatesLeft = Enumeration.GetAll<Column>(isUp).Where(col => col > figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row)).ToList();
+            var coordinatesRight = Enumeration.GetAll<Column>(isUp).Where(col => col < figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row)).ToList();
 
             AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesUp);
             AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesDown);

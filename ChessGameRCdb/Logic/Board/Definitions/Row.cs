@@ -14,7 +14,12 @@ namespace ChessGame.Logic
         public static Row Seven = new Row(7, nameof(Seven));
         public static Row Eight = new Row(8, nameof(Eight));
 
+        public static Row Max = Eight;
+        public static Row Min = One;
+
         public Row(int id, string name) : base(id, name) { }
+
+        public static bool Validate(int r) => r >= Min.Id && r <= Max.Id;
 
         public static Row operator +(Row left, int right)
         {

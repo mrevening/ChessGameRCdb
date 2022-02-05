@@ -9,6 +9,7 @@ namespace ChessGame.Logic
 
         public Coordinate(Column column, Row row)
         {
+            if (column is null || row is null) throw new ArgumentNullException("Coordinate cannot receive null arguments.");
             Column = column;
             Row = row;
         }

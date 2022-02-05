@@ -12,9 +12,10 @@ namespace ChessGame.Logic
             { new Coordinate(Column.C, Row.One), new Diagonal(X.X_3, Y.Y_1, C.Black) },
             { new Coordinate(Column.D, Row.One), new Diagonal(X.X_2, Y.Y_2, C.White) },
             { new Coordinate(Column.E, Row.One), new Diagonal(X.X_2, Y.Y_2, C.Black) },
-            { new Coordinate(Column.F, Row.One), new Diagonal(X.X_1, Y.Y_4, C.White) },
-            { new Coordinate(Column.G, Row.One), new Diagonal(X.X_1, Y.Y_4, C.Black) },
+            { new Coordinate(Column.F, Row.One), new Diagonal(X.X_1, Y.Y_3, C.White) },
+            { new Coordinate(Column.G, Row.One), new Diagonal(X.X_1, Y.Y_3, C.Black) },
             { new Coordinate(Column.H, Row.One), new Diagonal(X.X0, Y.Y_4, C.White) },
+
             { new Coordinate(Column.A, Row.Two), new Diagonal(X.X_3, Y.Y1, C.White) },
             { new Coordinate(Column.B, Row.Two), new Diagonal(X.X_3, Y.Y0, C.Black) },
             { new Coordinate(Column.C, Row.Two), new Diagonal(X.X_2, Y.Y_1, C.White) },
@@ -23,6 +24,7 @@ namespace ChessGame.Logic
             { new Coordinate(Column.F, Row.Two), new Diagonal(X.X_1, Y.Y_2, C.Black) },
             { new Coordinate(Column.G, Row.Two), new Diagonal(X.X0, Y.Y_3, C.White) },
             { new Coordinate(Column.H, Row.Two), new Diagonal(X.X1, Y.Y_3, C.Black) },
+
             { new Coordinate(Column.A, Row.Three), new Diagonal(X.X_3, Y.Y1, C.Black) },
             { new Coordinate(Column.B, Row.Three), new Diagonal(X.X_2, Y.Y1, C.White) },
             { new Coordinate(Column.C, Row.Three), new Diagonal(X.X_2, Y.Y0, C.Black) },
@@ -31,6 +33,7 @@ namespace ChessGame.Logic
             { new Coordinate(Column.F, Row.Three), new Diagonal(X.X0, Y.Y_2, C.White) },
             { new Coordinate(Column.G, Row.Three), new Diagonal(X.X1, Y.Y_2, C.Black) },
             { new Coordinate(Column.H, Row.Three), new Diagonal(X.X1, Y.Y_3, C.White) },
+
             { new Coordinate(Column.A, Row.Four), new Diagonal(X.X_2, Y.Y2, C.White) },
             { new Coordinate(Column.B, Row.Four), new Diagonal(X.X_2, Y.Y1, C.Black) },
             { new Coordinate(Column.C, Row.Four), new Diagonal(X.X_1, Y.Y1, C.White) },
@@ -48,6 +51,7 @@ namespace ChessGame.Logic
             { new Coordinate(Column.F, Row.Five), new Diagonal(X.X1, Y.Y_1, C.White) },
             { new Coordinate(Column.G, Row.Five), new Diagonal(X.X2, Y.Y_1, C.Black) },
             { new Coordinate(Column.H, Row.Five), new Diagonal(X.X2, Y.Y_2, C.White) },
+
             { new Coordinate(Column.A, Row.Six), new Diagonal(X.X_1, Y.Y3, C.White) },
             { new Coordinate(Column.B, Row.Six), new Diagonal(X.X_1, Y.Y2, C.Black) },
             { new Coordinate(Column.C, Row.Six), new Diagonal(X.X0, Y.Y2, C.White) },
@@ -56,6 +60,7 @@ namespace ChessGame.Logic
             { new Coordinate(Column.F, Row.Six), new Diagonal(X.X2, Y.Y0, C.Black) },
             { new Coordinate(Column.G, Row.Six), new Diagonal(X.X2, Y.Y_1, C.White) },
             { new Coordinate(Column.H, Row.Six), new Diagonal(X.X3, Y.Y_1, C.Black) },
+
             { new Coordinate(Column.A, Row.Seven), new Diagonal(X.X_1, Y.Y3, C.Black) },
             { new Coordinate(Column.B, Row.Seven), new Diagonal(X.X0, Y.Y3, C.White) },
             { new Coordinate(Column.C, Row.Seven), new Diagonal(X.X1, Y.Y2, C.Black) },
@@ -64,6 +69,7 @@ namespace ChessGame.Logic
             { new Coordinate(Column.F, Row.Seven), new Diagonal(X.X2, Y.Y1, C.White) },
             { new Coordinate(Column.G, Row.Seven), new Diagonal(X.X3, Y.Y0, C.Black) },
             { new Coordinate(Column.H, Row.Seven), new Diagonal(X.X3, Y.Y_1, C.White) },
+
             { new Coordinate(Column.A, Row.Eight), new Diagonal(X.X0, Y.Y4, C.White) },
             { new Coordinate(Column.B, Row.Eight), new Diagonal(X.X1, Y.Y3, C.Black) },
             { new Coordinate(Column.C, Row.Eight), new Diagonal(X.X1, Y.Y3, C.White) },

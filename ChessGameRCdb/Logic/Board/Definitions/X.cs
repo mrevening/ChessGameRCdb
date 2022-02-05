@@ -2,7 +2,7 @@
 {
     public class X : Enumeration
     {
-        public readonly static X X_4 = new X(-3, "-4X");
+        public readonly static X X_4 = new X(-4, "-4X");
         public readonly static X X_3 = new X(-3, "-3X");
         public readonly static X X_2 = new X(-2, "-2X");
         public readonly static X X_1 = new X(-1, "-1X");
@@ -12,8 +12,10 @@
         public readonly static X X3 = new X(3, "3X");
         public readonly static X X4 = new X(4, "4X");
 
-        public X(int id, string name) : base(id, name) { }
+        public static readonly X Max = X4;
+        public static readonly X Min = X_4;
 
+        public X(int id, string name) : base(id, name) { }
 
         public static X operator +(X left, int right)
         {

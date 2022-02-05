@@ -2,7 +2,7 @@
 {
     public class Y : Enumeration
     {
-        public readonly static Y Y_4 = new Y(-3, "-4Y");
+        public readonly static Y Y_4 = new Y(-4, "-4Y");
         public readonly static Y Y_3 = new Y(-3, "-3Y");
         public readonly static Y Y_2 = new Y(-2, "-2Y");
         public readonly static Y Y_1 = new Y(-1, "-3Y");
@@ -12,8 +12,10 @@
         public readonly static Y Y3 = new Y(3, "3Y");
         public readonly static Y Y4 = new Y(4, "4Y");
 
-        public Y(int id, string name) : base(id, name) { }
+        public static readonly Y Max = Y4;
+        public static readonly Y Min = Y_4;
 
+        public Y(int id, string name) : base(id, name) { }
 
         public static Y operator +(Y left, int right)
         {

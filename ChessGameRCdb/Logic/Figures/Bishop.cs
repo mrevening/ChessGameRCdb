@@ -6,7 +6,7 @@ namespace ChessGame.Logic
     public class Bishop : Figure
     {
         public override FigureType FigureType { get => FigureType.Bishop; }
-        public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
+        public override List<IMove> MoveTypes { get => new List<IMove>() { new DiagonalAllDirection() }; }
 
         public Bishop(Color player) : base(player) { }
         public Bishop(Color player, Column column, Row row) : base(player, column, row) { }

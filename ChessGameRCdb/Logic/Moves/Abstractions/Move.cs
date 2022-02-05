@@ -7,7 +7,6 @@ namespace ChessGame.Logic
     {
         private List<ActionType> _dangerousAction = new List<ActionType>() { ActionType.Check, ActionType.Mate };
         public abstract IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
-
         protected void AddLongDistanceWithCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
             var eK = figure.Color == Color.White ? Figure.BlackKing : Figure.WhiteKing;
