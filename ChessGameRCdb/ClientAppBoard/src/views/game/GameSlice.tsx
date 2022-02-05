@@ -151,14 +151,14 @@ export const gameSlice = createSlice({
             state.board.Figures = result
         },
         updateGuestInfo: (state, action: PayloadAction<IUpdateUserInfo>) => {
-            var hostColor = state.status.guest?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
-            state.status.host = {
+            var guestColor = state.status.thisPlayer?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
+            state.status.guest = {
                 id: action.payload.id,
                 name: action.payload.name,
                 token: action.payload.token,
-                color: hostColor
+                color: guestColor
             }
-            state.status.opponent = state.status.host
+            state.status.opponent = state.status.guest
         },
     },
     extraReducers: (builder) => {

@@ -10,8 +10,9 @@ export const menuAPI = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    tokenId: loggedIn.token,
-                    name: loggedIn.name
+                    id: loggedIn.id,
+                    name: loggedIn.name,
+                    token: loggedIn.token                    
                 }),
             })
                 .then(response => response.json() as Promise<ILoggedInResponse>)
