@@ -6,6 +6,9 @@ using ChessGame.DTO;
 using ChessGame.Interface;
 using ChessGame.HubMove;
 using System.Threading.Tasks;
+using ChessGame.Logic;
+using System.Linq;
+using System;
 
 namespace ChessGame.Controllers
 {
@@ -32,11 +35,29 @@ namespace ChessGame.Controllers
             return board;
         }
 
-        [HttpPost]
-        public bool SaveMove([FromBody] MoveDTO move)
+        [HttpGet]
+        public async Task UpdateBoard(UpdateBoardRequestDTO r)
         {
-            _boardCommand.CreateLog(move);
-            return true;
+            _boardCommand.CreateLog(r.Log);
+            var previousBoard = r.Figures.Select(X =>
+            {
+                var figureType = Enumeration.FromValue<FigureType>(X.Type);
+                var color = Enumeration.FromValue<Color>(X.Color);
+                var typeName = typeof(IFigure).Namespace + "." + figureType.ToString();
+                var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { color, new Coordinate(X.Square) });
+                return figure;
+            });
+            var log = new Log(new Coordinate(r.Log.ColumnStart, r.Log.ColumnEnd), new Coordinate(r.Log.ColumnEnd, r.Log.ColumnEnd));
+            var newBoard = new BoardProcessor(new Board(previousBoard)).CalculateBoard(new List<Log>() { log });
+            var dtoBoard = newBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            await _moveHub.Clients.Group(r.GameId.ToString()).UpdateBoard(new UpdateBoardDTO() { Board = dtoBoard });
         }
+
+        //[HttpPost]
+        //public bool SaveMove([FromBody] MoveDTO move)
+        //{
+        //    _boardCommand.CreateLog(move);
+        //    return true;
+        //}
     }
 }

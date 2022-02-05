@@ -15,6 +15,11 @@ import { IGetBoardResponseDTO } from './api/boardAPI/dto/IGetBoardResponseDTO'
 import { IUpdateBoardDTO } from './api/boardAPI/dto/IUpdateBoardDTO'
 import IMoveOption from './board/interface/IActionMove'
 import { Role } from './board/enum/Role'
+import { SaveLogCalculateAndUpdateBoardRequestDTO } from './api/boardAPI/dto/SaveLogCalculateAndUpdateBoardRequest/SaveLogCalculateAndUpdateBoardRequestDTO'
+import { LogDTO } from './api/boardAPI/dto/SaveLogCalculateAndUpdateBoardRequest/LogDTO'
+import { FigureDTO } from './api/boardAPI/dto/SaveLogCalculateAndUpdateBoardRequest/FigureDTO'
+import { LogSupplementDTO } from './api/boardAPI/dto/SaveLogCalculateAndUpdateBoardRequest/LogSupplementDTO'
+import { BoardDTO } from './api/boardAPI/dto/SaveLogCalculateAndUpdateBoardRequest/BoardDTO'
 
 const initialState: IGameSlice = {
     status: {
@@ -67,12 +72,28 @@ export const getBoard = createAsyncThunk(
     }
 )
 
+
+
 export const executeMove = createAsyncThunk(
     'game/executeMove',
     async (square: ISquare, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
         if (game.board.isValidMove)
-            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard(game.status.gameId!)), null);
+            thunkAPI.dispatch(saveLogCalculateAndUpdateBoard());
+    }
+)
+
+const saveLogCalculateAndUpdateBoard = createAsyncThunk(
+    'game/saveLogCalculateAndUpdateBoard',
+    async (_, thunkAPI) => {
+        const { game } = thunkAPI.getState() as { game: IGameSlice }
+        const startPoint = game.board.activeFigure?.Square.Name
+        const endPoint = game.board.destinationSquare?.Name
+        const supplement = game.board.activeFigure?.EnableMoves!.find(x => x.Log.endPoint.Name == endPoint)
+        const supplementDTO = { startPoint: supplement?.Log.startPoint.Name, endPoint: supplement?.Log.endPoint.Name } as LogSupplementDTO
+        const logDTO = { startPoint: startPoint!, endPoint: endPoint!, logSupplement: supplementDTO } as LogDTO
+        const board = { possibleMoves: game.board.Figures.map(x => ({ type: x.Type, color: x.Color, square: x.Square.Name } as FigureDTO)) } as BoardDTO
+        await BoardAPI.saveLogCalculateAndUpdateBoard({ gameId: game.status.gameId!, board: board, log: logDTO })
     }
 )
 

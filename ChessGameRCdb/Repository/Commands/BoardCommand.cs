@@ -17,15 +17,15 @@ namespace ChessGame.Command
         {
             _boardcontext = boardContext;
         }
-        public void CreateLog(MoveDTO move)
+        public void CreateLog(SaveLogDTO log)
         {
             _boardcontext.Add(new NotationLog()
             {
-                GameId = move.GameId,
-                StartColumnId = move.ColumnStart,
-                StartRowId = move.RowStart,
-                EndColumnId = move.ColumnEnd,
-                EndRowId = move.RowEnd
+                GameId = log.GameId,
+                StartColumnId = log.ColumnStart,
+                StartRowId = log.RowStart,
+                EndColumnId = log.ColumnEnd,
+                EndRowId = log.RowEnd
             });
             _boardcontext.SaveChanges();
         }
