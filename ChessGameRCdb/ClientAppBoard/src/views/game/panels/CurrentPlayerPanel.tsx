@@ -2,10 +2,13 @@ import { useAppSelector } from "state/hooks";
 
 
 export default function CurrentPlayerPanel() {
-    const userName = useAppSelector(store => store.game.status.thisPlayer?.name)
+    const currentPlayer = useAppSelector(store => store.game.status.thisPlayer)!
+    const gameId = useAppSelector(store => store.game.status.gameId)
     return (
         <>
-            <div>CurrentPlayer: {userName}</div>
+            <div>CurrentPlayer: {currentPlayer.name}</div>
+            <div>Role: {currentPlayer.role}</div>
+            <div>GameId: {gameId}</div>
         </>
     );
 }

@@ -1,0 +1,1 @@
+export enum Role { Host, Guest, Observer }
