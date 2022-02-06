@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import MenuReducer from 'views/menu/MenuSlice';
-import GameReducer from 'views/game/GameSlice';
+import GameSlice from '../slices/GameSlice'
+import MenuSlice from '../slices/MenuSlice'
 
 const store = configureStore({
     reducer: {
-        menu: MenuReducer,
-        game: GameReducer
+        menu: MenuSlice,
+        game: GameSlice
     }
 })
 
