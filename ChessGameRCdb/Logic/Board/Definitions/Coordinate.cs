@@ -13,17 +13,6 @@ namespace ChessGame.Logic
             Column = column;
             Row = row;
         }
-
-        public Coordinate(string coordinate)
-        {
-            var column = coordinate[0];
-            var row = coordinate[1];
-            if (column >= Column.A.Id && column <= Column.H.Id && row >= Row.One.Id && row <= Row.Eight.Id)
-            {
-                Column = Enumeration.FromValue<Column>(column);
-                Row = Enumeration.FromValue<Row>(row);
-            }
-        }
         public Coordinate(int column, int row)
         {
             if (column >= Column.A.Id && column <= Column.H.Id && row >= Row.One.Id && row <= Row.Eight.Id)

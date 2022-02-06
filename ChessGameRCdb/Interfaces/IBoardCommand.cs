@@ -4,6 +4,6 @@ namespace ChessGame.Interface
 {
     public interface IBoardCommand
     {
-        void CreateLog(SaveLogDTO log);
+        void CreateLog(MoveDTO move);
     }
 }
