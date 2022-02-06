@@ -1,10 +1,11 @@
+import { IGetBoardRequestDTO } from "../dto/GetBoard/IGetBoardRequestDTO";
 import { IGetBoardResponseDTO } from "../dto/GetBoard/IGetBoardResponseDTO";
 import ISaveMoveDTO from "../dto/SaveMove/ISaveMove"
 
 export const BoardAPI = {
-    async getBoard(gameId: number) {
+    async getBoard(request: IGetBoardRequestDTO) {
         return new Promise<{ response: IGetBoardResponseDTO }>(resolve =>
-            fetch(`api/Board/GetBoard?gameId=${gameId}`)
+            fetch(`api/Board/GetBoard?gameId=${request.gameId}`)
             .then(response => response.json() as Promise<IGetBoardResponseDTO>)
             .then((data) => {
                 resolve({ response: data })

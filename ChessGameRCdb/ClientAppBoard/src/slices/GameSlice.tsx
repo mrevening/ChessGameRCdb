@@ -15,6 +15,7 @@ import { ICreateGameResponseDTO } from '../dto/CreateGame/ICreateGameResponseDTO
 import { IJoinGameResponseDTO } from '../dto/JoinGame/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from '../dto/GetBoard/IGetBoardResponseDTO'
 import { Squares } from '../repository/Squares'
+import { IGetBoardRequestDTO } from '../dto/GetBoard/IGetBoardRequestDTO'
 
 
 const initialState: IGameSlice = {
@@ -62,8 +63,8 @@ export const joinGame = createAsyncThunk(
 
 export const getBoard = createAsyncThunk(
     'game/getBoard',
-    async (gameId: number) => {
-        const result = await BoardAPI.getBoard(gameId)
+    async (request: IGetBoardRequestDTO) => {
+        const result = await BoardAPI.getBoard(request)
         return result.response
     }
 )
@@ -73,7 +74,7 @@ export const executeMove = createAsyncThunk(
     async (square: ISquare, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
         if (game.board.isValidMove)
-            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard(game.status.gameId!)), null);
+            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard({ gameId: game.status.gameId! })), null);
     }
 )
 

@@ -15,7 +15,7 @@ interface IBoardProps {
 export default function Board({ gameId }: IBoardProps) {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        if (gameId) dispatch(getBoard( gameId ))
+        if (gameId) dispatch(getBoard({ gameId }))
     }, [dispatch, gameId]);
 
     useEffect(() => {
