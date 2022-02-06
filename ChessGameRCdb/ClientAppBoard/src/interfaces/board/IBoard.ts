@@ -3,9 +3,9 @@ import IFigure from './IFigure'
 import IMove from './IMove'
 
 export default interface IBoard{
-    Turn: number,
-    Squares: Array<ISquare>
-    Figures: Array<IFigure>,
-    Actions: Array<IMove>
-    EnPassant: Array<IFigure>
+    turn: number,
+    squares: Array<ISquare>
+    figures: Array<IFigure>,
+    actions: Array<IMove>
+    enPassant: Array<IFigure>
 }

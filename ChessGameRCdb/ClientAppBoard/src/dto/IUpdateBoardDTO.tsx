@@ -1,5 +1,5 @@
-import { FigureDTO } from "./FigureDTO";
+import IFigure from "../interfaces/board/IFigure";
 
 export interface IUpdateBoardDTO {
-    board: FigureDTO[]
+    board: IFigure[]
 }

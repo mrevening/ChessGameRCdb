@@ -1,6 +1,5 @@
-import { FigureDTO } from "../FigureDTO";
-
+import IFigure from "../../interfaces/board/IFigure";
 
 export interface IGetBoardResponseDTO {
-    figures: FigureDTO[]
+    figures: IFigure[]
 }

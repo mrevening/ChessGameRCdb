@@ -27,9 +27,9 @@ const initialState: IGameSlice = {
     },
     board: {
         activeFigure: undefined,
-        Squares: Squares,
-        Figures: new Array<IFigure>(),
-        PionPromotion: undefined,
+        squares: Squares,
+        figures: undefined,
+        pionPromotion: undefined,
         destinationSquare: undefined,
         isValidMove: undefined,
     }
@@ -82,7 +82,7 @@ const saveMove = createAsyncThunk(
     'game/saveMove',
     async (_, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
-        await BoardAPI.saveMove({ gameId: game.status.gameId!, startSquare: game.board.activeFigure!.Square, endSquare: game.board.destinationSquare! })
+        await BoardAPI.saveMove({ gameId: game.status.gameId!, startSquare: game.board.activeFigure!.square, endSquare: game.board.destinationSquare! })
     },
     {
         condition: (_, { getState }) => {
@@ -100,22 +100,22 @@ export const gameSlice = createSlice({
         click: (state, action: PayloadAction<ClickSquare>) => {
             console.log(state.status.thisPlayer?.name)
             const clickedSquare = action.payload.square;
-            var figure = state.board.Figures.find(f => f.Square.Id === clickedSquare.Id);
-            if (figure && figure.Color !== state.status.thisPlayer?.color) return
+            var figure = state.board.figures?.find(f => f.square.name === clickedSquare.name);
+            if (figure && figure.color !== state.status.thisPlayer?.color) return
             state.board.activeFigure = figure
         },
         release: (state, action: PayloadAction<ClickSquare>) => {
             console.log("relase")
             const clickedSquare = action.payload.square
-            const isValidMove = state.board.activeFigure?.EnableMoves?.some(eM => eM.Log?.endPoint?.Name === clickedSquare.Name)!
+            const isValidMove = state.board.activeFigure?.enableMoves?.some(eM => eM.log?.endPoint?.name === clickedSquare.name)!
             state.board.isValidMove = isValidMove
             if (!isValidMove) {
                 state.board.activeFigure = undefined;
                 return
             }
             state.board.destinationSquare = clickedSquare
-            const figure = state.board.Figures.find(x => x.Square.Name === state.board.activeFigure!.Square.Name)
-            figure!.Square = clickedSquare
+            const figure = state.board.figures?.find(x => x.square.name === state.board.activeFigure!.square.name)
+            figure!.square = clickedSquare
 
             //var actionTypes = figure?.EnableMoves?.find(x => x.Square === clickedSquare)?.ActionType
             //actionTypes?.map(a => { if (a === ActionType.Promotion) return state.board.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.board.activeFigure! } })
@@ -125,31 +125,13 @@ export const gameSlice = createSlice({
             //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
-            state.board.Figures.find(f => f.Id === state.board.PionPromotion!.ActivePion.Id)!.Type = action.payload
-            state.board.PionPromotion = undefined;
+            if( state.board.figures) state.board.figures.find(f => f.square.name === state.board.pionPromotion!.activePion.square.name)!.type = action.payload
+            state.board.pionPromotion = undefined;
         },
         updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
             console.log("updateGame")
             const board = action.payload.board;
-            var result = board.map((figure) => ({
-                Color: figure.color,
-                Type: figure.type,
-                Square: Squares.find(square => square.Name === figure.square) as ISquare,
-                EnableMoves: figure.possibleMoves && figure.possibleMoves.map(x => ({
-                    ActionType: x.action,
-                    Log: {
-                        startPoint: Squares.find(s => s.Name === x.log.startPoint),
-                        endPoint: Squares.find(s => s.Name === x.log.endPoint),
-                        logSupplement: x.log.logSupplement?.map(ls => ({
-                            startPoint: Squares.find(z => z.Name === ls.startPoint),
-                            endPoint: Squares.find(z => z.Name === ls.endPoint),
-                            figure: ls.figure && FigureType[ls.figure]
-                        }))
-                    }
-                }) as IMoveOption)
-            } as IFigure))
-
-            state.board.Figures = result
+            state.board.figures = board
         },
         updateGuestInfo: (state, action: PayloadAction<IUpdateUserInfo>) => {
             var guestColor = state.status.thisPlayer?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
@@ -175,28 +157,11 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(getBoard.fulfilled, (state, action: PayloadAction<IGetBoardResponseDTO>) => {
-            var figures = action.payload.figures.map((figure, i) => ({
-                Id: i,
-                Color: figure.color,
-                Type: figure.type,
-                Square: Squares.find(square => square.Name === figure.square),
-                EnableMoves: figure.possibleMoves && figure.possibleMoves.map(x => ({
-                    ActionType: x.action,
-                    Log: {
-                        startPoint: Squares.find(s => s.Name === x.log.startPoint),
-                        endPoint: Squares.find(s => s.Name === x.log.endPoint),
-                        logSupplement: x.log.logSupplement?.map(ls => ({
-                            startPoint: Squares.find(z => z.Name === ls.startPoint),
-                            endPoint: Squares.find(z => z.Name === ls.endPoint),
-                            figure: ls.figure && FigureType[ls.figure]
-                        }))
-                    }
-                }) as IMoveOption)
-            }) as IFigure)
+            var figures = action.payload.figures;
             state.board.activeFigure = undefined;
             state.board.destinationSquare = undefined;
             state.board.isValidMove = undefined;
-            state.board.Figures = figures
+            state.board.figures = figures
         });
         builder.addCase(executeMove.fulfilled, (state, action) => {
 

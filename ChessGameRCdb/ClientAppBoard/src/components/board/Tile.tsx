@@ -14,17 +14,18 @@ interface TileProps {
 
 export default function Tile({ col, row }: TileProps) {
     const dispatch = useAppDispatch();
-    const squares = useAppSelector(store => store.game.board.Squares)
-    const figures = useAppSelector(store => store.game.board.Figures)
+    const squares = useAppSelector(store => store.game.board.squares)
+    const figures = useAppSelector(store => store.game.board.figures)
     const activeFigure = useAppSelector(store => store.game.board.activeFigure)
+    const square = squares.find(f => f.column === col && f.row === row)!
+    const figure = figures?.find(f => f.square.name === square.name)
 
-    const square = squares.find(f => f.Column === col && f.Row === row)!
-    const figure = figures.find(f => f.Square === square)
-    const isActiveFigure = activeFigure && activeFigure.Square === square
-    const figureImg = figure && FigureImagePaths.find(p => p.Color === figure.Color && p.FigureType === figure.Type)?.ImgPath
-    const isActiveFigurePossibleMove = activeFigure?.EnableMoves?.some(af => af.Log?.endPoint === square)
 
-    const colorClass = square.Color === Color.Dark ? 'blackTile' : 'whiteTile'
+    const isActiveFigure = activeFigure && activeFigure.square.name === square.name
+    const figureImg = figure && FigureImagePaths.find(p => p.color === figure.color && p.figureType === figure.type)?.imgPath
+    const isActiveFigurePossibleMove = activeFigure?.enableMoves?.some(af => af.log?.endPoint === square)
+
+    const colorClass = square.color === Color.Dark ? 'blackTile' : 'whiteTile'
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -46,7 +47,7 @@ export default function Tile({ col, row }: TileProps) {
         var element = document.elementsFromPoint(firstTouchEvent.clientX, firstTouchEvent.clientY)
         var tile = element.find(x => x.className.includes('tile'))
         var name = tile?.getAttribute('square')
-        var square = squares.find(x => x.Name === name)!
+        var square = squares.find(x => x.name === name)!
         dispatch(release({ square }))
         dispatch(executeMove(square))
     }
@@ -55,7 +56,7 @@ export default function Tile({ col, row }: TileProps) {
         <>
             <div
                 draggable="false"
-                {...{ 'square': square.Name }}
+                {...{ 'square': square.name }}
                 className={["tile", colorClass, isPossibleMoveClass].join(" ")}
                 onMouseDown={(e) => handleMouseDown(e)}
                 onMouseUp={(e) => handleMouseUp(e) }

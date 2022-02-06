@@ -5,5 +5,5 @@ interface FigureImageProps {
 }
 
 export default function PromotionFigure({ figure }: FigureImageProps) {
-    return <img src={figure?.ImgPath} alt="figure" draggable="false" />
+    return <img src={figure?.imgPath} alt="figure" draggable="false" />
 }

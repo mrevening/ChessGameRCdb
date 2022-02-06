@@ -4,9 +4,9 @@ import ISquare from "../board/ISquare";
 
 export interface IBoard {
     activeFigure: IFigure | undefined
-    Squares: Array<ISquare>
-    Figures: Array<IFigure>
-    PionPromotion: IPionPromotion | undefined
+    squares: Array<ISquare>
+    figures: Array<IFigure> | undefined
+    pionPromotion: IPionPromotion | undefined
     destinationSquare: ISquare | undefined
     isValidMove: boolean | undefined
 }

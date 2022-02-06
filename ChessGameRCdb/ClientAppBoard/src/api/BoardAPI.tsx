@@ -19,7 +19,7 @@ export const BoardAPI = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ GameId: move.gameId, ColumnStart: move.startSquare.Column, RowStart: move.startSquare.Row, ColumnEnd: move.endSquare.Column, RowEnd: move.endSquare.Row }),
+                body: JSON.stringify({ GameId: move.gameId, ColumnStart: move.startSquare.column, RowStart: move.startSquare.row, ColumnEnd: move.endSquare.column, RowEnd: move.endSquare.row }),
             })
             .then(response => response.json() as Promise<boolean>)
             .then((data) => {

@@ -8,14 +8,14 @@ import { FigureImagePaths } from "../../repository/FigureImagePaths";
 
 export default function PionPromotion() {
     const dispatch = useAppDispatch();
-    var pionPromotionObject = useAppSelector(store => store.game.board.PionPromotion)
+    var pionPromotionObject = useAppSelector(store => store.game.board.pionPromotion)
     const [blockEnter, setBlockEnter] = useState(true);
     const [figureSelected, setFigureSelected] = useState<FigureType>()
     const figures = [FigureType.Knight, FigureType.Bishop, FigureType.Rook, FigureType.Queen]
 
     return (
         <>
-            <Modal isOpen={pionPromotionObject?.ShowPionPromotionAlert}>
+            <Modal isOpen={pionPromotionObject?.showPionPromotionAlert}>
                 <ModalHeader>
                     Pion promotion
                 </ModalHeader>
@@ -23,7 +23,7 @@ export default function PionPromotion() {
                     {
                         figures.map((figure,i) => { return (
                             <Button key={i} outline onClick={() => { setBlockEnter(false); setFigureSelected(figure) }}>
-                                <PromotionFigure figure={FigureImagePaths.find(x => x.Color === pionPromotionObject?.ActivePion.Color && x.FigureType === figure)!} />
+                                <PromotionFigure figure={FigureImagePaths.find(x => x.color === pionPromotionObject?.activePion.color && x.figureType === figure)!} />
                             </Button>
                         )})
                     }

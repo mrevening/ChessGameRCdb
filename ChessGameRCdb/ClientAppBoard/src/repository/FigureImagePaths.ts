@@ -15,16 +15,16 @@ import { PlayerColor } from './enum/PlayerColor'
 import IFigureImagePath from '../interfaces/board/IFigureImagePath'
 
 export const FigureImagePaths: Array<IFigureImagePath> = [ 
-    { FigureType: FigureType.Pawn, Color: PlayerColor.White, ImgPath: wpawn  },
-    { FigureType: FigureType.Knight, Color: PlayerColor.White, ImgPath: wknight  },
-    { FigureType: FigureType.Bishop, Color: PlayerColor.White, ImgPath: wbishop  },
-    { FigureType: FigureType.Rook, Color: PlayerColor.White, ImgPath: wrook  },
-    { FigureType: FigureType.Queen, Color: PlayerColor.White, ImgPath: wqueen  },
-    { FigureType: FigureType.King, Color: PlayerColor.White, ImgPath: wking  },
-    { FigureType: FigureType.Pawn, Color: PlayerColor.Black, ImgPath: bpawn  },
-    { FigureType: FigureType.Knight, Color: PlayerColor.Black, ImgPath: bknight  },
-    { FigureType: FigureType.Bishop, Color: PlayerColor.Black, ImgPath: bbishop  },
-    { FigureType: FigureType.Rook, Color: PlayerColor.Black, ImgPath: brook  },
-    { FigureType: FigureType.Queen, Color: PlayerColor.Black, ImgPath: bqueen  },
-    { FigureType: FigureType.King, Color: PlayerColor.Black, ImgPath: bking  },
+    { figureType: FigureType.Pawn, color: PlayerColor.White, imgPath: wpawn  },
+    { figureType: FigureType.Knight, color: PlayerColor.White, imgPath: wknight  },
+    { figureType: FigureType.Bishop, color: PlayerColor.White, imgPath: wbishop  },
+    { figureType: FigureType.Rook, color: PlayerColor.White, imgPath: wrook  },
+    { figureType: FigureType.Queen, color: PlayerColor.White, imgPath: wqueen  },
+    { figureType: FigureType.King, color: PlayerColor.White, imgPath: wking  },
+    { figureType: FigureType.Pawn, color: PlayerColor.Black, imgPath: bpawn  },
+    { figureType: FigureType.Knight, color: PlayerColor.Black, imgPath: bknight  },
+    { figureType: FigureType.Bishop, color: PlayerColor.Black, imgPath: bbishop  },
+    { figureType: FigureType.Rook, color: PlayerColor.Black, imgPath: brook  },
+    { figureType: FigureType.Queen, color: PlayerColor.Black, imgPath: bqueen  },
+    { figureType: FigureType.King, color: PlayerColor.Black, imgPath: bking  },
 ]
