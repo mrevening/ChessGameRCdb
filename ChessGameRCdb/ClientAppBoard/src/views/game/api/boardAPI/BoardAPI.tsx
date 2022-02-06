@@ -1,6 +1,6 @@
 import ISaveMove from "../../board/interface/ISaveMove"
 import { IGetBoardResponseDTO } from "./dto/IGetBoardResponseDTO"
-import { ExecuteMove } from "./dto/ExecuteMove/ExecuteMoveDTO";
+import { SaveLogCalculateAndUpdateBoardRequestDTO } from "./dto/SaveLogCalculateAndUpdateBoardRequest/SaveLogCalculateAndUpdateBoardRequestDTO";
 
 export const BoardAPI = {
     async getBoard(gameId: number) {
@@ -12,7 +12,7 @@ export const BoardAPI = {
             })
         );
     },
-    async executeMove(dto: ExecuteMove) {
+    async saveLogCalculateAndUpdateBoard(dto: SaveLogCalculateAndUpdateBoardRequestDTO) {
         return new Promise(resolve =>
             fetch(`api/Board/UpdateBoard`, {
                 method: 'POST',
