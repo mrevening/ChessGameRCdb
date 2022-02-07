@@ -8,15 +8,16 @@ namespace ChessGame.DTO
     {
         public int Type { get; set; }
         public int Color { get; set; }
-        public SquareDTO Square { get; set; }
-        public IEnumerable<MoveOptionDTO> PossibleMoves { get; set; }
+        public string Square { get; set; }
+        public IEnumerable<MoveOptionDTO> EnableMoves { get; set; }
 
+        public FigureDTO() { }
         public FigureDTO(int type, int player, Coordinate square, IEnumerable<MoveOption> possibleMoves) 
         {
             Type = type;
             Color = player;
-            Square = new SquareDTO(square.Column, square.Row);
-            //PossibleMoves = possibleMoves.Select(x => new MoveOptionDTO(x));
+            Square = square.ToString();
+            EnableMoves = possibleMoves.Select(x => new MoveOptionDTO(x));
         }
     }
 }

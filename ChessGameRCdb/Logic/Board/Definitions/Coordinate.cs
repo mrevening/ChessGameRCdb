@@ -22,6 +22,12 @@ namespace ChessGame.Logic
             }
         }
 
+        public Coordinate(string c)
+        {
+            Column = Enumeration.FromDisplayName<Column>(c[0].ToString().ToUpper());
+            Row = Enumeration.FromValue<Row>(int.Parse(c.Substring(1,1)));
+        }
+
         public override string ToString() => Column.ToString() + Row.Id.ToString(); 
         public override bool Equals(object other) => other is Coordinate && Equals(other);
         public bool Equals(Coordinate p) => Column == p.Column && Row == p.Row;

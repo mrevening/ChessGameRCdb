@@ -4,14 +4,15 @@ namespace ChessGame.DTO
 {
     public class SquareDTO
     {
-        public int Column { get; set; }
-        public int Row { get; set; }
         public string Name { get; set; }
+        public Column Column { get; set; }
+        public Row Row { get; set; }
+        public int? Color { get; set; }
+
+        public SquareDTO() { }
 
         public SquareDTO(Column c, Row r) 
         {
-            Column = c.Id;
-            Row = r.Id;
             Name = new Coordinate(c, r).ToString();
         }
     }

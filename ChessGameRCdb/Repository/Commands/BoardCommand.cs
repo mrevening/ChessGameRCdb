@@ -29,5 +29,19 @@ namespace ChessGame.Command
             });
             _boardcontext.SaveChanges();
         }
+        public void CreateLog(int gameId, LogDTO l)
+        {
+            var s = new Coordinate(l.Start);
+            var e = new Coordinate(l.End);
+            _boardcontext.Add(new NotationLog()
+            {
+                GameId = gameId,
+                StartColumnId = s.Column.Id,
+                StartRowId = s.Row.Id,
+                EndColumnId = e.Column.Id,
+                EndRowId = e.Row.Id
+            });
+            _boardcontext.SaveChanges();
+        }
     }
 }

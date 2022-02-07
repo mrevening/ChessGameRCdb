@@ -6,14 +6,15 @@ namespace ChessGame.DTO
 {
     public class LogDTO
     {
-        public string StartPoint { get; private set; }
-        public string EndPoint { get; private set; }
-        public IEnumerable<LogSupplementDTO> LogSupplement { get; private set; }
+        public string Start { get; set; }
+        public string End { get; set; }
+        public IEnumerable<LogSupplementDTO> LogSupplement { get; set; }
 
+        public LogDTO() { }
         public LogDTO(Log log)
         {
-            StartPoint = log.StartPoint.ToString();
-            EndPoint = log.EndPoint.ToString();
+            Start = log.StartPoint.ToString();
+            End = log.EndPoint.ToString();
             LogSupplement = log.LogComplexMove.Select(x => new LogSupplementDTO(x));
         }
     }

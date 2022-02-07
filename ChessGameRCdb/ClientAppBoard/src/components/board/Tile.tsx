@@ -18,12 +18,11 @@ export default function Tile({ col, row }: TileProps) {
     const figures = useAppSelector(store => store.game.board.figures)
     const activeFigure = useAppSelector(store => store.game.board.activeFigure)
     const square = squares.find(f => f.column === col && f.row === row)!
-    const figure = figures?.find(f => f.square.name === square.name)
+    const figure = figures?.find(f => f.square === square.name)
 
-
-    const isActiveFigure = activeFigure && activeFigure.square.name === square.name
+    const isActiveFigure = activeFigure?.square === square.name
     const figureImg = figure && FigureImagePaths.find(p => p.color === figure.color && p.figureType === figure.type)?.imgPath
-    const isActiveFigurePossibleMove = activeFigure?.enableMoves?.some(af => af.log?.endPoint === square)
+    const isActiveFigurePossibleMove = activeFigure?.enableMoves?.some(af => af.log?.end === square.name)
 
     const colorClass = square.color === Color.Dark ? 'blackTile' : 'whiteTile'
     const isPossibleMoveClass = isActiveFigurePossibleMove ? 'squareMoveOption' : ''
@@ -35,7 +34,7 @@ export default function Tile({ col, row }: TileProps) {
     const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         dispatch(release({ square }))
-        dispatch(executeMove(square))
+        dispatch(executeMove())
     }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -49,7 +48,7 @@ export default function Tile({ col, row }: TileProps) {
         var name = tile?.getAttribute('square')
         var square = squares.find(x => x.name === name)!
         dispatch(release({ square }))
-        dispatch(executeMove(square))
+        dispatch(executeMove())
     }
 
     return (

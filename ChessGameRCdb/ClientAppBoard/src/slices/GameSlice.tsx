@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk, current } from '@reduxjs/toolkit'
 import { BoardAPI } from '../api/BoardAPI'
 import { GameAPI } from '../api/GameAPI'
 import { PlayerColor } from '../repository/enum/PlayerColor'
@@ -8,15 +8,12 @@ import { ICreateGameRequestDTO } from '../dto/CreateGame/ICreateGameRequestDTO'
 import { IJoinGameRequestDTO } from '../dto/JoinGame/IJoinGameRequestDTO'
 import ISquare from '../interfaces/board/ISquare'
 import { IUpdateBoardDTO } from '../dto/IUpdateBoardDTO'
-import IMoveOption from '../interfaces/board/IActionMove'
-import IFigure from '../interfaces/board/IFigure'
 import { Role } from '../repository/enum/Role'
 import { ICreateGameResponseDTO } from '../dto/CreateGame/ICreateGameResponseDTO'
 import { IJoinGameResponseDTO } from '../dto/JoinGame/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from '../dto/GetBoard/IGetBoardResponseDTO'
 import { Squares } from '../repository/Squares'
 import { IGetBoardRequestDTO } from '../dto/GetBoard/IGetBoardRequestDTO'
-
 
 const initialState: IGameSlice = {
     status: {
@@ -26,12 +23,13 @@ const initialState: IGameSlice = {
         currentPlayerTurn: PlayerColor.White,
     },
     board: {
-        activeFigure: undefined,
         squares: Squares,
         figures: undefined,
-        pionPromotion: undefined,
-        destinationSquare: undefined,
+        activeFigure: undefined,
         isValidMove: undefined,
+        destinationSquare: undefined,
+        move: undefined,
+        pionPromotion: undefined
     }
 }
 
@@ -71,10 +69,11 @@ export const getBoard = createAsyncThunk(
 
 export const executeMove = createAsyncThunk(
     'game/executeMove',
-    async (square: ISquare, thunkAPI) => {
+    async (_, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
         if (game.board.isValidMove)
-            thunkAPI.dispatch(saveMove()).then(() => thunkAPI.dispatch(getBoard({ gameId: game.status.gameId! })), null);
+            await BoardAPI.executeMove({ gameId: game.status.gameId!, figures: game.board.figures!, move: game.board.move! })
+        return
     }
 )
 
@@ -82,7 +81,7 @@ const saveMove = createAsyncThunk(
     'game/saveMove',
     async (_, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
-        await BoardAPI.saveMove({ gameId: game.status.gameId!, startSquare: game.board.activeFigure!.square, endSquare: game.board.destinationSquare! })
+        await BoardAPI.saveMove({ gameId: game.status.gameId!, startSquare: game.board.activeFigure!.square, endSquare: game.board.destinationSquare!.name })
     },
     {
         condition: (_, { getState }) => {
@@ -92,40 +91,43 @@ const saveMove = createAsyncThunk(
     }
 )
 
-
 export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
         click: (state, action: PayloadAction<ClickSquare>) => {
-            console.log(state.status.thisPlayer?.name)
+            var s = current(state)
             const clickedSquare = action.payload.square;
-            var figure = state.board.figures?.find(f => f.square.name === clickedSquare.name);
-            if (figure && figure.color !== state.status.thisPlayer?.color) return
+            var figure = s.board.figures?.find(f => f.square === clickedSquare.name);
+            if (figure && figure.color !== s.status.thisPlayer?.color) return
             state.board.activeFigure = figure
         },
         release: (state, action: PayloadAction<ClickSquare>) => {
-            console.log("relase")
+            var s = current(state)
             const clickedSquare = action.payload.square
-            const isValidMove = state.board.activeFigure?.enableMoves?.some(eM => eM.log?.endPoint?.name === clickedSquare.name)!
+            const isValidMove = s.board.activeFigure?.enableMoves?.some(eM => eM.log?.end === clickedSquare.name)!
             state.board.isValidMove = isValidMove
             if (!isValidMove) {
                 state.board.activeFigure = undefined;
                 return
             }
             state.board.destinationSquare = clickedSquare
-            const figure = state.board.figures?.find(x => x.square.name === state.board.activeFigure!.square.name)
-            figure!.square = clickedSquare
+            s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
+            state.board.move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
+            //const figure = s.board.figures?.find(x => x.square.name === state.board.activeFigure!.square.name)
+            //const square = s.board.squares.find(x => x.name === clickedSquare.name)!
+            //figure!.square = square
+            //s.board.figures!.find(x => x.square.name === state.board.activeFigure!.square.name)!.square = square
 
             //var actionTypes = figure?.EnableMoves?.find(x => x.Square === clickedSquare)?.ActionType
             //actionTypes?.map(a => { if (a === ActionType.Promotion) return state.board.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.board.activeFigure! } })
 
-            state.status.currentPlayerTurn = state.status.currentPlayerTurn !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
+            
 
             //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
-            if( state.board.figures) state.board.figures.find(f => f.square.name === state.board.pionPromotion!.activePion.square.name)!.type = action.payload
+            if( state.board.figures) state.board.figures.find(f => f.square === state.board.pionPromotion!.activePion.square)!.type = action.payload
             state.board.pionPromotion = undefined;
         },
         updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
@@ -164,8 +166,12 @@ export const gameSlice = createSlice({
             state.board.figures = figures
         });
         builder.addCase(executeMove.fulfilled, (state, action) => {
-
-
+            state.board.activeFigure = undefined
+            state.board.destinationSquare = undefined
+            state.board.isValidMove = undefined
+            state.board.move = undefined
+            state.board.pionPromotion = undefined
+            state.status.currentPlayerTurn = state.status.currentPlayerTurn !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
         });
         builder.addCase(executeMove.rejected, (state, action) => {
 
