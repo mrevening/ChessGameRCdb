@@ -40,12 +40,11 @@ export default function Board({ gameId }: IBoardProps) {
     }, [dispatch, gameId]);
 
     const playerColor = useAppSelector(store => store.game.status.thisPlayer?.color)
-
     var rows = playerColor === PlayerColor.White ? Rows : Rows.slice().reverse()
 
     return (
         <Container>
-            { rows.map((row, i) => { return <BoardRow key={row} row={row} /> })}
+            { rows.map(row => { return <BoardRow key={row} row={row} /> })}
         </Container>
     )
 }
