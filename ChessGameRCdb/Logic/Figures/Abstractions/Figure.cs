@@ -29,9 +29,9 @@ namespace ChessGame.Logic
         public HashSet<AttackOption> AttackOptions { get; set; }
         public bool CannotBeMoved { get; set; }
 
-        public Figure(Color color) { Color = color; MoveOptions = new HashSet<MoveOption>(); }
-        public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; MoveOptions = new HashSet<MoveOption>(); }
-        public Figure(Color color, Column column, Row row) { Color = color; Coordinate = new Coordinate(column, row); MoveOptions = new HashSet<MoveOption>(); }
+        public Figure(Color color) { Color = color; MoveOptions = new HashSet<MoveOption>(); AttackOptions = new HashSet<AttackOption>(); }
+        public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; MoveOptions = new HashSet<MoveOption>(); AttackOptions = new HashSet<AttackOption>(); }
+        public Figure(Color color, Column column, Row row) { Color = color; Coordinate = new Coordinate(column, row); MoveOptions = new HashSet<MoveOption>(); AttackOptions = new HashSet<AttackOption>(); }
 
         public bool IsInPosition(Coordinate position) => Coordinate == position;
         public void SetPosition(Coordinate position) => Coordinate = new Coordinate(position.Column, position.Row);

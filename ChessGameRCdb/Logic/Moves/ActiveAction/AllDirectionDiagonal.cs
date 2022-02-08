@@ -8,7 +8,7 @@ namespace ChessGame.Logic
     {
         public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {
-            var directions = new List<IMoveDirection>() { new NE(), new NW(), new SE(), new SW() };
+            var directions = new List<IMoveDirection>() { new NW(), new SW(), new SE(), new NE() };
 
             directions.ForEach(d =>
             {
