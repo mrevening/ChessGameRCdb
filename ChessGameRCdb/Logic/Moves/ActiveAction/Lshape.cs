@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ChessGame.Logic
+{
+    internal class LShape : ActiveAction
+    {
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
+        {
+            var possibleCoordinates = GetLShapeCoordinates(board, figure);
+
+            allMoveOptions.UnionWith(possibleCoordinates.Select(c =>
+            {
+                if (board.IsOpponentFigure(c, figure.Color)) return new MoveOption(ActionType.Capture, new Log(figure.Coordinate, c));
+                else return new MoveOption(ActionType.Move, new Log(figure.Coordinate, c));
+            }));
+
+            return allMoveOptions;
+        }
+    }
+}

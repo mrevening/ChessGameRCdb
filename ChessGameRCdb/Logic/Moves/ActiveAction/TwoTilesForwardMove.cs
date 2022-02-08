@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class TwoTilesForwardMove : Move
+    internal class TwoTilesForwardMove : ActiveAction
     {
         public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {

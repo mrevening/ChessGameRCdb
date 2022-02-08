@@ -6,7 +6,8 @@ namespace ChessGame.Logic
     public class Rook : Figure
     {
         public override FigureType FigureType { get => FigureType.Rook; }
-        public override List<IMove> MoveTypes { get => new List<IMove>() { new CrossAllDirection() }; }
+        public override List<IActiveAction> MoveTypes { get => new List<IActiveAction>() { new AllDirection() }; }
+        public override List<IPassiveAttack> AttackTypes { get => new List<IPassiveAttack>() { new OpenAttack(), new DefferedCheck() }; }
 
         public Rook(Color player) : base(player) { }
         public Rook(Color player, Column column, Row row) : base(player, column, row) { }

@@ -16,6 +16,7 @@ namespace ChessGame.Logic
 
         public void EvaluateInitBoard(Color color)
         {
+            Figures.Where(x => x.Color != color).ToList().ForEach(x => x.AttackTypes.ForEach(y => y.AddAttackOptions(x.AttackOptions, this, x)));
             Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.AddMoveOptions(x.MoveOptions, this, x, null))));
             this.VerifyMoveOptions(color);
         }
@@ -27,7 +28,8 @@ namespace ChessGame.Logic
             log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
         }
         public void EvaluateBoard(Log previousLog) {
-            var color = this.GetCurrentColor(previousLog.EndPoint).Switch();
+            var color = !this.GetCurrentColor(previousLog.EndPoint);
+            Figures.Where(x => x.Color != color).ToList().ForEach(x => x.AttackTypes.ForEach(y => y.AddAttackOptions(x.AttackOptions, this, x)));
             Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.AddMoveOptions(x.MoveOptions, this, x, previousLog))));
             this.VerifyMoveOptions(color);
         }

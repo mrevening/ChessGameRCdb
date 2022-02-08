@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class OneTileDiagonalCapture : Move
+    internal class OneTileDiagonalCapture : ActiveAction
     {
         public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {

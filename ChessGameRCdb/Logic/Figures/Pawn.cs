@@ -5,7 +5,8 @@ namespace ChessGame.Logic
     public class Pawn : Figure
     {
         public override FigureType FigureType { get => FigureType.Pawn; }
-        public override List<IMove> MoveTypes { get => new List<IMove>() { new OneTileForwardMove(), new TwoTilesForwardMove(), new OneTileDiagonalCapture(), new EnPassant() }; }
+        public override List<IActiveAction> MoveTypes { get => new List<IActiveAction>() { new OneTileForwardMove(), new TwoTilesForwardMove(), new OneTileDiagonalCapture(), new EnPassant() }; }
+        public override List<IPassiveAttack> AttackTypes { get => new List<IPassiveAttack>() { }; }
 
         public Pawn(Color player) : base(player) { }
         public Pawn(Color player, Column column, Row row) : base(player, column, row) { }

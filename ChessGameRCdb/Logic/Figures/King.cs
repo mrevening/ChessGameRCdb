@@ -6,7 +6,8 @@ namespace ChessGame.Logic
     public class King : Figure, IUnremovable
     {
         public override FigureType FigureType { get => FigureType.King; }
-        public override List<IMove> MoveTypes { get => new List<IMove>() { new AllAroundOneSquare() }; }
+        public override List<IActiveAction> MoveTypes { get => new List<IActiveAction>() { new AllAroundOneSquare() }; }
+        public override List<IPassiveAttack> AttackTypes { get => new List<IPassiveAttack>() { new OpenAttack() }; }
 
         public King(Color player) : base(player) { }
         public King(Color player, Column column, Row row) : base(player, column, row) { }

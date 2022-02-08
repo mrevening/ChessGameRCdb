@@ -22,8 +22,11 @@ namespace ChessGame.Logic
         public abstract FigureType FigureType { get; }
         public Color Color { get; private set; }
         public Coordinate Coordinate { get; private set; }
-        public abstract List<IMove> MoveTypes { get; }
+        public Diagonal Diagonal { get => Coordinate.GetDiagonal(); }
+        public abstract List<IActiveAction> MoveTypes { get; }
+        public abstract List<IPassiveAttack> AttackTypes { get; }
         public HashSet<MoveOption> MoveOptions { get; set; }
+        public HashSet<AttackOption> AttackOptions { get; set; }
         public bool CannotBeMoved { get; set; }
 
         public Figure(Color color) { Color = color; MoveOptions = new HashSet<MoveOption>(); }
@@ -33,7 +36,7 @@ namespace ChessGame.Logic
         public bool IsInPosition(Coordinate position) => Coordinate == position;
         public void SetPosition(Coordinate position) => Coordinate = new Coordinate(position.Column, position.Row);
         public bool IsPlayersFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer && Coordinate == position;
-        public bool IsOpponentFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer.Switch() && Coordinate == position;
+        public bool IsOpponentFigure(Color currentPlayer, Coordinate position) => Color != currentPlayer && Coordinate == position;
 
         public override bool Equals(object other) => other is Figure && Equals(other);
         public bool Equals(Figure f) => FigureType == f.FigureType && Color == f.Color;

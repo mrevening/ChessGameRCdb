@@ -7,8 +7,8 @@
         public static ActionType EnPassant = new ActionType(3, nameof(EnPassant));
         public static ActionType Promotion = new ActionType(4, nameof(Promotion));
         public static ActionType Castle = new ActionType(5, nameof(Castle));
-        public static ActionType Check = new ActionType(5, nameof(Check));
-        public static ActionType Mate = new ActionType(5, nameof(Mate));
+        public static ActionType Check = new ActionType(6, nameof(Check));
+        public static ActionType Mate = new ActionType(7, nameof(Mate));
 
         public ActionType(int id, string name) : base(id, name) { }
     }

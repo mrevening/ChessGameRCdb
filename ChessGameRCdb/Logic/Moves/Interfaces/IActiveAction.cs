@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Logic
 {
-    public interface IMove
+    public interface IActiveAction
     {
         IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
     }

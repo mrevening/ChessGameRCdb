@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessGame.Logic
 {
-    public abstract class Move : IMove
+    public abstract class Move
     {
-        private List<ActionType> _dangerousAction = new List<ActionType>() { ActionType.Check, ActionType.Mate };
-        public abstract IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
         protected void AddLongDistanceWithCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
             var eK = figure.Color == Color.White ? Figure.BlackKing : Figure.WhiteKing;
@@ -28,50 +27,24 @@ namespace ChessGame.Logic
             allMoveOptions.Distinct(new MoveOptionComparer());
         }
 
-        protected void AddPossibleCheckActions(IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
+        protected IEnumerable<Coordinate> GetLShapeCoordinates(IBoard board, IFigure figure)
         {
-            //var k = board.GetEnemysKing(figure.Color);
-            //var ek = coordinates.FirstOrDefault(x => board.Figures.Any(x => x == k));
-            //if (ek == null) return;
-            //coordinates.All(x => x.Column)
-            //var coo = coordinates.Where(())
-
-            //var playerFiguresBetweenKingAndAttackingFigure = coordinates.Select(c => board.Figures.FirstOrDefault(X => X.Coordinate == c && X.Color == figure.Color));
-            //playerFiguresBetweenKingAndAttackingFigure.ToList().RemoveAll(x => x is null);
-            //if (playerFiguresBetweenKingAndAttackingFigure.ToList().Count == 1) playerFiguresBetweenKingAndAttackingFigure.First().CannotBeMoved = true;
+            var c = figure.Coordinate;
+            var hypotheticCoordinates = new List<Tuple<int, int>>()
+            {
+                Tuple.Create(c.Column.Id + 1, c.Row.Id + 2),
+                Tuple.Create(c.Column.Id - 1, c.Row.Id + 2),
+                Tuple.Create(c.Column.Id - 2, c.Row.Id + 1),
+                Tuple.Create(c.Column.Id - 2, c.Row.Id - 1),
+                Tuple.Create(c.Column.Id - 1, c.Row.Id - 2),
+                Tuple.Create(c.Column.Id + 1, c.Row.Id - 2),
+                Tuple.Create(c.Column.Id + 2, c.Row.Id - 1),
+                Tuple.Create(c.Column.Id + 2, c.Row.Id + 1)
+            };
+            var possibleCoordinates = new List<Coordinate>();
+            hypotheticCoordinates.ForEach(x => { if (Column.Validate(x.Item1) && Row.Validate(x.Item2)) possibleCoordinates.Add(new Coordinate(x.Item1, x.Item2)); });
+            possibleCoordinates.RemoveAll(x => board.IsPlayersFigure(x, figure.Color));
+            return possibleCoordinates;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //protected void HandleActionsCheckingKing(List<MoveOption> allMoveOptions, IBoard board)
-        //{
-        //    var k = board.GetPlayersKing();
-        //    var ek = board.GetEnemysKing();
-        //    foreach (var action in allMoveOptions)
-        //    {
-        //        var nextMoveBoard = board.CurrentColor.Switch() == Color.White
-        //            ? new MoveWhiteFigure(new Board(board.Figures, board.CurrentColor.Switch(), new List<Log>() { action.Log })).OutputBoard
-        //            : new MoveBlackFigure(new Board(board.Figures, board.CurrentColor.Switch(), new List<Log>() { action.Log })).OutputBoard;
-        //        if (action.Log.EndPoint == ek.Coordinate) {
-        //            action.Action = ActionType.Check;
-        //            if (nextMoveBoard.GetPlayersKing().MoveOptions.Count <= 0) action.Action = ActionType.Mate;
-        //        }
-        //        else 
-        //        {
-        //            if (nextMoveBoard.Figures.Where(x => x.Color == board.CurrentColor.Switch()).Any(x => x.MoveOptions.Any(x => _dangerousAction.Contains(x.Action))))
-        //                allMoveOptions.Remove(action);
-        //        }
-        //    }
-        //}
     }
 }
