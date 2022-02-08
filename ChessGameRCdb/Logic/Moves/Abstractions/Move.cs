@@ -6,25 +6,13 @@ namespace ChessGame.Logic
     public abstract class Move : IMove
     {
         private List<ActionType> _dangerousAction = new List<ActionType>() { ActionType.Check, ActionType.Mate };
-        public abstract IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
+        public abstract IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
         protected void AddLongDistanceWithCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
             var eK = figure.Color == Color.White ? Figure.BlackKing : Figure.WhiteKing;
             var isLastMoveCapture = false;
-            //var isCheckPossibility = false;
             var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c =>
             {
-                //if (isLastMoveCapture)
-                //{
-                //    if (isCheckPossibility) return false;
-                //    var figureInPositionBehind = board.GetFigure(c);
-                //    if (figureInPositionBehind.FigureType == eK.FigureType && figureInPositionBehind.Color == eK.Color)
-                //    {
-                //        isCheckPossibility = true;
-
-                //    }
-                //    return false;
-                //}
                 var figureInPosition = board.GetFigure(c);
                 if (figureInPosition != null && figureInPosition.Color != figure.Color) isLastMoveCapture = true;
                 return figureInPosition == null || figureInPosition.Color != figure.Color;
@@ -39,6 +27,32 @@ namespace ChessGame.Logic
             allMoveOptions.UnionWith(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
             allMoveOptions.Distinct(new MoveOptionComparer());
         }
+
+        protected void AddPossibleCheckActions(IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
+        {
+            //var k = board.GetEnemysKing(figure.Color);
+            //var ek = coordinates.FirstOrDefault(x => board.Figures.Any(x => x == k));
+            //if (ek == null) return;
+            //coordinates.All(x => x.Column)
+            //var coo = coordinates.Where(())
+
+            //var playerFiguresBetweenKingAndAttackingFigure = coordinates.Select(c => board.Figures.FirstOrDefault(X => X.Coordinate == c && X.Color == figure.Color));
+            //playerFiguresBetweenKingAndAttackingFigure.ToList().RemoveAll(x => x is null);
+            //if (playerFiguresBetweenKingAndAttackingFigure.ToList().Count == 1) playerFiguresBetweenKingAndAttackingFigure.First().CannotBeMoved = true;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         //protected void HandleActionsCheckingKing(List<MoveOption> allMoveOptions, IBoard board)
         //{
         //    var k = board.GetPlayersKing();

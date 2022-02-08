@@ -6,7 +6,7 @@ namespace ChessGame.Logic
 {
     internal class DiagonalAllDirection : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {
             var isUp = figure.Color.IsUp();
             var d = figure.Coordinate.GetDiagonal();
@@ -25,6 +25,11 @@ namespace ChessGame.Logic
             AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesDown);
             AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesLeft);
             AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesRight);
+
+            AddPossibleCheckActions(board, figure, coordinatesUp);
+            AddPossibleCheckActions(board, figure, coordinatesDown);
+            AddPossibleCheckActions(board, figure, coordinatesLeft);
+            AddPossibleCheckActions(board, figure, coordinatesRight);
 
             return allMoveOptions;
         }

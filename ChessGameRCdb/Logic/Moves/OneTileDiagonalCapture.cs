@@ -5,7 +5,7 @@ namespace ChessGame.Logic
 {
     internal class OneTileDiagonalCapture : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
         {
             var color = figure.Color;
             var i = color.GetDirectionSign();

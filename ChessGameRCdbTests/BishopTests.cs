@@ -20,7 +20,7 @@ namespace ChessGameTests
             {
                 new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.A, Row.One))),
                 new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.B, Row.Two))),
-                new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.C, Row.Three))),                
+                new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.C, Row.Three))),
                 new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.E, Row.Five))),
                 new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.F, Row.Six))),
                 new MoveOption(ActionType.Move, new Log(init, new Coordinate(Column.G, Row.Seven))),

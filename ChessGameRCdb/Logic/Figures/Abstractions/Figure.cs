@@ -24,6 +24,7 @@ namespace ChessGame.Logic
         public Coordinate Coordinate { get; private set; }
         public abstract List<IMove> MoveTypes { get; }
         public HashSet<MoveOption> MoveOptions { get; set; }
+        public bool CannotBeMoved { get; set; }
 
         public Figure(Color color) { Color = color; MoveOptions = new HashSet<MoveOption>(); }
         public Figure(Color color, Coordinate position) { Color = color; Coordinate = position; MoveOptions = new HashSet<MoveOption>(); }

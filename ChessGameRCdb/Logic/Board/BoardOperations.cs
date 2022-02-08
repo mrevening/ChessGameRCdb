@@ -11,6 +11,7 @@ namespace ChessGame.Logic
         public static void RemoveFigure(this IBoard board, Log log) => board.Figures.Remove(board.GetFigure(log.EndPoint));
         public static bool IsPlayersFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer;
         public static bool IsOpponentFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer.Switch();
+        public static bool IsAttacked(this IBoard board, Coordinate c, Color currentPlayer) => board.Figures.Where(x => x.Color == currentPlayer.Switch()).Any(x => x.MoveOptions.Any(x => x.Log.EndPoint == c));
         public static bool IsEmptyField(this IBoard board, Coordinate c) => board.GetFigure(c) == null;
         public static IFigure GetPlayersKing(this IBoard board, Color currentPlayer) => board.Figures.First(x => x.FigureType == FigureType.King && x.Color == currentPlayer);
         public static IFigure GetEnemysKing(this IBoard board, Color currentPlayer) => board.Figures.First(x => x.FigureType == FigureType.King && x.Color == currentPlayer.Switch());
@@ -31,6 +32,13 @@ namespace ChessGame.Logic
             var typeName = typeof(IFigure).Namespace + "." + log.FigureType.ToString();
             var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { player, log.EndPoint });
             board.Figures.Add(figure);
+        }
+        public static void VerifyMoveOptions(this IBoard board, Color p)
+        {
+            //var c = board.GetPlayersKing(p).Coordinate;
+            //board.Where
+            //remove check possibleCoordinates.RemoveAll(x => board.IsAttacked(x, figure.Color));
+
         }
     }
 }

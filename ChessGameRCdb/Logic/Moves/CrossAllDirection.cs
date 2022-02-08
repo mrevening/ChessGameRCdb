@@ -5,19 +5,16 @@ namespace ChessGame.Logic
 {
     internal class CrossAllDirection : Move
     {
-        public override IEnumerable<MoveOption> GetMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {
-            var isUp = figure.Color.IsUp();
+            var directions = new List<MoveDirection>() { new Up(), new Down(), new Left(), new Right() };
 
-            var coordinatesUp = Enumeration.GetAll<Row>(isUp).Where(row => row > figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).ToList();
-            var coordinatesDown = Enumeration.GetAll<Row>(isUp).Where(row => row < figure.Coordinate.Row).Select(r => new Coordinate(figure.Coordinate.Column, r)).ToList();
-            var coordinatesLeft = Enumeration.GetAll<Column>(isUp).Where(col => col > figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row)).ToList();
-            var coordinatesRight = Enumeration.GetAll<Column>(isUp).Where(col => col < figure.Coordinate.Column).Select(c => new Coordinate(c, figure.Coordinate.Row)).ToList();
-
-            AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesUp);
-            AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesDown);
-            AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesLeft);
-            AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, coordinatesRight);
+            directions.ForEach(d =>
+            {
+                var c = d.GetCoordinates(figure);
+                AddLongDistanceWithCaptureActions(allMoveOptions, board, figure, c);
+                AddPossibleCheckActions(board, figure, c);
+            });
 
             return allMoveOptions;
         }
