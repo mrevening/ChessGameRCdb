@@ -9,9 +9,9 @@
 
 
         public override bool Equals(object other) => other is Coordinate && Equals(other);
-        public bool Equals(Color p) => p.Id == Id;
-        public static bool operator ==(Color lhs, Color rhs) => lhs.Equals(rhs);
-        public static bool operator !=(Color lhs, Color rhs) => !lhs.Equals(rhs);
+        public bool Equals(Color p) => p is null ? false : p.Id == Id;
+        public static bool operator ==(Color lhs, Color rhs) => lhs is null ? rhs is null : lhs.Equals(rhs);
+        public static bool operator !=(Color lhs, Color rhs) => lhs is null ? rhs is null : !lhs.Equals(rhs);
         public static Color operator !(Color c) => c != White ? White : Black;
         public override int GetHashCode() => Id;
     }

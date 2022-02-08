@@ -13,8 +13,8 @@ namespace ChessGame.Logic
         public static bool IsOpponentFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color != currentPlayer;
         public static bool IsAttacked(this IBoard board, Coordinate c, Color currentPlayer) => board.Figures.Where(x => x.Color != currentPlayer).Any(x => x.MoveOptions.Any(x => x.Log.EndPoint == c));
         public static bool IsEmptyField(this IBoard board, Coordinate c) => board.GetFigure(c) == null;
-        public static IFigure GetPlayersKing(this IBoard board, Color currentPlayer) => board.Figures.First(x => x.FigureType == FigureType.King && x.Color == currentPlayer);
-        public static IFigure GetEnemysKing(this IBoard board, Color currentPlayer) => board.Figures.First(x => x.FigureType == FigureType.King && x.Color != currentPlayer);
+        public static IFigure GetPlayersKing(this IBoard board, Color currentPlayer) => board.Figures.FirstOrDefault(x => x.FigureType == FigureType.King && x.Color == currentPlayer);
+        public static IFigure GetEnemysKing(this IBoard board, Color currentPlayer) => board.Figures.FirstOrDefault(x => x.FigureType == FigureType.King && x.Color != currentPlayer);
         public static IEnumerable<IFigure> GetEnemyLongDistanceFigures(this IBoard board, Color color)
             => board.Figures.Where(x => x.Color != color && new List<FigureType>() { FigureType.Bishop, FigureType.Rook, FigureType.Queen }.Contains(x.FigureType));
         public static void SetPosition(this IBoard board, Log log, Color player) {

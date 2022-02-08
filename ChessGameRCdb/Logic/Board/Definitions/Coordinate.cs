@@ -30,9 +30,9 @@ namespace ChessGame.Logic
 
         public override string ToString() => Column.ToString() + Row.Id.ToString(); 
         public override bool Equals(object other) => other is Coordinate && Equals(other);
-        public bool Equals(Coordinate p) => Column == p.Column && Row == p.Row;
-        public static bool operator == (Coordinate lhs, Coordinate rhs) => lhs.Equals(rhs);
-        public static bool operator != (Coordinate lhs, Coordinate rhs) => !lhs.Equals(rhs);
+        public bool Equals(Coordinate p) => p is null ? false : Column == p.Column && Row == p.Row;
+        public static bool operator ==(Coordinate lhs, Coordinate rhs) => lhs is null ? rhs is null : lhs.Equals(rhs);
+        public static bool operator != (Coordinate lhs, Coordinate rhs) => !(lhs == rhs);
         public override int GetHashCode() => (Column, Row).GetHashCode();
     }
 }

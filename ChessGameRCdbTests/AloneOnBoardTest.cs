@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ChessGameTests
 {
-    public class OneFigureTest
+    public class AloneOnBoardTest
     {
         [Fact]
         public void Pion()
