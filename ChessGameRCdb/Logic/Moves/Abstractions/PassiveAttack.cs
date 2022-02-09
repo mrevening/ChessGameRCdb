@@ -18,11 +18,10 @@ namespace ChessGame.Logic
             var ek = coordinates.FirstOrDefault(x => board.Figures.Any(x => x == k));
             if (ek == null) return;
 
-            var figuresToEnemyKing = coordinates.TakeWhile(c => c == k.Coordinate).Select(c => board.Figures.FirstOrDefault(X => X.Coordinate == c)).ToList();
+            var figuresToEnemyKing = coordinates.TakeWhile(c => c != k.Coordinate).Select(c => board.Figures.FirstOrDefault(X => X.Coordinate == c)).ToList();
             figuresToEnemyKing.RemoveAll(x => x is null);
-
-            if (figuresToEnemyKing.Count != 2 || figuresToEnemyKing.First().Color != figure.Color) return;
-            else allMoveOptions.Add(new AttackOption(AttackType.DifferedCheck, figuresToEnemyKing.First().Coordinate));
+            if (figuresToEnemyKing.Count == 1 && figuresToEnemyKing.First().Color != figure.Color) allMoveOptions.Add(new AttackOption(AttackType.DefferedCheck, figuresToEnemyKing.First().Coordinate));
+            else return;
         }
     }
 }

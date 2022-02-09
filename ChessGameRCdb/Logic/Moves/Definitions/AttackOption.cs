@@ -12,7 +12,7 @@
         }
 
         public override string ToString() => AttackType.ToString() + Coordinate.ToString();
-        public override bool Equals(object obj) => obj != null && Equals(obj as MoveOption);
+        public override bool Equals(object obj) => obj != null && Equals(obj as AttackOption);
         public bool Equals(AttackOption moveOption) => AttackType == moveOption.AttackType && Coordinate == moveOption.Coordinate;
         public override int GetHashCode() => (AttackType, Coordinate).GetHashCode();
     }

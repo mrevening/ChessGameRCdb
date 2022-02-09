@@ -7,7 +7,7 @@ namespace ChessGame.Logic
     {
         public Down() : base() { }
 
-        public override IEnumerable<Coordinate> GetCoordinates(IFigure f) => Enumeration.GetAll<Row>(f.Color.IsUp()).Where(row => row < f.Coordinate.Row).Select(r => new Coordinate(f.Coordinate.Column, r)).ToList();
+        public override IEnumerable<Coordinate> GetCoordinates(IFigure f) => Enumeration.GetAll<Row>(true).Where(row => row < f.Coordinate.Row).Distinct().Select(r => new Coordinate(f.Coordinate.Column, r)).ToList();
 
     }
 }
