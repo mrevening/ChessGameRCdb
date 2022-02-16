@@ -38,10 +38,10 @@ namespace ChessGame.Logic
         public bool IsPlayersFigure(Color currentPlayer, Coordinate position) => Color == currentPlayer && Coordinate == position;
         public bool IsOpponentFigure(Color currentPlayer, Coordinate position) => Color != currentPlayer && Coordinate == position;
 
-        public override bool Equals(object other) => other is Figure && Equals(other);
-        public bool Equals(Figure f) => FigureType == f.FigureType && Color == f.Color;
-        public static bool operator == (Figure lf, Figure rf) => lf.Equals(rf);
-        public static bool operator != (Figure lf, Figure rf) => !lf.Equals(rf);
+        public override bool Equals(object other) => other is Figure && Equals(other as Figure);
+        public bool Equals(Figure f) => f is null ? false : FigureType == f.FigureType && Color == f.Color && f.Coordinate == Coordinate;
+        public static bool operator == (Figure lf, Figure rf) => lf is null ? rf is null : lf.Equals(rf);
+        public static bool operator !=(Figure lf, Figure rf) => !(lf == rf);
         public override int GetHashCode() => (FigureType, Color, Coordinate).GetHashCode();
     }
 }

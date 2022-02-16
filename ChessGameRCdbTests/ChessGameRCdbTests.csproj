@@ -17,4 +17,10 @@
     <ProjectReference Include="..\ChessGameRCdb\ChessGameRCdb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Figures\" />
+    <Folder Include="Moves\" />
+    <Folder Include="ActiveAction\" />
+  </ItemGroup>
+
 </Project>

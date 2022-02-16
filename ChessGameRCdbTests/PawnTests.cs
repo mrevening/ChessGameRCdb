@@ -37,7 +37,7 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log(initCoordinate, new Coordinate(initCol, Row.Five)))
                 };
             var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initCoordinate).MoveOptions;
-            Assert.Equal(correctOptions, calculatedOptions);
+             Assert.Equal(correctOptions, calculatedOptions);
         }
 
         [Fact]
