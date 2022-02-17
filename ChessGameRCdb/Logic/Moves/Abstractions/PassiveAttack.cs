@@ -14,9 +14,10 @@ namespace ChessGame.Logic
         }
         protected void AddDefferedAttack(HashSet<AttackOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)
         {
-            var k = board.GetEnemysKing(figure.Color!);
-            var ek = coordinates.FirstOrDefault(x => board.Figures.Any(x => x == k));
-            if (ek == null) return;
+            var k = board.Figures.SingleOrDefault(f => f.FigureType == FigureType.King && f.Color == !figure.Color);
+            if (k is null) return;
+            var isK = coordinates.Any(c => c == k.Coordinate);
+            if (!isK) return;
 
             var figuresToEnemyKing = coordinates.TakeWhile(c => c != k.Coordinate).Select(c => board.Figures.FirstOrDefault(X => X.Coordinate == c)).ToList();
             figuresToEnemyKing.RemoveAll(x => x is null);

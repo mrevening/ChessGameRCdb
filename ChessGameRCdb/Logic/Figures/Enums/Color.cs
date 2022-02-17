@@ -12,7 +12,7 @@
         public bool Equals(Color p) => p is null ? false : p.Id == Id;
         public static bool operator ==(Color lhs, Color rhs) => lhs is null ? rhs is null : lhs.Equals(rhs);
         public static bool operator !=(Color lhs, Color rhs) => lhs is null ? rhs is null : !lhs.Equals(rhs);
-        public static Color operator !(Color c) => c != White ? White : Black;
+        public static Color operator !(Color c) => c == White ? Black : White;
         public override int GetHashCode() => Id;
     }
 }

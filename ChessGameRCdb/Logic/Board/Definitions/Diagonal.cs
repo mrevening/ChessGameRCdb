@@ -23,7 +23,7 @@ namespace ChessGame.Logic
                 C = Enumeration.FromValue<C>(c);
             }
         }
-        public override string ToString() => X.ToString() + Y.Id.ToString() + C.Id.ToString(); 
+        public override string ToString() => X.ToString() + Y.ToString() + C.ToString(); 
         public override bool Equals(object other) => other is Diagonal && Equals(other);
         public bool Equals(Diagonal p) => p is null ? false : X == p.X && Y == p.Y && C == p.C;
         public static bool operator == (Diagonal lhs, Diagonal rhs) => lhs is null ? rhs is null : lhs.Equals(rhs);
