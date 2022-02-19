@@ -15,6 +15,12 @@ namespace ChessGame.Logic
             EndPoint = endPoint;
             LogComplexMove = logComplexMove ?? new List<LogComplexMove>();
         }
+        public Log(string startPoint, string endPoint, List<LogComplexMove> logComplexMove = null)
+        {
+            StartPoint = new Coordinate(startPoint);
+            EndPoint = new Coordinate(endPoint);
+            LogComplexMove = logComplexMove ?? new List<LogComplexMove>();
+        }
         public override string ToString() => StartPoint.ToString() + EndPoint.ToString();
         public override bool Equals(object obj) => obj != null && Equals(obj as Log);
         public bool Equals(Log log) => StartPoint == log.StartPoint && EndPoint == log.EndPoint;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessGame.Logic
 {
@@ -12,6 +11,6 @@ namespace ChessGame.Logic
         public King(Color player) : base(player) { }
         public King(Color player, Column column, Row row) : base(player, column, row) { }
         public King(Color player, Coordinate position) : base(player, position) { }
-
+        public King(Color player, string position) : base(player, position) { }
     }
 }

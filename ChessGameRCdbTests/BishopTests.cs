@@ -60,5 +60,35 @@ namespace ChessGameTests
             var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(init).MoveOptions;
             Assert.Subset(checkOptions, calculatedOptions);
         }
+
+
+        public static IEnumerable<object[]> CoordinateEquality => new List<object[]> {
+            new object[] {
+                new List<IFigure>() {
+                    new Bishop(Color.White, "B5"),
+                    new Pawn(Color.Black, "D7"),
+                    new King(Color.Black, "E8"),
+                    new Knight(Color.Black, "B8"),
+                },
+                new Log("B8", "C6"),
+                new HashSet<MoveOption>()
+                {
+                    new MoveOption(ActionType.Capture, new Log("B5", "C6")),
+                    new MoveOption(ActionType.Move, new Log("B5", "A6")),
+                    new MoveOption(ActionType.Move, new Log("B5", "A4")),
+                    new MoveOption(ActionType.Move, new Log("B5", "C4")),
+                    new MoveOption(ActionType.Move, new Log("B5", "D3")),
+                    new MoveOption(ActionType.Move, new Log("B5", "E2")),
+                    new MoveOption(ActionType.Move, new Log("B5", "F1"))
+                }
+            },
+        };
+        [Theory]
+        [MemberData(nameof(CoordinateEquality))]
+        public void Bishop_Move(List<IFigure> figures, Log log, HashSet<MoveOption> moves)
+        {
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(new List<Log>() { log }).GetFigure(figures.First().Coordinate).MoveOptions;
+            Assert.Equal(moves, calculatedOptions);
+        }
     }
 }

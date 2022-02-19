@@ -12,12 +12,23 @@ namespace ChessGame.Logic
             var isLastMoveCapture = false;
             var coordinatesFreeToMoveOrCapture = coordinates.TakeWhile(c =>
             {
+                if (isLastMoveCapture) return false;
                 var figureInPosition = board.GetFigure(c);
-                if (figureInPosition != null && figureInPosition.Color != figure.Color) isLastMoveCapture = true;
-                return figureInPosition == null || figureInPosition.Color != figure.Color;
+                if (figureInPosition == null) return true;
+                if (figureInPosition.Color != figure.Color)
+                {
+                    isLastMoveCapture = true;
+                    return true;
+                }
+                else return false;
             });
             allMoveOptions.UnionWith(coordinatesFreeToMoveOrCapture.Select(c => new MoveOption(ActionType.Move, new Log(figure.Coordinate, c))));
-            if (isLastMoveCapture) allMoveOptions.Last().Action = ActionType.Capture;
+            if (isLastMoveCapture) {
+                var last = allMoveOptions.Last();
+                var capture = new MoveOption(ActionType.Capture, new Log(last.Log.StartPoint, last.Log.EndPoint));
+                allMoveOptions.Remove(last);
+                allMoveOptions.Add(capture);
+            }
         }
 
         protected void AddLongDistanceWithoutCaptureActions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Coordinate> coordinates)

@@ -35,13 +35,9 @@ namespace ChessGame.Logic
             var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { player, log.EndPoint });
             board.Figures.Add(figure);
         }
-        public static void VerifyMoveOptions(this IBoard board, Color p)
+        public static void EvaluateMoveOptions(this IBoard board, Color p)
         {
-            //var c = board.GetPlayersKing(p);
-            //board.Figures.ForEach(x => x.MoveOptions.Any(o => o.Log.EndPoint == c.))
-            //board.Where
-            //remove check possibleCoordinates.RemoveAll(x => board.IsAttacked(x, figure.Color));
-
+            board.Figures.Where(x => x.Color != p).ToList().ForEach(x => x.AttackOptions.Where(a => a.AttackType == AttackType.DefferedCheck).ToList().ForEach(d => board.Figures.First(f => f.Coordinate == d.Coordinate).MoveOptions = new HashSet<MoveOption>() { }));
         }
     }
 }
