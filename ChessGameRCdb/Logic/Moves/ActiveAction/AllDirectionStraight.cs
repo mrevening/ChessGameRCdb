@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class AllDirection : ActiveAction
+    internal class AllDirectionStraight : ActiveAction
     {
         public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
         {

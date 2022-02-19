@@ -37,7 +37,21 @@ namespace ChessGame.Logic
         }
         public static void EvaluateMoveOptions(this IBoard board, Color p)
         {
-            board.Figures.Where(x => x.Color != p).ToList().ForEach(x => x.AttackOptions.Where(a => a.AttackType == AttackType.DefferedCheck).ToList().ForEach(d => board.Figures.First(f => f.Coordinate == d.Coordinate).MoveOptions = new HashSet<MoveOption>() { }));
+            UnableDefferedAttack(board, p);
+            RemoveKingAttackedFieldsMoves(board, p);
+        }
+
+        private static void UnableDefferedAttack(IBoard board, Color p) => 
+            board.Figures.Where(x => x.Color != p).ToList()
+            .ForEach(x => x.AttackOptions.Where(a => a.AttackType == AttackType.DefferedCheck).ToList()
+            .ForEach(d => board.Figures.First(f => f.Coordinate == d.Coordinate).MoveOptions = new HashSet<MoveOption>() { }));
+        private static void RemoveKingAttackedFieldsMoves(IBoard board, Color p)
+        {
+            var king = board.Figures.FirstOrDefault(f => f.Color == p && f.FigureType == FigureType.King);
+            var list = king?.MoveOptions.ToList();
+           list.RemoveAll(kingMove => board.Figures.Where(f => f.Color != p)
+           .Any(enemyFigure => enemyFigure.AttackOptions.Any(m => m.AttackType == AttackType.OpenAttack && m.Coordinate == kingMove.Log.EndPoint)));
+            king.MoveOptions = list.ToHashSet();
         }
     }
 }

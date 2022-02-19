@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class DefferedCheck : PassiveAttack
+    internal class DefferedStraightCheck : PassiveAttack
     {
         public override IEnumerable<AttackOption> AddAttackOptions(HashSet<AttackOption> allAttackOptions, IBoard board, IFigure figure)
         {

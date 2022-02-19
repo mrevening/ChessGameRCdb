@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ChessGame.Logic
 {
-    internal class DefferedCheckDiagonal : PassiveAttack
+    internal class OpenDiagonalAttack : PassiveAttack
     {
         public override IEnumerable<AttackOption> AddAttackOptions(HashSet<AttackOption> allAttackOptions, IBoard board, IFigure figure)
         {
@@ -13,8 +13,9 @@ namespace ChessGame.Logic
             directions.ForEach(d =>
             {
                 var c = d.GetCoordinates(figure);
-                AddDefferedAttack(allAttackOptions, board, figure, c);
+                AddOpenAttack(allAttackOptions, board, figure, c);
             });
+
             return allAttackOptions;
         }
     }
