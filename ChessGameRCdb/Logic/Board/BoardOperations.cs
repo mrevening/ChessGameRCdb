@@ -48,10 +48,11 @@ namespace ChessGame.Logic
         private static void RemoveKingAttackedFieldsMoves(IBoard board, Color p)
         {
             var king = board.Figures.FirstOrDefault(f => f.Color == p && f.FigureType == FigureType.King);
-            var list = king?.MoveOptions.ToList();
-           list.RemoveAll(kingMove => board.Figures.Where(f => f.Color != p)
+            if (king is null) return;
+            var list = king.MoveOptions.ToList();
+           list?.RemoveAll(kingMove => board.Figures.Where(f => f.Color != p)
            .Any(enemyFigure => enemyFigure.AttackOptions.Any(m => m.AttackType == AttackType.OpenAttack && m.Coordinate == kingMove.Log.EndPoint)));
-            king.MoveOptions = list.ToHashSet();
+           king.MoveOptions = list.ToHashSet();
         }
     }
 }

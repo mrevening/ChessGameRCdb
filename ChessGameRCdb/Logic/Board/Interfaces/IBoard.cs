@@ -7,6 +7,6 @@ namespace ChessGame.Logic
         List<IFigure> Figures { get; }
         void EvaluateInitBoard(Color color);
         void ExecuteLog(Log log);
-        void EvaluateBoard(Log previousLog);
+        void EvaluateBoard(IEnumerable<Log> previousLogs);
     }
 }

@@ -6,7 +6,7 @@ namespace ChessGame.Logic
 {
     internal class LShape : ActiveAction
     {
-        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs = null)
         {
             var possibleCoordinates = GetLShapeCoordinates(board, figure);
 

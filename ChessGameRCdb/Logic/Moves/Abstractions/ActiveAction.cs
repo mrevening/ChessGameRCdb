@@ -5,6 +5,6 @@ namespace ChessGame.Logic
 {
     public abstract class ActiveAction : Move, IActiveAction
     {
-        public abstract IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null);
+        public abstract IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs = null);
     }
 }

@@ -6,7 +6,7 @@ namespace ChessGame.Logic
 {
     internal class AllAroundOneSquare : ActiveAction
     {
-        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs = null)
         {
             var possibleCoordinates = GetSimpleAllAroundCoordinates(board, figure);
             allMoveOptions.UnionWith(possibleCoordinates.Select(c =>

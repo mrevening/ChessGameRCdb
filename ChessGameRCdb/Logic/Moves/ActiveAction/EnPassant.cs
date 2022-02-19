@@ -5,8 +5,9 @@ namespace ChessGame.Logic
 {
     internal class EnPassant : ActiveAction
     {
-        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs)
         {
+            var previousLog = previousLogs?.TakeLast(1).FirstOrDefault();
             if (previousLog == null) return allMoveOptions;
             var eF = board.GetFigure(previousLog.EndPoint);
             var isUp = figure.Color.IsUp();

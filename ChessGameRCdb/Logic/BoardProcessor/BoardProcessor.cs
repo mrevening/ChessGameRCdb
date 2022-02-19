@@ -25,7 +25,7 @@ namespace ChessGame.Logic
             else
             {
                 logs.ForEach(log => Board.ExecuteLog(log));
-                Board.EvaluateBoard(logs.TakeLast(1).FirstOrDefault());
+                Board.EvaluateBoard(logs);
             };
 
             return new Board(ImmutableList.CreateRange(Board.Figures).ToImmutableList());

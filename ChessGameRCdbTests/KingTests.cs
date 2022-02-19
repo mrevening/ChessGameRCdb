@@ -16,6 +16,14 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log("A1", "A2"))
                 }
             }
+            //new object[] {
+            //    new King(Color.White, "E1"),
+            //    new Rook(Color.White, "A1"),
+            //    new List<MoveOption>()
+            //    {
+            //        new MoveOption(ActionType.Castle, new Log("A1", "A2", new List<LogComplexMove>() { new LogComplexMove(new CO) }))
+            //    }
+            //}
         };
         [Theory]
         [MemberData(nameof(Data))]

@@ -27,10 +27,11 @@ namespace ChessGame.Logic
             this.SetPosition(log, color);
             log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
         }
-        public void EvaluateBoard(Log previousLog) {
+        public void EvaluateBoard(IEnumerable<Log> previousLogs) {
+            var previousLog = previousLogs.TakeLast(1).FirstOrDefault();
             var color = !this.GetCurrentColor(previousLog.EndPoint);
             Figures.Where(x => x.Color != color).ToList().ForEach(x => x.AttackTypes.ForEach(y => y.AddAttackOptions(x.AttackOptions, this, x)));
-            Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.AddMoveOptions(x.MoveOptions, this, x, previousLog))));
+            Figures.Where(x => x.Color == color).ToList().ForEach(x => x.MoveTypes.ForEach(y => x.MoveOptions.UnionWith(y.AddMoveOptions(x.MoveOptions, this, x, previousLogs))));
             this.EvaluateMoveOptions(color);
         }
     }

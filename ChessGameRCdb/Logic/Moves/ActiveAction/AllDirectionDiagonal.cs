@@ -6,7 +6,7 @@ namespace ChessGame.Logic
 {
     internal class AllDirectionDiagonal : ActiveAction
     {
-        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, Log previousLog = null)
+        public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs = null)
         {
             var directions = new List<IMoveDirection>() { new NW(), new SW(), new SE(), new NE() };
 
