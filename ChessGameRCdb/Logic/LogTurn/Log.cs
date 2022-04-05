@@ -7,19 +7,27 @@ namespace ChessGame.Logic
     {
         public Coordinate StartPoint { get; private set; }
         public Coordinate EndPoint { get; private set; }
-        public List<LogComplexMove> LogComplexMove { get; private set; }
-        //public List<LogComplexMove> LogPromotion { get; private set; }
-        public Log(Coordinate startPoint, Coordinate endPoint, List<LogComplexMove> logComplexMove = null)
-        {
-            StartPoint = startPoint;
-            EndPoint = endPoint;
-            LogComplexMove = logComplexMove ?? new List<LogComplexMove>();
-        }
-        public Log(string startPoint, string endPoint, List<LogComplexMove> logComplexMove = null)
+
+        public LogEnPassant EnPassant { get; private set; }
+        //public LogComplexMove Promotion { get; private set; }
+        //public LogComplexMove Castle { get; private set; }
+
+        public Log(string startPoint, string endPoint)
         {
             StartPoint = new Coordinate(startPoint);
             EndPoint = new Coordinate(endPoint);
-            LogComplexMove = logComplexMove ?? new List<LogComplexMove>();
+        }
+        public Log(Coordinate startPoint, Coordinate endPoint)
+        {
+            StartPoint = startPoint;
+            EndPoint = endPoint;
+        }
+
+        public Log(Coordinate startPoint, Coordinate endPoint, LogEnPassant enPassant)
+        {
+            StartPoint = startPoint;
+            EndPoint = endPoint;
+            EnPassant = enPassant;
         }
         public override string ToString() => StartPoint.ToString() + EndPoint.ToString();
         public override bool Equals(object obj) => obj != null && Equals(obj as Log);

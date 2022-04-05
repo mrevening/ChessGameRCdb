@@ -10,11 +10,12 @@ namespace ChessGame.DbModels
         public int StartRowId { get; set; }
         public int EndColumnId { get; set; }
         public int EndRowId { get; set; }
+        public int? NotationLogEnPassantId { get; set; }
         public virtual Game Game { get; set; }
         public virtual Column StartColumn { get; set; }
         public virtual Row StartRow { get; set; }
         public virtual Column EndColumn { get; set; }
         public virtual Row EndRow { get; set; }
-        public virtual IEnumerable<NotationLogComplexMove> NotationLogComplexMove { get; set; }
+        public virtual NotationLogEnPassant NotationLogEnPassant { get; set; }
     }
 }

@@ -23,9 +23,9 @@ namespace ChessGame.Logic
         public void ExecuteLog(Log log)
         {
             BoardValidator.ValidateLogs(this, log);
-            var color = this.GetCurrentColor(log.StartPoint);
-            this.SetPosition(log, color);
-            log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
+            this.SetPosition(log);
+            if (log.EnPassant != null) this.HandleEnPassant(log.EnPassant);
+            //log.LogComplexMove.ForEach(supplement => this.HandleExtraMove(supplement, color));
         }
         public void EvaluateBoard(IEnumerable<Log> previousLogs) {
             var previousLog = previousLogs.TakeLast(1).FirstOrDefault();

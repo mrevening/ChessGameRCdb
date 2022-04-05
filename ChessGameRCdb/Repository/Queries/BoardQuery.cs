@@ -49,20 +49,16 @@ namespace ChessGame.Query
                     .ThenInclude(log => log.EndColumn)
                 .Include(game => game.NotationLogs)
                     .ThenInclude(log => log.EndRow)
+
                 .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogComplexMove)
+                    .ThenInclude(log => log.NotationLogEnPassant)
                 .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogComplexMove)
-                        .ThenInclude(log => log.StartColumn)
+                    .ThenInclude(log => log.NotationLogEnPassant)
+                        .ThenInclude(log => log.EnemyPionColumn)
                 .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogComplexMove)
-                        .ThenInclude(log => log.StartRow)
-                .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogComplexMove)
-                        .ThenInclude(log => log.EndColumn)
-                .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogComplexMove)
-                        .ThenInclude(log => log.EndRow)
+                    .ThenInclude(log => log.NotationLogEnPassant)
+                        .ThenInclude(log => log.EnemyPionRow)
+
                 .Single(x => x.Id == gameId);
 
             foreach (var boardConfiguration in game.BoardConfiguration.BoardConfigurationToFigure)
@@ -86,18 +82,16 @@ namespace ChessGame.Query
                 var endColumn = Enumeration.FromValue<Column>(log.EndColumn.Id);
                 var endRow = Enumeration.FromValue<Row>(log.EndRow.Id);
 
-                var complexMoves = new List<LogComplexMove>();
-                foreach (var complexMove in log.NotationLogComplexMove)
+                if (log.NotationLogEnPassant != null)
                 {
-                    var startColumnCM = Enumeration.FromValue<Column>(complexMove.StartColumn.Id);
-                    var startRowCM = Enumeration.FromValue<Row>(complexMove.StartRow.Id);
-                    var endColumnCM = Enumeration.FromValue<Column>(complexMove.EndColumn.Id);
-                    var endRowCM = Enumeration.FromValue<Row>(complexMove.EndRow.Id);
-                    var figureType = Enumeration.FromValue<FigureType>(complexMove.FigureType.Id);
-                    complexMoves.Add(new LogComplexMove(new Coordinate(startColumnCM, startRowCM), new Coordinate(endColumnCM, endRowCM), figureType));
+                    var enemyPionColumn = Enumeration.FromValue<Column>(log.NotationLogEnPassant.EnemyPionColumn.Id);
+                    var enemyPionRow = Enumeration.FromValue<Row>(log.NotationLogEnPassant.EnemyPionRow.Id);
+                    logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), new LogEnPassant(new Coordinate(enemyPionColumn, enemyPionRow))));
                 }
-
-                logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), complexMoves));
+                else
+                {
+                    logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow)));
+                }
             }
 
             var processor = new BoardProcessor(new Board(figures));
