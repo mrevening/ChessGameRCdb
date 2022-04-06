@@ -7,6 +7,10 @@
         {
             EnemyPionCoordinate = enemyPion;
         }
+        public LogEnPassant(string enemyPion)
+        {
+            EnemyPionCoordinate = new Coordinate(enemyPion);
+        }
 
         public override string ToString() => EnemyPionCoordinate.ToString();
     }

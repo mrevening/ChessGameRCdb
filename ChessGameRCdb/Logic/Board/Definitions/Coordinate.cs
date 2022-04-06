@@ -24,6 +24,7 @@ namespace ChessGame.Logic
 
         public Coordinate(string c)
         {
+            if (c == null) return;
             Column = Enumeration.FromDisplayName<Column>(c[0].ToString().ToUpper());
             Row = Enumeration.FromValue<Row>(int.Parse(c.Substring(1,1)));
         }

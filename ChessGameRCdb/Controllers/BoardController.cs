@@ -48,7 +48,8 @@ namespace ChessGame.Controllers
                 var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { color, new Coordinate(X.Square) });
                 return figure;
             });
-            var log = new Log(new Coordinate(r.Move.Log.Start), new Coordinate(r.Move.Log.End));
+
+            var log = new Log(r.Move.Log.Start, r.Move.Log.End, r.Move.Log.EnPassant);
             var newBoard = new BoardProcessor(new Board(previousBoard)).CalculateBoard(new List<Log>() { log });
             var dtoBoard = newBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
 

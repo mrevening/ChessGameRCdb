@@ -17,18 +17,24 @@ namespace ChessGame.Logic
             StartPoint = new Coordinate(startPoint);
             EndPoint = new Coordinate(endPoint);
         }
+        public Log(string startPoint, string endPoint, string enPassant)
+        {
+            StartPoint = new Coordinate(startPoint);
+            EndPoint = new Coordinate(endPoint);
+            EnPassant = new LogEnPassant(enPassant);
+        }
         public Log(Coordinate startPoint, Coordinate endPoint)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
         }
-
         public Log(Coordinate startPoint, Coordinate endPoint, LogEnPassant enPassant)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
             EnPassant = enPassant;
         }
+
         public override string ToString() => StartPoint.ToString() + EndPoint.ToString();
         public override bool Equals(object obj) => obj != null && Equals(obj as Log);
         public bool Equals(Log log) => StartPoint == log.StartPoint && EndPoint == log.EndPoint;

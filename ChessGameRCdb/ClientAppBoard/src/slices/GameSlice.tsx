@@ -112,7 +112,6 @@ export const gameSlice = createSlice({
                 return
             }
             state.board.destinationSquare = clickedSquare
-            s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
             state.board.move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
             //const figure = s.board.figures?.find(x => x.square.name === state.board.activeFigure!.square.name)
             //const square = s.board.squares.find(x => x.name === clickedSquare.name)!
