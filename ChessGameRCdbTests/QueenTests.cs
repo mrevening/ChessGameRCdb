@@ -78,7 +78,7 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Check, new Log(init, end)),
                 new MoveOption(ActionType.Check, new Log(init, end2)),
             };
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(init).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(init).MoveOptions;
             Assert.Subset(checkOptions, calculatedOptions);
             Assert.Subset(checkOptions, calculatedOptions);
         }

@@ -8,14 +8,19 @@ namespace ChessGame.DTO
     {
         public string Start { get; set; }
         public string End { get; set; }
-        public string EnPassant { get; set; }
+        public bool? Castle { get; set; }
+        public bool? EnPassant { get; set; }
+        public int? Promotion { get; set; }
+
 
         public LogDTO() { }
         public LogDTO(Log log)
         {
             Start = log.StartPoint.ToString();
             End = log.EndPoint.ToString();
-            EnPassant = log.EnPassant?.ToString();
+            Castle = log.Castle;
+            EnPassant = log.EnPassant;
+            Promotion = log.Promotion;
         }
     }
 }

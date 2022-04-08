@@ -36,7 +36,7 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log(initCoordinate, new Coordinate(initCol, Row.Six))),
                     new MoveOption(ActionType.Move, new Log(initCoordinate, new Coordinate(initCol, Row.Five)))
                 };
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initCoordinate).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(initCoordinate).MoveOptions;
              Assert.Equal(correctOptions, calculatedOptions);
         }
 
@@ -61,7 +61,7 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(initCoordinateBlack, new Coordinate(initCol, Row.Six)))
             };
             var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(initCoordinateWhite).MoveOptions;
-            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initCoordinateBlack).MoveOptions;
+            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(initCoordinateBlack).MoveOptions;
             Assert.Equal(correctOptionsWhite, calculatedOptionsWhite);
             Assert.Equal(correctOptionsBlack, calculatedOptionsBlack);
         }
@@ -112,7 +112,7 @@ namespace ChessGameTests
                     new MoveOption(ActionType.Move, new Log(new Coordinate(col, Row.Seven), new Coordinate(col, Row.Five))),
                     new MoveOption(ActionType.Move, new Log(new Coordinate(col, Row.Seven), new Coordinate(col, Row.Six)))
                 };
-                var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(new Coordinate(col, Row.Seven)).MoveOptions;
+                var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(new Coordinate(col, Row.Seven)).MoveOptions;
                 Assert.Equal(correctOptions, calculatedOptions);
             }
         }
@@ -139,7 +139,7 @@ namespace ChessGameTests
                 new Pawn(Color.Black, Column.D, Row.Five)
             };
             var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Four)).MoveOptions;
-            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
+            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
             Assert.Equal(new HashSet<MoveOption>(), calculatedOptionsWhite);
             Assert.Equal(new HashSet<MoveOption>(), calculatedOptionsBlack);
         }
@@ -154,7 +154,7 @@ namespace ChessGameTests
                 new Pawn(Color.Black,initBlack)
             };
             var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(initWhite).MoveOptions;
-            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(initBlack).MoveOptions;
+            var calculatedOptionsBlack = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(initBlack).MoveOptions;
             var moveOptionWhite = new HashSet<MoveOption>() 
             {
                 new MoveOption(ActionType.Move, new Log(initWhite, new Coordinate(Column.D, Row.Five))),
@@ -175,7 +175,7 @@ namespace ChessGameTests
                 new Pawn(Color.White, Column.D, Row.Five),
                 new Pawn(Color.Black, Column.E, Row.Seven),
             };
-            var log = new List<Log>()
+            var logs = new List<Log>()
             {
                 new Log(new Coordinate(Column.E, Row.Seven), new Coordinate(Column.E, Row.Five))
             };
@@ -184,7 +184,7 @@ namespace ChessGameTests
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Five), new Coordinate(Column.D, Row.Six))),
                 new MoveOption(ActionType.EnPassant, new Log(new Coordinate(Column.D, Row.Five), new Coordinate(Column.E, Row.Six)))
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard(log).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures), logs).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
             Assert.Equal(correctOptions, calculatedOptionsWhite);
         }
         [Fact]
@@ -195,7 +195,7 @@ namespace ChessGameTests
                 new Pawn(Color.Black, Column.E, Row.Four),
                 new Pawn(Color.Black, Column.A, Row.Seven),
             };
-            var log = new List<Log>()
+            var logs = new List<Log>()
             {
                 new Log(new Coordinate(Column.A, Row.Seven), new Coordinate(Column.A, Row.Five)),
             };
@@ -203,7 +203,7 @@ namespace ChessGameTests
             {
                 new MoveOption(ActionType.Move, new Log(new Coordinate(Column.D, Row.Five), new Coordinate(Column.D, Row.Six))),
             };
-            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard(log).GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures), logs).CalculateBoard().GetFigure(new Coordinate(Column.D, Row.Five)).MoveOptions;
 
             Assert.Equal(correctOptions, calculatedOptionsWhite);
         }

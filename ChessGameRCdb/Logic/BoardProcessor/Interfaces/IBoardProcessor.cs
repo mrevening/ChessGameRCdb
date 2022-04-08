@@ -4,6 +4,7 @@ namespace ChessGame.Logic
 {
     public interface IBoardProcessor
     {
-        IBoard CalculateBoard(List<Log> logs);
+        IBoard CalculateBoard();
+        IBoard CalculateBoard(Log log);
     }
 }

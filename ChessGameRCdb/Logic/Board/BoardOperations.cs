@@ -6,7 +6,7 @@ namespace ChessGame.Logic
 {
     public static class BoardOperations
     {
-        public static IFigure? GetFigure(this IBoard board, Coordinate endPoint) => board.Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
+        public static IFigure GetFigure(this IBoard board, Coordinate endPoint) => board.Figures.FirstOrDefault(x => x.IsInPosition(endPoint));
         public static Color GetCurrentColor(this IBoard board, Coordinate c) => board.GetFigure(c)?.Color ?? throw new IllegalMoveException("Not touched player's figure.");
         public static void RemoveFigure(this IBoard board, Coordinate c) => board.Figures.Remove(board.GetFigure(c));
         public static bool IsPlayersFigure(this IBoard board, Coordinate coordinate, Color currentPlayer) => board.GetFigure(coordinate)?.Color == currentPlayer;
@@ -17,21 +17,30 @@ namespace ChessGame.Logic
         public static IFigure GetEnemysKing(this IBoard board, Color currentPlayer) => board.Figures.FirstOrDefault(x => x.FigureType == FigureType.King && x.Color != currentPlayer);
         public static IEnumerable<IFigure> GetEnemyLongDistanceFigures(this IBoard board, Color color)
             => board.Figures.Where(x => x.Color != color && new List<FigureType>() { FigureType.Bishop, FigureType.Rook, FigureType.Queen }.Contains(x.FigureType));
-        public static void SetPosition(this IBoard board, Log log) {
+        public static void MoveFigure(this IBoard board, Log log) {
             if (log.StartPoint == log.EndPoint) throw new IllegalMoveException("Start and end coordinates are equal.");
             var color = board.GetCurrentColor(log.StartPoint);
             if (board.IsPlayersFigure(log.EndPoint, color)) throw new IllegalMoveException("Cannot capture player's figure.");
             if (board.IsOpponentFigure(log.EndPoint, color)) board.RemoveFigure(log.EndPoint);
             board.GetFigure(log.StartPoint).SetPosition(log.EndPoint);
         }
-        public static void HandleEnPassant(this IBoard board, LogEnPassant log) => board.RemoveFigure(log.EnemyPionCoordinate);
-        //public static void Promote(this IBoard board, LogComplexMove log) {
-        //    var player = board.GetCurrentColor(log.StartPoint);
-        //    board.RemoveFigure(log.EndPoint);
-        //    var typeName = typeof(IFigure).Namespace + "." + log.FigureType.ToString();
-        //    var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { player, log.EndPoint });
-        //    board.Figures.Add(figure);
-        //}
+        public static void MoveFigure(this IBoard board, Coordinate startPoint, Coordinate endPoint)
+        {
+            board.GetFigure(startPoint).SetPosition(endPoint);
+        }
+        public static void HandleEnPassant(this IBoard board, Log log) =>  board.RemoveFigure(new Coordinate(log.EndPoint.Column, log.StartPoint.Row));
+        public static void HandleCastle(this IBoard board, Log log) => board.MoveFigure(new Coordinate(log.StartPoint.Column == Column.D ? Column.A: Column.H, log.StartPoint.Row), new Coordinate(log.StartPoint.Column == Column.D ? Column.C : Column.F, log.StartPoint.Row));
+        public static void HandlePromotion(this IBoard board, Log log)
+        {
+            var color = board.GetCurrentColor(log.EndPoint);
+            board.RemoveFigure(log.EndPoint);
+
+            var figureType = Enumeration.FromValue<FigureType>(log.Promotion.Value);
+            var typeName = typeof(IFigure).Namespace + "." + figureType.ToString();
+            var figure = (IFigure)Activator.CreateInstance(Type.GetType(typeName), new object[] { color, log.EndPoint });
+
+            board.Figures.Add(figure);
+        }
         public static void EvaluateMoveOptions(this IBoard board, Color p)
         {
             UnableDefferedAttack(board, p);

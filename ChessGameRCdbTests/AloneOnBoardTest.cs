@@ -15,7 +15,7 @@ namespace ChessGameTests
                 new Pawn(Color.White ,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void Knight()
@@ -25,7 +25,7 @@ namespace ChessGameTests
                 new Knight(Color.White, init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void Bishop()
@@ -35,7 +35,7 @@ namespace ChessGameTests
                 new Bishop(Color.White, init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void Rook()
@@ -45,7 +45,7 @@ namespace ChessGameTests
                 new Rook(Color.White,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void Queen()
@@ -55,7 +55,7 @@ namespace ChessGameTests
                 new Queen(Color.White,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void King()
@@ -65,7 +65,7 @@ namespace ChessGameTests
                 new King(Color.White,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void PionBlack()
@@ -75,7 +75,7 @@ namespace ChessGameTests
                 new Pawn(Color.Black ,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void KnightBlack()
@@ -85,7 +85,7 @@ namespace ChessGameTests
                 new Knight(Color.Black, init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void BishopBlack()
@@ -95,7 +95,7 @@ namespace ChessGameTests
                 new Bishop(Color.Black, init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void RookBlack()
@@ -105,7 +105,7 @@ namespace ChessGameTests
                 new Rook(Color.Black,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void QueenBlack()
@@ -115,7 +115,7 @@ namespace ChessGameTests
                 new Queen(Color.Black,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
         [Fact]
         public void KingBlack()
@@ -125,7 +125,7 @@ namespace ChessGameTests
                 new King(Color.Black,init)
             };
 
-            new BoardProcessor(new Board(figures)).CalculateInitBoard();
+            new BoardProcessor(new Board(figures)).CalculateBoard();
         }
     }
 }

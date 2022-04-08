@@ -22,7 +22,7 @@ namespace ChessGameTests
         [MemberData(nameof(Data1))]
         public void FigureDeffersCheck_True(IFigure king, IFigure opponent, IEnumerable<MoveOption> expectedOptions)
         {
-            var processor = new BoardProcessor(new Board(new List<IFigure>() { opponent, king })).CalculateInitBoard(king.Color);
+            var processor = new BoardProcessor(new Board(new List<IFigure>() { opponent, king })).CalculateBoard(king.Color);
             var actualMoves = processor.GetFigure(king.Coordinate).MoveOptions;
             Assert.Equal(expectedOptions, actualMoves);
         }
@@ -42,7 +42,7 @@ namespace ChessGameTests
         [MemberData(nameof(Data2))]
         public void Check(IFigure opponent, IFigure king, IEnumerable<MoveOption> expectedOptions)
         {
-            var processor = new BoardProcessor(new Board(new List<IFigure>() { opponent, king })).CalculateInitBoard(opponent.Color);
+            var processor = new BoardProcessor(new Board(new List<IFigure>() { opponent, king })).CalculateBoard(opponent.Color);
             var actualMoves = processor.GetFigure(opponent.Coordinate).MoveOptions;
             Assert.Equal(expectedOptions, actualMoves);
         }

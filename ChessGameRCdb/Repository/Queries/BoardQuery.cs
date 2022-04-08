@@ -49,15 +49,8 @@ namespace ChessGame.Query
                     .ThenInclude(log => log.EndColumn)
                 .Include(game => game.NotationLogs)
                     .ThenInclude(log => log.EndRow)
-
                 .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogEnPassant)
-                .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogEnPassant)
-                        .ThenInclude(log => log.EnemyPionColumn)
-                .Include(game => game.NotationLogs)
-                    .ThenInclude(log => log.NotationLogEnPassant)
-                        .ThenInclude(log => log.EnemyPionRow)
+                    .ThenInclude(log => log.PromotedFigure)
 
                 .Single(x => x.Id == gameId);
 
@@ -82,22 +75,41 @@ namespace ChessGame.Query
                 var endColumn = Enumeration.FromValue<Column>(log.EndColumn.Id);
                 var endRow = Enumeration.FromValue<Row>(log.EndRow.Id);
 
-                if (log.NotationLogEnPassant != null)
-                {
-                    var enemyPionColumn = Enumeration.FromValue<Column>(log.NotationLogEnPassant.EnemyPionColumn.Id);
-                    var enemyPionRow = Enumeration.FromValue<Row>(log.NotationLogEnPassant.EnemyPionRow.Id);
-                    logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow), new LogEnPassant(new Coordinate(enemyPionColumn, enemyPionRow))));
-                }
-                else
-                {
-                    logs.Add(new Log(new Coordinate(startColumn, startRow), new Coordinate(endColumn, endRow)));
-                }
+                logs.Add(new Log(new Coordinate(startColumn, startRow).ToString(), new Coordinate(endColumn, endRow).ToString(), log.Castle, log.EnPassant, log.PromotedFigureId));
             }
 
-            var processor = new BoardProcessor(new Board(figures));
-            var result = processor.CalculateBoard(logs).Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            var processor = new BoardProcessor(new Board(figures), logs);
+            var result = processor.CalculateBoard().Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
 
             return new GetBoardResponseDTO { Figures = result };
+        }
+
+        public IEnumerable<Log> GetLogs(int gameId)
+        {
+            var logs = new List<Log>();
+            var game = _context.Game.AsNoTracking()
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.StartColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.StartRow)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.EndColumn)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.EndRow)
+                .Include(game => game.NotationLogs)
+                    .ThenInclude(log => log.PromotedFigure)
+                .Single(x => x.Id == gameId);
+
+            foreach (var log in game.NotationLogs)
+            {
+                var startColumn = Enumeration.FromValue<Column>(log.StartColumn.Id);
+                var startRow = Enumeration.FromValue<Row>(log.StartRow.Id);
+                var endColumn = Enumeration.FromValue<Column>(log.EndColumn.Id);
+                var endRow = Enumeration.FromValue<Row>(log.EndRow.Id);
+
+                logs.Add(new Log(new Coordinate(startColumn, startRow).ToString(), new Coordinate(endColumn, endRow).ToString(), log.Castle, log.EnPassant, log.PromotedFigureId));
+            }
+            return logs;
         }
     }
 }

@@ -39,7 +39,6 @@ namespace ChessGame.Controllers
         public async Task ExecuteMove([FromBody] ExecuteMoveRequestDTO r)
         {
             _boardCommand.CreateLog(r.GameID, r.Move.Log);
-
             var previousBoard = r.Figures.Select(X =>
             {
                 var figureType = Enumeration.FromValue<FigureType>(X.Type);
@@ -49,11 +48,13 @@ namespace ChessGame.Controllers
                 return figure;
             });
 
-            var log = new Log(r.Move.Log.Start, r.Move.Log.End, r.Move.Log.EnPassant);
-            var newBoard = new BoardProcessor(new Board(previousBoard)).CalculateBoard(new List<Log>() { log });
-            var dtoBoard = newBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));
+            var log = new Log(r.Move.Log.Start, r.Move.Log.End, r.Move.Log.Castle, r.Move.Log.EnPassant, r.Move.Log.Promotion);
+            var logs = _boardQuery.GetLogs(r.GameID);
+            var newBoard = new BoardProcessor(new Board(previousBoard), logs).CalculateBoard(log);
 
+            var dtoBoard = newBoard.Figures.Select((x) => new FigureDTO(x.FigureType.Id, x.Color.Id, x.Coordinate, x.MoveOptions));            
             await _moveHub.Clients.Group(r.GameID.ToString()).UpdateBoard(new UpdateBoardDTO() { Board = dtoBoard });
+            
         }
 
         [HttpPost]

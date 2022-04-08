@@ -13,7 +13,7 @@ namespace ChessGameTests
         public void StandardSetup_InputBoardHasAllFigures()
         {
             var processed = new BoardProcessor(new Board(setup.GetStandardSetup()));
-            Assert.Equal(32, processed.CalculateInitBoard(Color.White).Figures.Count());
+            Assert.Equal(32, processed.CalculateBoard(Color.White).Figures.Count());
         }
         [Fact]
         public void StartAndEndPointsAreTheSame_Error()
@@ -22,7 +22,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Two))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateBoard(logList);
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList).CalculateBoard();
             Assert.Throws<IllegalMoveException>(action);
         }
         [Fact]
@@ -32,7 +32,7 @@ namespace ChessGameTests
             {
                 new Log(new Coordinate(Column.D, Row.Six), new Coordinate(Column.D, Row.Five))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateBoard(logList);
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList).CalculateBoard();
             Assert.Throws<IllegalMoveException>(action);
         }
         [Fact]
@@ -43,7 +43,7 @@ namespace ChessGameTests
                 new Log(new Coordinate(Column.D, Row.Two), new Coordinate(Column.D, Row.Four)),
                 new Log(new Coordinate(Column.D, Row.Four), new Coordinate(Column.D, Row.Five))
             };
-            void action() => new BoardProcessor(new Board(setup.GetStandardSetup())).CalculateBoard(logList);
+            void action() => new BoardProcessor(new Board(setup.GetStandardSetup()), logList).CalculateBoard();
             Assert.Throws<IllegalMoveException>(action);
         }
     }

@@ -57,7 +57,7 @@ namespace ChessGameTests
             {
                 new MoveOption(ActionType.Check, new Log(init, king)),
             };
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateInitBoard(Color.Black).GetFigure(init).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(Color.Black).GetFigure(init).MoveOptions;
             Assert.Subset(checkOptions, calculatedOptions);
         }
 
@@ -87,7 +87,7 @@ namespace ChessGameTests
         [MemberData(nameof(CoordinateEquality))]
         public void Bishop_Move(List<IFigure> figures, Log log, HashSet<MoveOption> moves)
         {
-            var calculatedOptions = new BoardProcessor(new Board(figures)).CalculateBoard(new List<Log>() { log }).GetFigure(figures.First().Coordinate).MoveOptions;
+            var calculatedOptions = new BoardProcessor(new Board(figures), new List<Log>() { log }).CalculateBoard().GetFigure(figures.First().Coordinate).MoveOptions;
             Assert.Equal(moves, calculatedOptions);
         }
     }

@@ -60,7 +60,7 @@ namespace ChessGameTests
         {
             var figures = new List<IFigure>() { opponent, inTheMiddle, king };
             var o = new AttackOption(AttackType.DefferedCheck, inTheMiddle.Coordinate);
-            var processor = new BoardProcessor(new Board(figures)).CalculateInitBoard(king.Color);
+            var processor = new BoardProcessor(new Board(figures)).CalculateBoard(king.Color);
             var opponentAttackOptions = processor.GetFigure(opponent.Coordinate).AttackOptions;
             var intTheMiddleMoveOptions = processor.GetFigure(inTheMiddle.Coordinate).MoveOptions;
             Assert.Contains(o, opponentAttackOptions);

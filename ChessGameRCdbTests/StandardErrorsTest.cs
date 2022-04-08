@@ -17,8 +17,8 @@ namespace ChessGameTests
             {
                 new Log(coordinate, coordinate)
             };
-            var processor = new BoardProcessor(new Board(figures));
-            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard(log));
+            var processor = new BoardProcessor(new Board(figures), log);
+            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard());
         }
         [Fact]
         public void OnePion_StartPointIsEmptyFieds_ThrowException()
@@ -33,8 +33,8 @@ namespace ChessGameTests
             {
                 new Log(emptyCoordinateStart, emptyCoordinateEnd)
             };
-            var processor = new BoardProcessor(new Board(figures));
-            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard(log));
+            var processor = new BoardProcessor(new Board(figures), log);
+            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard());
         }
         [Fact]
         public void TwoWhitePions_OneCapturesAnother_ThrowException()
@@ -49,8 +49,8 @@ namespace ChessGameTests
             {
                 new Log(coordinatePion1, coordinatePion2)
             };
-            var processor = new BoardProcessor(new Board(figures));
-            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard(log));
+            var processor = new BoardProcessor(new Board(figures), log);
+            Assert.Throws<IllegalMoveException>(() => processor.CalculateBoard());
         }
     }
 }
