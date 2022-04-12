@@ -9,7 +9,7 @@ namespace ChessGame.Logic
             var isUp = figure.Color.IsUp();
             var promotedRow = isUp ? Row.Seven : Row.Two;
             var endRow = isUp ? Row.Eight : Row.One;
-            if (figure.Coordinate.Row == promotedRow)
+            if (figure.Coordinate.Row == promotedRow && board.GetFigure(new Coordinate(figure.Coordinate.Column, endRow)) == null)
                 allMoveOptions.Add(new MoveOption(ActionType.Promotion, new Log(figure.Coordinate, new Coordinate(figure.Coordinate.Column, endRow))));
                 
             return allMoveOptions;

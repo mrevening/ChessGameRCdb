@@ -13,6 +13,7 @@ import { ICreateGameResponseDTO } from '../dto/CreateGame/ICreateGameResponseDTO
 import { IJoinGameResponseDTO } from '../dto/JoinGame/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from '../dto/GetBoard/IGetBoardResponseDTO'
 import { Squares } from '../repository/Squares'
+import { ActionType } from '../repository/enum/ActionType'
 import { IGetBoardRequestDTO } from '../dto/GetBoard/IGetBoardRequestDTO'
 
 const initialState: IGameSlice = {
@@ -106,24 +107,14 @@ export const gameSlice = createSlice({
             var s = current(state)
             const clickedSquare = action.payload.square
             const isValidMove = s.board.activeFigure?.enableMoves?.some(eM => eM.log?.end === clickedSquare.name)!
-            state.board.isValidMove = isValidMove
-            if (!isValidMove) {
-                state.board.activeFigure = undefined;
-                return
-            }
+            if (!isValidMove) return
+            state.board.isValidMove = true
             state.board.destinationSquare = clickedSquare
             state.board.move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
-            //const figure = s.board.figures?.find(x => x.square.name === state.board.activeFigure!.square.name)
-            //const square = s.board.squares.find(x => x.name === clickedSquare.name)!
-            //figure!.square = square
-            //s.board.figures!.find(x => x.square.name === state.board.activeFigure!.square.name)!.square = square
 
-            //var actionTypes = figure?.EnableMoves?.find(x => x.Square === clickedSquare)?.ActionType
-            //actionTypes?.map(a => { if (a === ActionType.Promotion) return state.board.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.board.activeFigure! } })
-
-            
-
-            //if (state.destinationSquare?.Row == RowLine.Eight) state.PionPromotion = { ShowPionPromotionAlert: true, ActivePion: state.activeFigure } as IPionPromotion
+            var actionType = s.board.activeFigure.enableMoves.find(x => x.log.end === clickedSquare.name)
+            if (actionType.action === ActionType.Promotion || actionType.action === ActionType.PromotionWithCapture)
+            state.board.pionPromotion = { showPionPromotionAlert: true, activePion: state.board.activeFigure }
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
             if( state.board.figures) state.board.figures.find(f => f.square === state.board.pionPromotion!.activePion.square)!.type = action.payload

@@ -24,7 +24,7 @@ namespace ChessGame.Logic
 
         public Coordinate(string c)
         {
-            if (c == null) return;
+            if (c == null) throw new ArgumentNullException("Coordinate cannot receive null arguments.");
             Column = Enumeration.FromDisplayName<Column>(c[0].ToString().ToUpper());
             Row = Enumeration.FromValue<Row>(int.Parse(c.Substring(1,1)));
         }

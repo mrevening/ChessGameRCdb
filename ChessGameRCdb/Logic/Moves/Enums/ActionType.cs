@@ -9,6 +9,7 @@
         public static ActionType Castle = new ActionType(5, nameof(Castle));
         public static ActionType Check = new ActionType(6, nameof(Check));
         public static ActionType Mate = new ActionType(7, nameof(Mate));
+        public static ActionType PromotionWithCapture = new ActionType(8, nameof(PromotionWithCapture));
 
         public ActionType(int id, string name) : base(id, name) { }
     }

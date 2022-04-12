@@ -224,5 +224,24 @@ namespace ChessGameTests
 
             Assert.Equal(correctOptions, calculatedOptionsWhite);
         }
+
+        [Fact]
+        public void WhitePion_PromotionWithCapture_Success()
+        {
+            var figures = new List<IFigure>() {
+                new Pawn(Color.White, "D7"),
+                new Queen(Color.Black, "C8"),
+                new Rook(Color.Black, "E8"),
+            };
+            var correctOptions = new HashSet<MoveOption>()
+            {
+                new MoveOption(ActionType.Promotion, new Log("D7", "D8")),
+                new MoveOption(ActionType.PromotionWithCapture, new Log("D7", "C8")),
+                new MoveOption(ActionType.PromotionWithCapture, new Log("D7", "E8"))
+            };
+            var calculatedOptionsWhite = new BoardProcessor(new Board(figures)).CalculateBoard().GetFigure(new Coordinate("D7")).MoveOptions;
+
+            Assert.Subset(correctOptions, calculatedOptionsWhite);
+        }
     }
 }
