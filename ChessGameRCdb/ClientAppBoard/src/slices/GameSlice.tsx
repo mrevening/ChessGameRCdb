@@ -13,7 +13,7 @@ import { ICreateGameResponseDTO } from '../dto/CreateGame/ICreateGameResponseDTO
 import { IJoinGameResponseDTO } from '../dto/JoinGame/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from '../dto/GetBoard/IGetBoardResponseDTO'
 import { Squares } from '../repository/Squares'
-import { ActionType } from '../repository/enum/ActionType'
+import { ActionType, ActionTypeEnum } from '../repository/enum/ActionType'
 import { IGetBoardRequestDTO } from '../dto/GetBoard/IGetBoardRequestDTO'
 
 const initialState: IGameSlice = {
@@ -110,11 +110,11 @@ export const gameSlice = createSlice({
             if (!isValidMove) return
             state.board.isValidMove = true
             state.board.destinationSquare = clickedSquare
-            state.board.move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
-
-            var actionType = s.board.activeFigure.enableMoves.find(x => x.log.end === clickedSquare.name)
-            if (actionType.action === ActionType.Promotion || actionType.action === ActionType.PromotionWithCapture)
-            state.board.pionPromotion = { showPionPromotionAlert: true, activePion: state.board.activeFigure }
+            var move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
+            if (move === null) console.log('null')
+            state.board.move = move
+            //var actionType = move.action as ActionType
+            if (move.action.id === ActionTypeEnum.Promotion || move.action.id === ActionTypeEnum.PromotionWithCapture) state.board.pionPromotion = { showPionPromotionAlert: true, activePion: state.board.activeFigure }
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
             if( state.board.figures) state.board.figures.find(f => f.square === state.board.pionPromotion!.activePion.square)!.type = action.payload
