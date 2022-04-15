@@ -8,20 +8,27 @@ namespace ChessGame.Logic
     {
         public override IEnumerable<MoveOption> AddMoveOptions(HashSet<MoveOption> allMoveOptions, IBoard board, IFigure figure, IEnumerable<Log> previousLogs = null)
         {
+            var rookColumns = new List<Column>() { Column.A, Column.H };
 
-//check if king and rook hasn't moved and are not checked
-            var isKingAlreadyMoved = previousLogs.Any(l => l.StartPoint == figure.Coordinate);
-            if (isKingAlreadyMoved) return allMoveOptions;
-            var rookColumn = figure.Coordinate.Column == Column.D ? Column.A : Column.H;
-            var rook = board.Figures.FirstOrDefault(f => f.Coordinate == new Coordinate(rookColumn, figure.Coordinate.Row));
-            if (rook == null && previousLogs.Any(l => l.StartPoint == rook.Coordinate)) return allMoveOptions;
+            foreach(var rookColumn in rookColumns)
+            {
+                //check if king and rook hasn't moved and are not checked
+                var isKingAlreadyMoved = previousLogs.Any(l => l.StartPoint == figure.Coordinate);
+                if (isKingAlreadyMoved) return allMoveOptions;
 
-            var newKingColumn = figure.Coordinate.Column == Column.D ? Column.C : Column.G;
+                var rook = board.Figures.FirstOrDefault(f => f.Coordinate == new Coordinate(rookColumn, figure.Coordinate.Row));
+                if (rook == null && previousLogs.Any(l => l.StartPoint == rook.Coordinate)) return allMoveOptions;
 
-            var log = new Log(figure.Coordinate, new Coordinate(newKingColumn, figure.Coordinate.Row));
-            log.SetCastle();
-            allMoveOptions.Add(new MoveOption(ActionType.Castle, log));
+                var transferColumns = (rookColumn == Column.A) ? new List<Column>() { Column.B, Column.C, Column.D } : new List<Column>() { Column.F, Column.G };
+                var isTranferFieldsOccupied = transferColumns.Any(c => board.Figures.Any(x => x.Coordinate == new Coordinate(c, figure.Coordinate.Row)));
+                if (isTranferFieldsOccupied) return allMoveOptions;
 
+                var newKingColumn = rookColumn == Column.A ? Column.C : Column.G;
+
+                var log = new Log(figure.Coordinate, new Coordinate(newKingColumn, figure.Coordinate.Row));
+                log.SetCastle();
+                allMoveOptions.Add(new MoveOption(ActionType.Castle, log));
+            }
             return allMoveOptions;
         }
     }
