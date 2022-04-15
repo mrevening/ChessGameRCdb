@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useAppDispatch, useAppSelector } from "state/hooks";
 import PromotionFigure from './PromotionFigure'
 import { FigureType } from "../../repository/enum/FigureType";
-import { pionPromotion } from "../../slices/GameSlice";
+import { executeMove, pionPromotion } from "../../slices/GameSlice";
 import { FigureImagePaths } from "../../repository/FigureImagePaths";
 
 export default function PionPromotion() {
@@ -29,7 +29,7 @@ export default function PionPromotion() {
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <Button disabled={blockEnter} onClick={() => dispatch(pionPromotion(figureSelected!)) } color="primary">Promote</Button>
+                    <Button disabled={blockEnter} onClick={() => { dispatch(pionPromotion(figureSelected!)); dispatch(executeMove()); } } color="primary">Promote</Button>
                 </ModalFooter>
             </Modal>
         </>

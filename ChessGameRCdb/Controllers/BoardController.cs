@@ -48,7 +48,7 @@ namespace ChessGame.Controllers
                 return figure;
             });
 
-            var log = new Log(r.Move.Log.Start, r.Move.Log.End, r.Move.Log.Castle, r.Move.Log.EnPassant, r.Move.Log.Promotion);
+            var log = new Log(r.Move.Log.Start, r.Move.Log.End, r.Move.Log.Castle, r.Move.Log.EnPassant, r.Move.Log.PromotedFigureType);
             var logs = _boardQuery.GetLogs(r.GameID);
             var newBoard = new BoardProcessor(new Board(previousBoard), logs).CalculateBoard(log);
 

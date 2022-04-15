@@ -10,7 +10,7 @@ namespace ChessGame.DTO
         public string End { get; set; }
         public bool? Castle { get; set; }
         public bool? EnPassant { get; set; }
-        public int? Promotion { get; set; }
+        public int? PromotedFigureType { get; set; }
 
 
         public LogDTO() { }
@@ -20,7 +20,7 @@ namespace ChessGame.DTO
             End = log.EndPoint.ToString();
             Castle = log.Castle;
             EnPassant = log.EnPassant;
-            Promotion = log.Promotion;
+            PromotedFigureType = log.Promotion;
         }
     }
 }

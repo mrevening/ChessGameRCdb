@@ -72,9 +72,14 @@ export const executeMove = createAsyncThunk(
     'game/executeMove',
     async (_, thunkAPI) => {
         const { game } = thunkAPI.getState() as { game: IGameSlice }
-        if (game.board.isValidMove)
-            await BoardAPI.executeMove({ gameId: game.status.gameId!, figures: game.board.figures!, move: game.board.move! })
-        return
+        await BoardAPI.executeMove({ gameId: game.status.gameId!, figures: game.board.figures!, move: game.board.move! })
+    },
+    {
+        condition: (_, { getState }) => {
+            const { game } = getState() as { game: IGameSlice }
+            return game.board.isValidMove === true && game.board.pionPromotion == undefined
+        },
+        dispatchConditionRejection: true
     }
 )
 
@@ -88,7 +93,7 @@ const saveMove = createAsyncThunk(
         condition: (_, { getState }) => {
             const { game } = getState() as { game: IGameSlice }
             return game.board.destinationSquare !== undefined
-        },
+        }
     }
 )
 
@@ -111,19 +116,19 @@ export const gameSlice = createSlice({
             state.board.isValidMove = true
             state.board.destinationSquare = clickedSquare
             var move = s.board.activeFigure?.enableMoves?.find(x => x.log.end === clickedSquare.name)
-            if (move === null) console.log('null')
             state.board.move = move
-            //var actionType = move.action as ActionType
-            if (move.action.id === ActionTypeEnum.Promotion || move.action.id === ActionTypeEnum.PromotionWithCapture) state.board.pionPromotion = { showPionPromotionAlert: true, activePion: state.board.activeFigure }
+            if (move.action.id === ActionTypeEnum.Promotion || move.action.id === ActionTypeEnum.PromotionWithCapture) state.board.pionPromotion = { showPionPromotionAlert: true, activePion: s.board.activeFigure }
         },
         pionPromotion: (state, action: PayloadAction<FigureType>) => {
-            if( state.board.figures) state.board.figures.find(f => f.square === state.board.pionPromotion!.activePion.square)!.type = action.payload
-            state.board.pionPromotion = undefined;
+            state.board.move.log.promotedFigureType = action.payload
+            state.board.pionPromotion = undefined
         },
         updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
             console.log("updateGame")
-            const board = action.payload.board;
-            state.board.figures = board
+            if (state.board.pionPromotion == undefined) {
+                const board = action.payload.board;
+                state.board.figures = board
+            }
         },
         updateGuestInfo: (state, action: PayloadAction<IUpdateUserInfo>) => {
             var guestColor = state.status.thisPlayer?.color !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
@@ -164,8 +169,9 @@ export const gameSlice = createSlice({
             state.status.currentPlayerTurn = state.status.currentPlayerTurn !== PlayerColor.White ? PlayerColor.White : PlayerColor.Black
         });
         builder.addCase(executeMove.rejected, (state, action) => {
-
-
+            state.board.activeFigure = undefined
+        });
+        builder.addCase(executeMove.pending, (state, action) => {
         });
         builder.addCase(saveMove.fulfilled, (state, action) => {
 

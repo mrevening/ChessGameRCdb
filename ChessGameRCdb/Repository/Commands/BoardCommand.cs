@@ -3,9 +3,6 @@ using ChessGame.DTO;
 using ChessGame.Infrastructure;
 using ChessGame.Interface;
 using ChessGame.Logic;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessGame.Command
 {
@@ -39,7 +36,8 @@ namespace ChessGame.Command
                 StartColumnId = s.Column.Id,
                 StartRowId = s.Row.Id,
                 EndColumnId = e.Column.Id,
-                EndRowId = e.Row.Id
+                EndRowId = e.Row.Id,
+                PromotedFigureId = l.PromotedFigureType
             });
             _boardcontext.SaveChanges();
         }
