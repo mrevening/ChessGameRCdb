@@ -29,7 +29,7 @@ namespace ChessGame.Logic
             board.GetFigure(startPoint).SetPosition(endPoint);
         }
         public static void HandleEnPassant(this IBoard board, Log log) =>  board.RemoveFigure(new Coordinate(log.EndPoint.Column, log.StartPoint.Row));
-        public static void HandleCastle(this IBoard board, Log log) => board.MoveFigure(new Coordinate(log.StartPoint.Column == Column.D ? Column.A: Column.H, log.StartPoint.Row), new Coordinate(log.StartPoint.Column == Column.D ? Column.C : Column.F, log.StartPoint.Row));
+        public static void HandleCastle(this IBoard board, Log log) => board.MoveFigure(new Coordinate(log.EndPoint.Column == Column.C ? Column.A : Column.H, log.EndPoint.Row), new Coordinate(log.EndPoint.Column == Column.C ? Column.D : Column.F, log.EndPoint.Row));
         public static void HandlePromotion(this IBoard board, Log log)
         {
             var color = board.GetCurrentColor(log.EndPoint);

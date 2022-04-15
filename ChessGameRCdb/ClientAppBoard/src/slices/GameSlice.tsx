@@ -13,7 +13,7 @@ import { ICreateGameResponseDTO } from '../dto/CreateGame/ICreateGameResponseDTO
 import { IJoinGameResponseDTO } from '../dto/JoinGame/IJoinGameResponseDTO'
 import { IGetBoardResponseDTO } from '../dto/GetBoard/IGetBoardResponseDTO'
 import { Squares } from '../repository/Squares'
-import { ActionType, ActionTypeEnum } from '../repository/enum/ActionType'
+import { ActionTypeEnum } from '../repository/enum/ActionType'
 import { IGetBoardRequestDTO } from '../dto/GetBoard/IGetBoardRequestDTO'
 
 const initialState: IGameSlice = {
@@ -77,7 +77,7 @@ export const executeMove = createAsyncThunk(
     {
         condition: (_, { getState }) => {
             const { game } = getState() as { game: IGameSlice }
-            return game.board.isValidMove === true && game.board.pionPromotion == undefined
+            return game.board.isValidMove === true && game.board.pionPromotion === undefined
         },
         dispatchConditionRejection: true
     }
@@ -125,7 +125,7 @@ export const gameSlice = createSlice({
         },
         updateBoard: (state, action: PayloadAction<IUpdateBoardDTO>) => {
             console.log("updateGame")
-            if (state.board.pionPromotion == undefined) {
+            if (state.board.pionPromotion === undefined) {
                 const board = action.payload.board;
                 state.board.figures = board
             }
